@@ -92,7 +92,7 @@ BasketProduct.belongsTo(Product)
 Product.hasMany(ProductInfo)
 ProductInfo.belongsTo(Product)
 
-ProductType.hasMany(ProductBrand, {through: ProductTypeBrand})
+ProductType.belongsToMany(ProductBrand, {through: ProductTypeBrand})
 ProductBrand.belongsToMany(ProductType, {through: ProductTypeBrand})
 
 module.exports = {
