@@ -12,7 +12,8 @@ const models = require('./models/models')
 //Import main router
 const router = require('./routes/index')
 
-
+//Import middleware
+const errorHandler = require('./middleware/ErrorHandlingMidleWare')
 
 //Read port local server
 const PORT = process.env.PORT || 5000
@@ -22,6 +23,8 @@ app.use(cors())
 app.use(express.json())
 app.use('/api', router)
 
+//The lastMIdllewares
+app.use(errorHandler)
 
 
 //Function start Server

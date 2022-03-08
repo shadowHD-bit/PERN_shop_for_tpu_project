@@ -5,7 +5,8 @@ const router = new Router()
 //Method POST to create
 router.post('/', )
 
-//Method GET to get brands
+//Method GET to get product
+router.get('/', )
 router.get('/', )
 
 
