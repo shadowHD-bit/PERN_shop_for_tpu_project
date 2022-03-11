@@ -1,13 +1,13 @@
 const Router = require('express')
 const router = new Router()
-
+const productController = require('../controllers/productController')
 
 //Method POST to create
-router.post('/', )
+router.post('/', productController.createProduct)
 
 //Method GET to get product
-router.get('/', )
-router.get('/', )
+router.get('/', productController.getOneProduct)
+router.get('/', productController.getProduct)
 
 
 module.exports = router

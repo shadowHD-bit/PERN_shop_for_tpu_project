@@ -1,12 +1,12 @@
 const Router = require('express')
 const router = new Router()
-
+const productTypeController = require('../controllers/productTypeController')
 
 //Method POST to create
-router.post('/', )
+router.post('/', productTypeController.createProductType)
 
 //Method GET to get brands
-router.get('/', )
+router.get('/', productTypeController.getProductType)
 
 
 module.exports = router
