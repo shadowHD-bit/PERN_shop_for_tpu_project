@@ -31,9 +31,9 @@ const Product = sequelize.define('product', {
     price: {type: DataTypes.INTEGER, allowNull: false},
     rating: {type: DataTypes.INTEGER, defaultValue: 0},
     imgMain: {type: DataTypes.STRING, allowNull: false},
-    imgFirst: {type: DataTypes.STRING, allowNull: false},
-    imgSecond: {type: DataTypes.STRING, allowNull: false},
-    imgThird: {type: DataTypes.STRING, allowNull: false}
+    imgFirst: {type: DataTypes.STRING, allowNull: true},
+    imgSecond: {type: DataTypes.STRING, allowNull: true},
+    imgThird: {type: DataTypes.STRING, allowNull: true}
 })
 
 //Models Type Product
