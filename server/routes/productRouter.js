@@ -6,8 +6,8 @@ const productController = require('../controllers/productController')
 router.post('/', productController.createProduct)
 
 //Method GET to get product
-router.get('/', productController.getOneProduct)
 router.get('/', productController.getProduct)
+router.get('/:id', productController.getOneProduct)
 
 
 module.exports = router
