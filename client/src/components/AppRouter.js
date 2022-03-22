@@ -1,10 +1,19 @@
-import React from 'react'
-import {Route, BrowserRouter, Routes, } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
+import { authRoutes, publicRoutes } from '../routes'
 
-export default function AppRouter() {
+function AppRouter() {
+  const isAuth = false
   return (
-    <BrowserRouter>
+    <Routes>
+      {isAuth === true && authRoutes.map(({path, element}) =>
+        <Route key={path} path={path} element={element} exact/>
+      )}
+      {publicRoutes.map(({path, element}) =>
+        <Route key={path} path={path} element={element} exact/>
+      )}
       
-    </BrowserRouter>
+    </Routes>
   )
 }
+
+export default AppRouter

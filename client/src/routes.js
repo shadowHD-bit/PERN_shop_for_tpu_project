@@ -10,29 +10,29 @@ import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROU
 export const authRoutes = [
     {
         path: ADMIN_ROUTE,
-        Component: Admin
+        element: <Admin />
     },
     {
         path: BASKET_ROUTE,
-        Component: Basket
-    }
+        element: <Basket />
+    },
 ]
 
 export const publicRoutes = [
     {
         path: SHOP_ROUTE,
-        Component: Shop
+        element: <Shop />
     },
     {
         path: LOGIN_ROUTE,
-        Component: Auth
+        element: <Auth />
     },
     {
         path: REGISTRATION_ROUTE,
-        Component: Auth
+        element: <Auth />
     },
     {
         path: PRODUCT_ROUTE + '/:id',
-        Component: ProguctPage
-    }
+        element: <ProguctPage />
+    },
 ]

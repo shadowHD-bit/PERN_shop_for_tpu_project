@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function ProductPage() {
+function ProductPage() {
   return (
     <div>ProductPage</div>
   )
 }
+
+export default ProductPage;
