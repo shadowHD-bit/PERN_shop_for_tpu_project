@@ -1,17 +1,19 @@
-import { Route, Routes } from 'react-router-dom'
+import { useContext } from 'react'
+import { Route, Routes, Navigate } from 'react-router-dom'
+import { Context } from '..'
 import { authRoutes, publicRoutes } from '../routes'
 
 function AppRouter() {
-  const isAuth = false
+  const {user} = useContext(Context)
   return (
     <Routes>
-      {isAuth === true && authRoutes.map(({path, element}) =>
+      {user.isAuth === true && authRoutes.map(({path, element}) =>
         <Route key={path} path={path} element={element} exact/>
       )}
       {publicRoutes.map(({path, element}) =>
         <Route key={path} path={path} element={element} exact/>
       )}
-      
+      <Route path="*" element={<Navigate to="/" replace />}/>
     </Routes>
   )
 }
