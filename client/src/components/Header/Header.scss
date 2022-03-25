@@ -2,26 +2,40 @@
     display:flex
 } 
 
+.offcanvas{
+    background-image: url(../../../public/img/index/bgmain.png);
+}
+
+a.dropdown-item .dropdown-item{
+    width: 100%;
+    border-bottom: 1px solid rgb(235, 235, 235);
+}
+
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: #EF5350 !important;
+}
+
+.dropdown-menu{
+    width: 100%;
+    border-bottom: 1px solid rgb(235, 235, 235);
+}
 
 .header{
-    background-image: url(../../img/header/bg_header.png);
+    background-image: url(../../../public/img/header/bg_header.png);
     height: 100px;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
 
     nav{
-        background-image: url(../../img/header/bg_header.png);
+        background-image: url(../../../public/img/header/bg_header.png);
 
     }
 
     .right_menu{
         width: 20px;
-    }
-
-
-
-    .offcanvas{
-        background-image: url(../../img/index/bgmain.png);
     }
 
     .social_header{
@@ -115,14 +129,9 @@ ul{
     width: 100%;
 }
 
-li{
-    width: 100%;
-    border-bottom: 1px solid rgb(235, 235, 235);
-}
-
 
 nav {
-    background-image: url(../../img/header/bg_header.png);
+    background-image: url(../../../public/img/header/bg_header.png);
 }
 
 .navbar-brand {
@@ -217,6 +226,7 @@ a {
 .dropdown-item:hover {
     background-color: inherit
 }
+
 
 @media (max-width: 767px) {
     .nav-item {
