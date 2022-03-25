@@ -1,0 +1,59 @@
+.row .classic{
+    margin-left: 0px;
+}
+
+.register{
+    font-family: 'Montserrat', sans-serif;
+
+
+    h5{
+        margin-top: 5px;
+    }
+
+    h2{
+        margin-top: 20px;
+    }
+
+    label{
+        margin-top: 5px;
+    }
+
+    button{
+        margin: 20px 0px;
+    }
+
+    .reg_socialweb{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        margin-bottom: 10px;
+        border-radius: 30px;
+
+        .social_reg_text{
+            margin-bottom: 10px;
+        }
+
+    }
+
+    .personal_data{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        border-radius: 30px;
+        margin-bottom: 10px;
+
+
+    }
+
+    .data_auth{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        margin-bottom: 10px;
+        border-radius: 30px;
+    }
+
+    .info_text_right{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        margin-bottom: 10px;
+        border-radius: 30px; 
+    }
+}

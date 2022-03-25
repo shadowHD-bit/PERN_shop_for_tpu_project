@@ -39,9 +39,6 @@ function Auth() {
                   />
                 </Form.Group>
 
-
-
-
               <Button className='auth_btn' variant="outline-danger">ВОЙТИ</Button>{' '}
 
 
@@ -92,7 +89,7 @@ function Auth() {
                 Подробнее ознакомиться со всеми возможностями вы сможете после регистрации в личном кабинете пользователя.
               </p>
 
-              <Button variant="outline-danger" href='/register'>РЕГИСТРАЦИЯ</Button>{' '}
+              <Button variant="outline-danger" href='/registration'>РЕГИСТРАЦИЯ</Button>{' '}
 
               </div>
             </div>
