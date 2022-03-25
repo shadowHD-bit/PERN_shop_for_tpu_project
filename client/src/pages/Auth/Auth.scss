@@ -1,0 +1,37 @@
+.auth{
+    font-family: 'Montserrat', sans-serif;
+
+
+    h2{
+        margin-top: 35px;
+    }
+
+    .auth_socweb{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        border-radius: 30px;
+        margin-top: 20px;
+
+    }
+
+    .main_auth{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        border-radius: 30px;
+
+        .auth_btn{
+            margin-top: 20px;
+        }
+
+        label{
+            margin-top: 5px;
+        }
+    }
+
+    .dop_reg{
+        border: 2px solid rgb(212, 212, 212);
+        padding: 20px 10px;
+        border-radius: 30px;
+    }
+
+}

@@ -1,26 +1,28 @@
 import React, {useState, useContext } from 'react'
-import { Context } from '../..'
+import {observer} from "mobx-react-lite";
+
 
 //import style Bootstrap
 import './Header.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import {Offcanvas, Dropdown} from 'react-bootstrap'
+import {Offcanvas, Dropdown, Button} from 'react-bootstrap'
 import { BsFacebook } from 'react-icons/bs'; 
 import { BsTwitter } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
 
 import {MdMenu} from 'react-icons/md';
+import { Context } from '../..';
 
-export default function Header() {
+const Header = observer(() => {
+
+    const {user} = useContext(Context)
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    const {user} = useContext(Context)
 
     return (  
       <div className='header h-100'>
@@ -43,19 +45,23 @@ export default function Header() {
                   </div>
 
                   <Offcanvas className='Offs' placement='end' show={show} onHide={handleClose}>
-                    <div className="offcanvas-header">
-                      <h5 id="offcanvasRightLabel">Be sure of yourself...</h5>
-                  </div>
-                  <div className="offcanvas-body">
-                      <a href='/'><button className="btn btn-outline-danger mt-3" type="button">
+                  <Offcanvas.Header>     
+                   <h5 id="offcanvasRightLabel">Be sure of yourself...</h5>
+                   </Offcanvas.Header> 
+
+
+                  <Offcanvas.Body>
+
+                      
+                    <Button variant='none' className="btn btn-outline-danger mt-3" type="button" href="/shop-news">
                           Главная
-                      </button></a>
+                      </Button>
 
                       <Dropdown className="dropdown mt-3">
                       <Dropdown.Toggle variant='none' className="btn btn-outline-danger dropdown-toggle">
                         Товары
                       </Dropdown.Toggle>
-
+                      
                       <Dropdown.Menu className="dropdown-menu">
                         <Dropdown.Item className="dropdown-item" href="#/action-1">Мужская одежда</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-2">Женская одежда</Dropdown.Item>
@@ -63,9 +69,9 @@ export default function Header() {
                       </Dropdown.Menu>
                     </Dropdown>
 
-                      <button className="btn btn-outline-danger mt-3" type="button" href="/shop-news">
+                      <Button variant='none' className="btn btn-outline-danger mt-3" type="button" href="/shop-news">
                           Новости
-                      </button>
+                      </Button>
 
                       <Dropdown className="dropdown mt-3">
                       <Dropdown.Toggle variant='none' className="btn btn-outline-danger dropdown-toggle">
@@ -80,13 +86,19 @@ export default function Header() {
                       </Dropdown.Menu>
                     </Dropdown>
 
-                      <div className='offcanvas-bottom'>
-                      <a href='/auth'><button className="btn btn-outline-success fixed-bottom" type="button" href="/shop-news">
+                    {user.isAuth ?
+                    
+                    <Button variant='none' id='exit' className="btn btn-outline-danger exit mt-3" type="button" href="/shop-news">
+                      Выйти
+                    </Button>
+                    :
+                    <Button variant='none' className="btn btn-outline-success mt-3" type="button" onClick={() => user.setIsAuth(true)}>
                           Вход / Регистрация
-                      </button></a>
-                      </div>
-                    </div>
-                  </Offcanvas>    
+                    </Button>
+                    }
+
+                      </Offcanvas.Body>
+                    </Offcanvas>    
 
               </div>
           </div>
@@ -95,4 +107,7 @@ export default function Header() {
   </div>
   
   )
-}
+
+})
+
+export default Header

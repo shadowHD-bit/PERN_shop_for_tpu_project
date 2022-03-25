@@ -121,9 +121,39 @@ a.dropdown-item .dropdown-item{
     font-weight: 100;
 }
 
-button{
+.btn-outline-danger{
     width: 100%;
+    color: #dc3545 !important;
 }
+
+.btn-outline-danger:hover{
+    width: 100%;
+    color: #ffffff !important;
+}
+
+#exit{
+    width: 100%;
+    color: #dc3545 !important;
+    background-color: #a1000b21;
+}
+
+#exit:hover{
+    width: 100%;
+    background-color: #dc3545;
+
+    color: #ffffff !important;
+}
+
+.btn-outline-success{
+    width: 100%;
+    color: #059711 !important;
+}
+
+.btn-outline-success:hover{
+    width: 100%;
+    color: #ffffff !important;
+}
+
 
 ul{
     width: 100%;
