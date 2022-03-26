@@ -14,10 +14,12 @@ import { FaVk } from 'react-icons/fa';
 
 import {MdMenu} from 'react-icons/md';
 import { Context } from '../..';
-import { ABOUT_ROUTE, LOCATIONPLACES_ROUTE, PRODUCT_ROUTE } from '../../utils/consts';
+import { ABOUT_ROUTE, ADMIN_ROUTE, LOCATIONPLACES_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE } from '../../utils/consts';
+import { useNavigate } from 'react-router-dom';
 
 const Header = observer(() => {
 
+    const navigate = useNavigate()
     const {user} = useContext(Context)
 
     const [show, setShow] = useState(false);
@@ -85,6 +87,7 @@ const Header = observer(() => {
                         <Dropdown.Item className="dropdown-item" href="#/action-2">Контакты</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href={LOCATIONPLACES_ROUTE}>Основные адреса</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-3">Правила</Dropdown.Item>
+                        <Dropdown.Item className="dropdown-item" onClick={() => navigate(ADMIN_ROUTE)}>Админка</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
 
@@ -94,7 +97,7 @@ const Header = observer(() => {
                       Выйти
                     </Button>
                     :
-                    <Button variant='none' className="btn btn-outline-success mt-3" type="button" onClick={() => user.setIsAuth(true)}>
+                    <Button variant='none' className="btn btn-outline-success mt-3" type="button" onClick={() => navigate(LOGIN_ROUTE)}>
                           Вход / Регистрация
                     </Button>
                     }
