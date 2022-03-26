@@ -1,7 +1,7 @@
 import Admin from './pages/Admin'
 import Basket from './pages/Basket'
 
-import Shop from './components/MainPage/Shop'
+import Shop from './pages/MainPage/Shop'
 import Auth from './pages/Auth/Auth'
 import ProguctPage from './pages/ProductPage'
 import Register from './pages/Registration/RegisterPage'
