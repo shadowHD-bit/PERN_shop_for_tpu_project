@@ -14,6 +14,7 @@ import { FaVk } from 'react-icons/fa';
 
 import {MdMenu} from 'react-icons/md';
 import { Context } from '../..';
+import { LOCATIONPLACES_ROUTE } from '../../utils/consts';
 
 const Header = observer(() => {
 
@@ -81,7 +82,7 @@ const Header = observer(() => {
                       <Dropdown.Menu className="dropdown-menu">
                         <Dropdown.Item className="dropdown-item" href="#/action-1">О нас</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-2">Контакты</Dropdown.Item>
-                        <Dropdown.Item className="dropdown-item" href="#/action-3">Основные адреса</Dropdown.Item>
+                        <Dropdown.Item className="dropdown-item" href={LOCATIONPLACES_ROUTE}>Основные адреса</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-3">Правила</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

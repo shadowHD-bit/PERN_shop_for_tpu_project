@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button'
 import { BsFacebook } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
+import { REGISTRATION_ROUTE } from '../../utils/consts';
 
 
 function Auth() {
@@ -89,7 +90,7 @@ function Auth() {
                 Подробнее ознакомиться со всеми возможностями вы сможете после регистрации в личном кабинете пользователя.
               </p>
 
-              <Button variant="outline-danger" href='/registration'>РЕГИСТРАЦИЯ</Button>{' '}
+              <Button variant="outline-danger" href={REGISTRATION_ROUTE}>РЕГИСТРАЦИЯ</Button>{' '}
 
               </div>
             </div>
