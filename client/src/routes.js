@@ -3,7 +3,7 @@ import Basket from './pages/Basket'
 
 import Shop from './pages/MainPage/Shop'
 import Auth from './pages/Auth/Auth'
-import ProguctPage from './pages/ProductPage'
+import ProguctPage from './pages/ProductPage/ProductPage'
 import Register from './pages/Registration/RegisterPage'
 import Location from './pages/LocationPage/Location'
 import About from './pages/AboutUs/AboutUs'
@@ -47,5 +47,9 @@ export const publicRoutes = [
     {
         path: ABOUT_ROUTE,
         element: <About />
+    },
+    {
+        path: PRODUCT_ROUTE,
+        element: <ProguctPage />
     },
 ]
