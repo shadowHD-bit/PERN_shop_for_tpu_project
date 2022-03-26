@@ -8,10 +8,35 @@ import Button from 'react-bootstrap/Button'
 import { BsFacebook } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
-import { REGISTRATION_ROUTE } from '../../utils/consts';
+import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { useContext, useState } from 'react';
+import { Context } from '../..';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { login, registration } from '../../http/userAPI';
 
 
 function Auth() {
+
+  const {user} = useContext(Context)
+  const location = useLocation()
+  const history = useNavigate()
+  const isLogin = location.pathname === LOGIN_ROUTE
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const click = async () => {
+      try {
+          let data;
+          data = await login(email, password);
+          user.setUser(user)
+          user.setIsAuth(true)
+          history(SHOP_ROUTE)
+      } catch (e) {
+          alert(e.response.data.message)
+      }
+
+  }
+
     return (
       <div className="auth">
 
@@ -28,7 +53,12 @@ function Auth() {
 
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Почта</Form.Label>
-              <Form.Control type="email" placeholder="example@email.com" />
+              <Form.Control 
+                type="email" 
+                placeholder="example@email.com" 
+                value={email}
+                onChange={e => setEmail(e.target.value)}
+              />
             </Form.Group>
 
               <Form.Group>
@@ -37,10 +67,12 @@ function Auth() {
                     type="password"
                     id="inputPassword5"
                     aria-describedby="passwordHelpBlock"
+                    value={password}
+                    onChange={e => setPassword(e.target.value)}
                   />
                 </Form.Group>
 
-              <Button className='auth_btn' variant="outline-danger">ВОЙТИ</Button>{' '}
+              <Button onClick={click} className='auth_btn' variant="outline-danger">ВОЙТИ</Button>{' '}
 
 
               </Form>

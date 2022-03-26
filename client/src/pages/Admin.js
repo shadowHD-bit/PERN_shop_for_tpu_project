@@ -11,6 +11,7 @@ const Admin = () => {
 
     return (
         <Container className="d-flex flex-column">
+          <h1>Админка (v. 1.0.1)</h1>
             <Button
                 variant={"outline-dark"}
                 className="mt-4 p-2"

@@ -8,9 +8,35 @@ import Button from 'react-bootstrap/Button'
 import { BsFacebook } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
+import { Context } from '../..';
+import { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { LOGIN_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { registration } from '../../http/userAPI';
 
 
 function Register() {
+
+  const {user} = useContext(Context)
+  const location = useLocation()
+  const history = useNavigate()
+  const isLogin = location.pathname === LOGIN_ROUTE
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const click = async () => {
+      try {
+          let data;
+          data = await registration(email, password);
+          user.setUser(user)
+          user.setIsAuth(true)
+          history(SHOP_ROUTE)
+      } catch (e) {
+          alert(e.response.data.message)
+      }
+
+  }
+
     return (
       
       <div className="register">
@@ -71,7 +97,8 @@ function Register() {
 
                <Form.Group controlId="formBasicEmail">
                 <Form.Label>Почта*</Form.Label>
-                <Form.Control type="email" placeholder="example@email.com" />
+                <Form.Control type="email" placeholder="example@email.com" value={email}
+                onChange={e => setEmail(e.target.value)}/>
                 <Form.Text className="text-muted">
                   Никогда не делитесь своей почтой с мошениками...
                 </Form.Text>
@@ -83,7 +110,8 @@ function Register() {
                       type="password"
                       id="inputPassword5"
                       aria-describedby="passwordHelpBlock"
-                      
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
                     />
                     <Form.Text id="passwordHelpBlock" muted>
                       Пароль должен содержать 8-20 символов, букв и цифр, и не содержать пробелы, специальные знаки, или emoji.
@@ -135,7 +163,7 @@ function Register() {
                     name="group1"
                   />
                 </Form.Group>
-                <Button variant="outline-danger">ЗАРЕГИСТРИРОВАТЬСЯ</Button>{' '}
+                <Button onClick={click} variant="outline-danger">ЗАРЕГИСТРИРОВАТЬСЯ</Button>{' '}
                 </Form>
                </div>
               </div>
