@@ -6,9 +6,11 @@ import Auth from './pages/Auth/Auth'
 import ProguctPage from './pages/ProductPage'
 import Register from './pages/Registration/RegisterPage'
 import Location from './pages/LocationPage/Location'
+import About from './pages/AboutUs/AboutUs'
 
 import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
+import { ABOUT_ROUTE } from './utils/consts'
 
 export const authRoutes = [
     {
@@ -41,5 +43,9 @@ export const publicRoutes = [
     {
         path: LOCATIONPLACES_ROUTE,
         element: <Location />
-    }
+    },
+    {
+        path: ABOUT_ROUTE,
+        element: <About />
+    },
 ]

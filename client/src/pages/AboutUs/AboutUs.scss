@@ -1,0 +1,86 @@
+.about_us{
+
+    background-image: url(../../../public//img//about/about-bg.jpg);
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    font-family: 'Montserrat', sans-serif;
+
+
+    .first_null_section{
+        height: 200px;
+    }
+
+    .col-md-1{
+        width: 3%;
+    }
+
+    .main_about{
+        background-image: url(../../../public/img/index/bgmain.png);
+        height: 400px;
+        vertical-align: middle;
+
+        .imgLogo{
+            width: 60%;
+        }
+    }
+
+    .count_data{
+        height: 300px;
+
+        .col-md-3{
+            padding:0px 50px;
+        }
+    }
+
+    .info_data{
+        background-image: url(../../../public/img/index/bgmain.png);
+        height: 400px;
+    }
+
+    .tools_data{
+        background-image: url(../../../public/img/index/bgmain.png);
+        height: 500px;
+    }
+
+
+    .countNumber{
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+
+    }
+
+    .countNumberA{
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: bold;
+        font-size: 40px;
+    }
+
+
+    .icon_count{
+        color: white;
+        margin-bottom: 20px;
+    }
+
+    .text{
+        font-size: 12px;
+    }
+
+
+    .sass-icon{
+        color: rgb(221, 57, 57);
+    }
+
+    .git-icon{
+        color: rgb(0, 0, 0);
+    }
+
+    .boot-icon{
+        color: rgb(120, 57, 221);
+    }
+
+    .react-icon{
+        color: rgb(121, 199, 250);
+    }
+}
