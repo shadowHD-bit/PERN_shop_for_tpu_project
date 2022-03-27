@@ -1,9 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
+import { fetchOneProduct } from '../../http/productAPI';
 
 const SimpleProduct = () => {
-    const product = {id: 1, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'}
+
+    const [product, setProduct] = useState({info: []})
+    const {id} = useParams()
+    useEffect(() => {
+        fetchOneProduct(id).then(data => setProduct(data))
+    }, [])
 
     return (
         <Container className="mt-3">
@@ -32,7 +38,14 @@ const SimpleProduct = () => {
                     </Card>
                 </Col>
             </Row>
-
+            <Row className="d-flex flex-column m-3">
+                <h1>Характеристики</h1>
+                {product.info.map((info, index) =>
+                    <Row key={info.id} style={{background: index % 2 === 0 ? 'lightgray' : 'transparent', padding: 10}}>
+                        {info.title}: {info.description}
+                    </Row>
+                )}
+            </Row>
         </Container>
     );
 };
