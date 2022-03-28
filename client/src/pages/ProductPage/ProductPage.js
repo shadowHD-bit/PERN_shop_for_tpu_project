@@ -4,6 +4,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { Context } from '../..';
 import BrandBar from '../../components/BrandBar';
 import ProductList from '../../components/ProductList';
+import Pages from '../../components/productPages';
 import TypeBar from '../../components/TypeBar';
 import { fetchBrands, fetchProduct, fetchTypes } from '../../http/productAPI';
 
@@ -23,9 +24,9 @@ const ProductPage = observer(() => {
 useEffect(() => {
   fetchProduct(product.selectedType.id, product.selectedBrand.id, product.page, 10).then(data => {
       product.setProduct(data.rows)
-        product.setTotalCount(data.count)
+      product.setTotalCount(data.count)
     })
-}, [product.page, product.selectedType, product.selectedBrand,])
+}, [product.page, product.selectedType, product.selectedBrand])
 
   return (
 
@@ -37,6 +38,7 @@ useEffect(() => {
         <Col md={9}>
           <BrandBar />
           <ProductList />
+          <Pages />
         </Col>
       </Row>
     </Container>
