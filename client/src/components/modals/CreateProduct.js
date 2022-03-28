@@ -3,6 +3,7 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Dropdown, Form, Row, Col} from "react-bootstrap";
 import {observer} from "mobx-react-lite";
 import { Context } from '../..';
+import { createProduct, fetchBrands, fetchProduct, fetchTypes } from '../../http/productAPI';
 
 const CreateProduct = observer(({show, onHide}) => {
     const {product} = useContext(Context)
@@ -11,7 +12,14 @@ const CreateProduct = observer(({show, onHide}) => {
     const [file, setFile] = useState(null)
     const [info, setInfo] = useState([])
 
-
+    useEffect(() => {
+        fetchTypes().then(data => product.setTypes(data))
+        fetchBrands().then(data => product.setBrands(data))
+        fetchProduct(null, null, 1, 2).then(data => {
+          product.setProduct(data.rows)
+          product.setTotalCount(data.count)
+        })
+    }, [])
 
     const addInfo = () => {
         setInfo([...info, {title: '', description: '', number: Date.now()}])
@@ -31,11 +39,11 @@ const CreateProduct = observer(({show, onHide}) => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', `${price}`)
-        formData.append('imgMain', file)
-        formData.append('brandId', product.selectedBrand.id)
-        formData.append('typeId', product.selectedType.id)
+        formData.append('img', file)
+        formData.append('productBrandId', product.selectedBrand.id)
+        formData.append('productTypeId', product.selectedType.id)
         formData.append('info', JSON.stringify(info))
-        CreateProduct(formData).then(data => onHide())
+        createProduct(formData).then(data => onHide())
     }
 
     return (
@@ -62,6 +70,7 @@ const CreateProduct = observer(({show, onHide}) => {
                                     {type.name}
                                 </Dropdown.Item>
                             )}
+                            
                         </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown className="mt-2 mb-2">
