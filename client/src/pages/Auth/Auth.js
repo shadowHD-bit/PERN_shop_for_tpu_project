@@ -1,26 +1,23 @@
 import './Auth.scss';
-
-import Header from '../../components/Header/Header';
-
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 
 import { BsFacebook } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
-import { LOGIN_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { REGISTRATION_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 import { useContext, useState } from 'react';
 import { Context } from '../..';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { login, registration } from '../../http/userAPI';
+import { login } from '../../http/userAPI';
+import { observer } from 'mobx-react-lite';
 
 
-function Auth() {
+const Auth = observer(() => {
 
   const {user} = useContext(Context)
   const location = useLocation()
   const history = useNavigate()
-  const isLogin = location.pathname === LOGIN_ROUTE
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
@@ -136,7 +133,7 @@ function Auth() {
 
 </div>
     );
-  }
+  })
   
   export default Auth;
   

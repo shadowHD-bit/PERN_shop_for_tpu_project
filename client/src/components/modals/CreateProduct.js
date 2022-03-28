@@ -31,7 +31,7 @@ const CreateProduct = observer(({show, onHide}) => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', `${price}`)
-        formData.append('img', file)
+        formData.append('imgMain', file)
         formData.append('brandId', product.selectedBrand.id)
         formData.append('typeId', product.selectedType.id)
         formData.append('info', JSON.stringify(info))
@@ -81,13 +81,13 @@ const CreateProduct = observer(({show, onHide}) => {
                         value={name}
                         onChange={e => setName(e.target.value)}
                         className="mt-3"
-                        placeholder="Введите название устройства"
+                        placeholder="Введите название товара"
                     />
                     <Form.Control
                         value={price}
                         onChange={e => setPrice(Number(e.target.value))}
                         className="mt-3"
-                        placeholder="Введите стоимость устройства"
+                        placeholder="Введите стоимость товара"
                         type="number"
                     />
                     <Form.Control

@@ -14,18 +14,24 @@ import { FaVk } from 'react-icons/fa';
 
 import {MdMenu} from 'react-icons/md';
 import { Context } from '../..';
-import { ABOUT_ROUTE, ADMIN_ROUTE, LOCATIONPLACES_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE } from '../../utils/consts';
+import { ABOUT_ROUTE, ADMIN_ROUTE, LOCATIONPLACES_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 import { useNavigate } from 'react-router-dom';
 
 const Header = observer(() => {
 
     const navigate = useNavigate()
     const {user} = useContext(Context)
+    console.log(user.isAuth)
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    function logOut(){
+      localStorage.clear();
+        window.location.href = '/';
+    }
 
     return (  
       <div className='header h-100'>
@@ -93,7 +99,7 @@ const Header = observer(() => {
 
                     {user.isAuth ?
                     
-                    <Button variant='none' id='exit' className="btn btn-outline-danger exit mt-3" type="button" href="/shop-news">
+                    <Button variant='none' id='exit' className="btn btn-outline-danger exit mt-3" type="button" onClick={() => logOut()}>
                       Выйти
                     </Button>
                     :

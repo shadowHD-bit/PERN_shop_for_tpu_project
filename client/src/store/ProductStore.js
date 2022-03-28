@@ -3,27 +3,10 @@ import {makeAutoObservable} from "mobx";
 export default class ProductStore {
     constructor() {
         this._types = [
-            {id: 1, name: 'Рубашки'},
-            {id: 2, name: 'Штаны'},
-            {id: 3, name: 'Майки'},
-            {id: 4, name: 'Брюки'},
         ]
         this._brands = [
-            {id: 1, name: 'Adidas'},
-            {id: 2, name: 'Nile'},
-            {id: 3, name: 'H&M'},
-            {id: 4, name: 'CROPP'},
         ]
-        this._products = [
-            {id: 1, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 2, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 3, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 4, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 5, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 6, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-            {id: 7, name: 'Брюки Adidas', price: 2500, rating: 5, imgMain: 'https://b.allegroimg.com/original/033708/41fe4477451aa5a5b407984d754b/Spodnie-treningowe-ADIDAS-REGISTA-18-size-S'},
-
-        ]
+        this._products = []
         this._selectedType = {}
         this._selectedBrand = {}
         this._page = 1

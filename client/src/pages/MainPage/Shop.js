@@ -4,9 +4,10 @@ import LightBox from './lightbox/lightbox';
 import NewProduct from './newProduct/newProduct';
 import News from './newsSlider/news';
 import Brands from './brands/brands';
+import { observer } from 'mobx-react-lite';
 
 
-function mainPage() {
+const mainPage = observer(() => {
     return (
         <div className='mainPage'>
             <MainSlider />
@@ -17,6 +18,6 @@ function mainPage() {
             <Brands />
         </div>
     );
-  }
+  })
 
 export default mainPage;

@@ -4,8 +4,8 @@ import {BrowserRouter} from 'react-router-dom'
 import { Context } from '.';
 import AppRouter from './components/AppRouter';
 import Header from './components/Header/Header';
-import { check } from './http/userAPI';
 import {Spinner} from "react-bootstrap";
+import { checkAuth } from './http/userAPI';
 
 
 const App = observer(() => {
@@ -13,7 +13,7 @@ const App = observer(() => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    check().then(data => {
+    checkAuth().then(data => {
         user.setUser(true)
         user.setIsAuth(true)
     }).finally(() => setLoading(false))
