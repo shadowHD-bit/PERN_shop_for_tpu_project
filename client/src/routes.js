@@ -8,8 +8,9 @@ import Register from './pages/Registration/RegisterPage'
 import Location from './pages/LocationPage/Location'
 import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
+import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, SHOP_ROUTE } from './utils/consts'
+import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
 
@@ -57,4 +58,8 @@ export const publicRoutes = [
         path: PRODUCT_ROUTE,
         element: <ProguctPage />
     },
+    {
+        path: RULES_ROUTE,
+        element: <RulesPage />
+    }
 ]

@@ -14,7 +14,7 @@ import { FaVk } from 'react-icons/fa';
 
 import {MdMenu} from 'react-icons/md';
 import { Context } from '../..';
-import { ABOUT_ROUTE, ADMIN_ROUTE, LOCATIONPLACES_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, SHOP_ROUTE } from '../../utils/consts';
+import { ABOUT_ROUTE, ADMIN_ROUTE, LOCATIONPLACES_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, RULES_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 import { useNavigate } from 'react-router-dom';
 
 const Header = observer(() => {
@@ -75,7 +75,7 @@ const Header = observer(() => {
                         <Dropdown.Item className="dropdown-item" href={ABOUT_ROUTE}>О нас</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-2">Контакты</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href={LOCATIONPLACES_ROUTE}>Основные адреса</Dropdown.Item>
-                        <Dropdown.Item className="dropdown-item" href="#/action-3">Правила</Dropdown.Item>
+                        <Dropdown.Item className="dropdown-item" href={RULES_ROUTE}>Правила</Dropdown.Item>
                         {user.isAuth && user.isAdmin == true ?
                         <Dropdown.Item className="dropdown-item" onClick={() => navigate(ADMIN_ROUTE)}>Админка</Dropdown.Item>
                           :
