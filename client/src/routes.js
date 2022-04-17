@@ -15,14 +15,18 @@ import { ABOUT_ROUTE } from './utils/consts'
 
 export const authRoutes = [
     {
-        path: ADMIN_ROUTE,
-        element: <Admin />
-    },
-    {
         path: BASKET_ROUTE,
         element: <Basket />
     },
 ]
+
+export const adminRoutes = [
+    {
+        path: ADMIN_ROUTE,
+        element: <Admin />
+    },
+]
+
 
 export const publicRoutes = [
     {

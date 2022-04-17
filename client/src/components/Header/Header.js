@@ -76,7 +76,11 @@ const Header = observer(() => {
                         <Dropdown.Item className="dropdown-item" href="#/action-2">Контакты</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href={LOCATIONPLACES_ROUTE}>Основные адреса</Dropdown.Item>
                         <Dropdown.Item className="dropdown-item" href="#/action-3">Правила</Dropdown.Item>
+                        {user.isAuth && user.isAdmin == true ?
                         <Dropdown.Item className="dropdown-item" onClick={() => navigate(ADMIN_ROUTE)}>Админка</Dropdown.Item>
+                          :
+                          <div></div>
+                        }
                       </Dropdown.Menu>
                     </Dropdown>
                     {user.isAuth ?
@@ -85,7 +89,7 @@ const Header = observer(() => {
                     </Button>
                     :
                     <Button variant='none' className="btn btn-outline-success mt-3" type="button" onClick={() => navigate(LOGIN_ROUTE)}>
-                          Вход / Регистрация
+                        Вход / Регистрация
                     </Button>
                     }
 
