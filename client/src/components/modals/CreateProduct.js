@@ -74,7 +74,7 @@ const CreateProduct = observer(({show, onHide}) => {
                         </Dropdown.Menu>
                     </Dropdown>
                     <Dropdown className="mt-2 mb-2">
-                        <Dropdown.Toggle>{product.selectedBrand.name || "Выберите тип"}</Dropdown.Toggle>
+                        <Dropdown.Toggle>{product.selectedBrand.name || "Выберите бренд"}</Dropdown.Toggle>
                         <Dropdown.Menu>
                             {product.brands.map(brand =>
                                 <Dropdown.Item

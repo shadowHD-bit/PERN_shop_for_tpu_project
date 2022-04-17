@@ -4,6 +4,7 @@ import {BrowserRouter} from 'react-router-dom'
 import { Context } from '.';
 import AppRouter from './components/AppRouter';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import {Spinner} from "react-bootstrap";
 import { checkAuth } from './http/userAPI';
 
@@ -28,6 +29,7 @@ if (loading) {
       <BrowserRouter>
         <Header />
         <AppRouter />
+        <Footer />
       </BrowserRouter>
     </div>
   );

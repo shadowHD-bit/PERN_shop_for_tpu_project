@@ -1,0 +1,13 @@
+//Scroll-bar steles
+
+body::-webkit-scrollbar {
+    width: 12px;               /* ширина scrollbar */
+  }
+  body::-webkit-scrollbar-track {
+    background: #434240;        /* цвет дорожки */
+  }
+  body::-webkit-scrollbar-thumb {
+    background-color: rgb(252, 41, 41);    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    border: 3px solid #434240;  /* padding вокруг плашки */
+  }
