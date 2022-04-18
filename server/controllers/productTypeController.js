@@ -13,6 +13,24 @@ class ProductTypeController{
         return res.json(types)
     }
 
+    async deleteProductType(req, res) {
+        try {
+            const {id} = req.params;
+            await ProductType.findOne({where:{id}})
+                .then( async data => {
+                    if(data) {
+                        await ProductType.destroy({where:{id}}).then(() => {
+                            return res.json("Тип удален");
+                        })
+                    } else {
+                        return res.json("Это тип отсутствует в базе данных");
+                    }
+                })
+        } catch (e) {
+            return res.json(e);
+        }
+    }
+
 }
 
 module.exports = new ProductTypeController()

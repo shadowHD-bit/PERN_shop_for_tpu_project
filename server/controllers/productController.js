@@ -63,6 +63,24 @@ class ProductController{
         return res.json(product)
     }
 
+    async deleteProduct(req, res) {
+        try {
+            const {id} = req.params;
+            await Product.findOne({where: {id}})
+                .then( async data => {
+                    if(data) {
+                        await Product.destroy({where:{id}}).then(() => {
+                            return res.json("Продукт удален");
+                        })
+                    } else {
+                        return res.json("Этого продукта нет в базе данных...");
+                    }
+                })
+        } catch (e) {
+            return res.json(e);
+        }
+    }
+
 }
 
 module.exports = new ProductController()
