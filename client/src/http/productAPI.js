@@ -62,3 +62,9 @@ export const fetchDeleteProduct = async (id) => {
     const {data} = await $authHost({method:'DELETE', url:`api/product/${id}`});
     return data;
 }
+
+// Обновление товара
+export const updateProduct = async (id, body) => {
+    const {data} = await $authHost({method:'PUT', url:`api/product/${id}`, data: body});
+    return data;
+}

@@ -7,6 +7,7 @@ import { Context } from '..';
 import CreateBrand from "../components/modals/CreateBrand";
 import CreateProduct from "../components/modals/CreateProduct";
 import CreateType from "../components/modals/CreateType";
+import ChangeProduct from '../components/modals/ChangeProduct'
 import DeleteTypeBrand from "../components/modals/DeleteTypeBrand";
 import { fetchDeleteProduct, fetchProduct } from '../http/productAPI';
 import { ADMIN_ROUTE } from '../utils/consts';
@@ -16,6 +17,8 @@ const Admin = () => {
     const [typeVisible, setTypeVisible] = useState(false)
     const [productVisible, setProductVisible] = useState(false)
     const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false)
+    const [changeVisible, setChangeVisible] = useState(false)
+    const [changeProductData, setChangeProductData] = useState()
 
     const {product} = useContext(Context)
 
@@ -37,11 +40,18 @@ const Admin = () => {
 
     const history = useNavigate()
 
-    // const deleteProduct = (id) => {
-    //     fetchDeleteProduct(id).then(() => {
-    //         history(ADMIN_ROUTE);
-    //     })
-    // }
+    const deleteProduct = (id) => {
+        fetchDeleteProduct(id).then(() => {
+            history(ADMIN_ROUTE);
+        })
+    }
+
+    const changeProduct = (product) => {
+        setChangeProductData(product)
+        setChangeVisible(true)
+        console.log(product)
+    }
+
 
     return (
         <Container className="d-flex flex-column">
@@ -106,19 +116,16 @@ const Admin = () => {
                         <td key={productItem.createdAt}>{productItem.createdAt}</td>
                         <td key={productItem.productBrandId + Math.random()}>{productItem.productBrandId}</td>
                         <td key={productItem.productTypeId + Math.random()}>{productItem.productTypeId}</td>
-                        <td key={Math.random() + Math.random()}><Button variant={"outline-danger"}>Удалить</Button></td>
-                        <td key={Math.random() + Math.random()}><Button variant={"outline-primary"}>Изменить</Button></td>
-                    </tr>
-                    
+                        <td key={Math.random() + Math.random()}><Button variant={"outline-danger"} onClick={() => deleteProduct(productItem.id)}>Удалить</Button></td>
+                        <td key={Math.random() + Math.random()}><Button variant={"outline-primary"} onClick={() => changeProduct(productItem)}>Изменить</Button></td>
+                    </tr>      
                 )}
                 </tbody>
                 </Table>
             </AccordionBody>
             </Accordion.Item>
         </Accordion>
-           
-
-    
+            <ChangeProduct show={changeVisible} onHide={() => setChangeVisible(false)} productChange={changeProductData}/>
             <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
             <CreateProduct show={productVisible} onHide={() => setProductVisible(false)}/>
             <CreateType show={typeVisible} onHide={() => setTypeVisible(false)}/>

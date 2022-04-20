@@ -81,6 +81,63 @@ class ProductController{
         }
     }
 
+
+    async update(req, res) {
+        try {
+            const {id} = req.params;
+            const {productBrandId, productTypeId, name, price, info} = req.body;
+
+            await Product.findOne({where:{id}})
+                .then( async data => {
+                    if(data) {
+                        let newVal = {};
+                        productBrandId ? newVal.productBrandId = productBrandId : false;
+                        productTypeId ? newVal.productTypeId = productTypeId : false;
+                        name ? newVal.name = name : false;
+                        price ? newVal.price = price : false;
+
+                        if(req.files) {
+                            const {imgMain} = req.files;
+                            const type = imgMain.mimetype.split('/')[1];
+                            let fileName = uuid.v4() + `.${type}`;
+                            imgMain.mv(path.resolve(__dirname, '..', 'static', fileName));
+                            newVal.imgMain = fileName;
+                        }
+
+                        if(info) {
+                            const parseInfo = JSON.parse(info);
+                            for (const item of parseInfo) {
+                                await ProductInfo.findOne({where:{id: item.id}}).then( async data => {
+                                    if(data) {
+                                        await ProductInfo.update({
+                                            title: item.title,
+                                            description: item.description
+                                        }, {where:{id: item.id}})
+                                    } else {
+                                        await ProductInfo.create({
+                                            title: item.title,
+                                            description: item.description,
+                                            productId: id
+                                        })
+                                    }
+                                })
+                            }
+                        }
+
+                        await Product.update({
+                            ...newVal
+                        }, {where:{id}} ).then(() => {
+                            return res.json("Продукт обновлен");
+                        })
+                    } else {
+                        return res.json("Этого продукта нет в базе данных!");
+                    }
+                })
+            } catch (e) {
+            return res.json(e);
+        }
+    }
+
 }
 
 module.exports = new ProductController()

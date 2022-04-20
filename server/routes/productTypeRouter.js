@@ -10,6 +10,6 @@ router.post('/', checkRole('ADMIN'),productTypeController.createProductType)
 router.get('/', productTypeController.getProductType)
 
 
-router.delete('/:id',checkRole('ADMIN'), productTypeController.deleteProductType)
+router.delete('/:id', checkRole('ADMIN'), productTypeController.deleteProductType)
 
 module.exports = router
