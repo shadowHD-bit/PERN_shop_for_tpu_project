@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {Accordion, Button, Container, Table} from "react-bootstrap";
+import {Accordion, Button, Container, Form, FormControl, Table} from "react-bootstrap";
 import AccordionBody from 'react-bootstrap/esm/AccordionBody';
 import AccordionHeader from 'react-bootstrap/esm/AccordionHeader';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -11,18 +11,20 @@ import ChangeProduct from '../components/modals/ChangeProduct'
 import DeleteTypeBrand from "../components/modals/DeleteTypeBrand";
 import { fetchDeleteProduct, fetchProduct } from '../http/productAPI';
 import { ADMIN_ROUTE } from '../utils/consts';
+import { observer } from 'mobx-react-lite';
 
-const Admin = () => {
+const Admin = observer(() => {
     const [brandVisible, setBrandVisible] = useState(false)
     const [typeVisible, setTypeVisible] = useState(false)
     const [productVisible, setProductVisible] = useState(false)
     const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false)
     const [changeVisible, setChangeVisible] = useState(false)
     const [changeProductData, setChangeProductData] = useState()
-
+    const [stateAccordion, setStateAccordion] = useState(false)
+    const [temp, setTemp] = useState(false)
     const {product} = useContext(Context)
 
-    useEffect(() => {
+    React.useEffect(() => {
         fetchProduct(null, null, 1, 10).then(data => {
           product.setProduct(data.rows)
           product.setTotalCount(data.count)
@@ -49,8 +51,26 @@ const Admin = () => {
     const changeProduct = (product) => {
         setChangeProductData(product)
         setChangeVisible(true)
-        console.log(product)
     }
+
+    const UpdatePageDataProducts = () => {
+        fetchProduct(null, null, 1, 10).then(data => {
+            product.setProduct(data.rows)
+            product.setTotalCount(data.count)
+        })
+    }
+
+    // const [searchDevice, setSearchDevice] = useState('');
+    // const [searchedDevice, setSearchedDevice] = useState([]);
+    // const [filter, setFilter] = useState("All");
+
+    // const fetchProductSearch = () => {
+    //     getAllDevicesInAdminPage(searchDevice, filter).then(({count, rows}) => {
+    //         setSearchedDevice(rows);
+    //     })
+    // };
+
+    // console.log(temp)
 
 
     return (
@@ -87,9 +107,23 @@ const Admin = () => {
                 Добавить товар
             </Button>
         <Accordion>
-        <Accordion.Item eventKey="" className='mt-4 mb-4'>
+        <Accordion.Item eventKey="" className='mt-4 mb-4' onClick={() => setStateAccordion(true)}>
             <AccordionHeader>Список товаров</AccordionHeader>
             <AccordionBody>
+            <Form className="d-flex">
+                <FormControl
+                type="search"
+                placeholder="Поиск товара по названию"
+                className="me-2"
+                aria-label="Search"
+                // value={searchDevice}
+                // onChange={e => setSearchDevice(e.target.value)}
+                />
+                <Container className='d-flex flex-row'>
+                    <Button variant="outline-danger" className='mr-1'>Поиск</Button>
+                    <Button variant="outline-success"  className='ml-1' onClick={() => UpdatePageDataProducts()}>Обновить данные</Button>
+                </Container>
+            </Form>
                 <Table striped bordered hover className="mt-4 p-2">
                 <thead>
                     <tr>
@@ -125,13 +159,13 @@ const Admin = () => {
             </AccordionBody>
             </Accordion.Item>
         </Accordion>
-            <ChangeProduct show={changeVisible} onHide={() => setChangeVisible(false)} productChange={changeProductData}/>
+            <ChangeProduct show={changeVisible} onHide={() => setChangeVisible(false)} productChange={changeProductData} updatePage = {() => setTemp(!temp)}/>
             <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)}/>
             <CreateProduct show={productVisible} onHide={() => setProductVisible(false)}/>
             <CreateType show={typeVisible} onHide={() => setTypeVisible(false)}/>
             <DeleteTypeBrand show={typeBrandDeleteVisible} onHide={() => setDeleteTypeBrandVisible(false)} showSuccessMsgFunc={showSuccessMsgFunc}/>
         </Container>
     );
-};
+});
 
 export default Admin;

@@ -2,9 +2,9 @@ import React, {useContext, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Form, Button} from "react-bootstrap";
 import { updateProduct } from '../../http/productAPI';
-import { Context } from '../..';
+import UpdatePageDataProducts from '../../pages/Admin'
 
-const ChangeProduct = ({show, onHide, productChange}) => {
+const ChangeProduct = ({show, onHide, productChange, updatePage}) => {
     const thisProduct = {...productChange}
     const id = thisProduct.id
     const name = thisProduct.name
@@ -38,8 +38,9 @@ const ChangeProduct = ({show, onHide, productChange}) => {
         formData.append('imgMain', valueImgMain);
         formData.append('productBrandId', valueBrand);
         formData.append('productTypeId', valueType);
-        updateProduct(id, formData)
-        onHide()
+        updateProduct(id, formData);
+        onHide();
+        updatePage()
     }
 
     return (
