@@ -121,6 +121,10 @@ a.dropdown-item:hover{
     border-top: 0px solid black!important;
 }
 
+.offcanvas-body {
+    position: relative;
+}
+
 .dop_info{
     color: #c9c9c9;
     font-size: 15px;
@@ -145,7 +149,10 @@ a.dropdown-item:hover{
     width: 100%;
     color: #dc3545 !important;
     background-color: #a1000b21;
+    
+
 }
+
 
 #exit:hover{
     width: 100%;

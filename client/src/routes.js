@@ -10,9 +10,10 @@ import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
 import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE } from './utils/consts'
+import { ADMIN_ROUTE, BASKET_ROUTE, LOGIN_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
+import UserProfile from './pages/UserProfile/UserProfile'
 
 export const authRoutes = [
     {
@@ -61,5 +62,9 @@ export const publicRoutes = [
     {
         path: RULES_ROUTE,
         element: <RulesPage />
+    },
+    {
+        path: USERPROFILE_ROUTE,
+        element: <UserProfile />
     }
 ]
