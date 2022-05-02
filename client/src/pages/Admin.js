@@ -21,11 +21,13 @@ import DeleteTypeBrand from "../components/modals/DeleteTypeBrand";
 import { fetchDeleteProduct, fetchProduct } from "../http/productAPI";
 import { ADMIN_ROUTE } from "../utils/consts";
 import { observer } from "mobx-react-lite";
+import ChangeSlides from "../components/modals/ChangeSlide";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
   const [typeVisible, setTypeVisible] = useState(false);
   const [slideCreateVisible, setSlideCreateVisible] = useState(false);
+  const [slideChangeVisible, setSlideChangeVisible] = useState(false);
   const [productVisible, setProductVisible] = useState(false);
   const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false);
   const [changeVisible, setChangeVisible] = useState(false);
@@ -134,7 +136,7 @@ const Admin = observer(() => {
           <Button
             variant={"outline-dark"}
             className="mt-4 ml-2 w-50"
-            //onClick={() => setProductVisible(true)}
+            onClick={() => setSlideChangeVisible(true)}
           >
             Удалить/Изменить слайд
           </Button>
@@ -265,6 +267,11 @@ const Admin = observer(() => {
       <CreateSlider
         show={slideCreateVisible}
         onHide={() => setSlideCreateVisible(false)}
+        showSuccessMsgFunc={showSuccessMsgFunc}
+      />
+      <ChangeSlides
+        show={slideChangeVisible}
+        onHide = {() => setSlideChangeVisible(false)}
         showSuccessMsgFunc={showSuccessMsgFunc}
       />
     </Container>

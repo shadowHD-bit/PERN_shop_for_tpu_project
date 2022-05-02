@@ -1,13 +1,20 @@
 //Scroll-bar steles
 
 body::-webkit-scrollbar {
-    width: 12px;               /* ширина scrollbar */
-  }
+  width: 12px;              
+}
   body::-webkit-scrollbar-track {
-    background: #434240;        /* цвет дорожки */
-  }
-  body::-webkit-scrollbar-thumb {
-    background-color: rgb(252, 41, 41);    /* цвет плашки */
-    border-radius: 20px;       /* закругления плашки */
-    border: 3px solid #434240;  /* padding вокруг плашки */
-  }
+  background: #434240;        
+}
+body::-webkit-scrollbar-thumb {
+  background-color: rgb(252, 41, 41);    
+  border-radius: 20px;      
+  border: 3px solid #434240;  
+}
+
+//Card Style
+
+.card{
+  box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+
+}

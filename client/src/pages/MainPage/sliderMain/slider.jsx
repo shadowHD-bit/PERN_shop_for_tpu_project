@@ -11,18 +11,9 @@ import "./slider.scss";
 // import required modules
 import { Pagination, Navigation, Autoplay } from "swiper";
 import { Context } from "../../..";
-import { fetchSlider } from "../../../http/sliderAPI";
 
 export default function Slider() {
   const { slider } = useContext(Context);
-
-  React.useEffect(() => {
-    fetchSlider().then((data) => {
-      slider.setSlider(data);
-    });
-  }, []);
-
-  console.log(slider);
 
   return (
     <>
@@ -53,14 +44,6 @@ export default function Slider() {
               </div>
             </SwiperSlide>
           )
-          // <SwiperSlide>Slide 2</SwiperSlide>
-          // <SwiperSlide>Slide 3</SwiperSlide>
-          // <SwiperSlide>Slide 4</SwiperSlide>
-          // <SwiperSlide>Slide 5</SwiperSlide>
-          // <SwiperSlide>Slide 6</SwiperSlide>
-          // <SwiperSlide>Slide 7</SwiperSlide>
-          // <SwiperSlide>Slide 8</SwiperSlide>
-          // <SwiperSlide>Slide 9</SwiperSlide>
         )}
       </Swiper>
     </>

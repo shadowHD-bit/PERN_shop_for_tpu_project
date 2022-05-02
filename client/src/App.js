@@ -8,10 +8,11 @@ import Footer from './components/Footer/Footer';
 import {Spinner} from "react-bootstrap";
 import { checkAuth } from './http/userAPI';
 import { getProductFromBasket } from './http/productAPI';
+import { fetchSlider } from './http/sliderAPI';
 
 
 const App = observer(() => {
-  const {user, basket} = useContext(Context)
+  const {user, basket, slider} = useContext(Context)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,6 +21,9 @@ const App = observer(() => {
         user.setIsAdmin(data.role == 'ADMIN' ? true : false)
         user.setIsAuth(true)
     }).finally(() => setLoading(false))
+    fetchSlider().then((data) => {
+      slider.setSlider(data);
+    })
 }, [])
 
 //Loading Basket
@@ -30,12 +34,18 @@ useEffect(() => {
       for (let key in savedBasket) {
           basket.setBasket(savedBasket[key]);
       }
+      fetchSlider().then((data) => {
+        slider.setSlider(data);
+      })
   } else if(user.isAuth === true){
       basket.setDeleteAllProductFromBasket();
       getProductFromBasket().then(data => {
           for (let key in data) {
               basket.setBasket(data[key], true);
           }
+      })
+      fetchSlider().then((data) => {
+        slider.setSlider(data);
       })
   }
 }, [basket, user.isAuth]);
