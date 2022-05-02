@@ -1,15 +1,34 @@
-import React, {useEffect, useState} from 'react';
+import { observer } from 'mobx-react-lite';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
-import { fetchOneProduct } from '../../http/productAPI';
+import { Context } from '../..';
+import { fetchOneProduct, addProductToBasket } from '../../http/productAPI';
 
-const SimpleProduct = () => {
+const SimpleProduct = observer(() => {
+    const {user, basket} = useContext(Context);
 
     const [product, setProduct] = useState({info: []})
     const {id} = useParams()
+
+    
     useEffect(() => {
         fetchOneProduct(id).then(data => setProduct(data))
     }, [])
+
+    const isProductInBasket = () => {
+        const findProduct = basket.Basket.findIndex(item => Number(item.id) === Number(product.id));
+        return findProduct < 0;
+    }
+
+    const addProductInBasket = (product) => {
+        if(user.isAuth) {
+            addProductToBasket(product).then(() => basket.setBasket(product, true))
+        } else {
+            basket.setBasket(product);
+        }
+    }
+    console.log(basket.Basket);
 
     return (
         <Container className="mt-3">
@@ -29,12 +48,17 @@ const SimpleProduct = () => {
                     </Row>
                 </Col>
                 <Col md={4}>
-                    <Card
+                <Card
                         className="d-flex flex-column align-items-center justify-content-around"
                         style={{width: 300, height: 300, fontSize: 32, border: '5px solid lightgray'}}
                     >
-                        <h3>От: {product.price} руб.</h3>
-                        <Button variant={"outline-dark"}>Добавить в корзину</Button>
+                        <h3>{product?.price || 0} Рублей</h3>
+                        { isProductInBasket() ?
+                            <Button variant="outline-dark" onClick={() => addProductInBasket(product)}>Добавить в корзину</Button>
+                            :
+                            <Button variant="outline-dark" disabled>Product already in basket</Button>
+                        }
+
                     </Card>
                 </Col>
             </Row>
@@ -48,6 +72,6 @@ const SimpleProduct = () => {
             </Row>
         </Container>
     );
-};
+});
 
 export default SimpleProduct;

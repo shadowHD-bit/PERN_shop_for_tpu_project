@@ -1,5 +1,5 @@
 import Admin from './pages/Admin'
-import Basket from './pages/Basket'
+import Basket from './components/Basket/BasketCard'
 
 import Shop from './pages/MainPage/Shop'
 import Auth from './pages/Auth/Auth'
@@ -66,5 +66,5 @@ export const publicRoutes = [
     {
         path: USERPROFILE_ROUTE,
         element: <UserProfile />
-    }
+    },
 ]

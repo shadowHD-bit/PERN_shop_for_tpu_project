@@ -7,10 +7,11 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import {Spinner} from "react-bootstrap";
 import { checkAuth } from './http/userAPI';
+import { getProductFromBasket } from './http/productAPI';
 
 
 const App = observer(() => {
-  const {user} = useContext(Context)
+  const {user, basket} = useContext(Context)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,6 +21,24 @@ const App = observer(() => {
         user.setIsAuth(true)
     }).finally(() => setLoading(false))
 }, [])
+
+//Loading Basket
+useEffect(() => {
+  if(user.isAuth === false) {
+      basket.setDeleteAllProductFromBasket();
+      const savedBasket = JSON.parse(localStorage.getItem("basket"));
+      for (let key in savedBasket) {
+          basket.setBasket(savedBasket[key]);
+      }
+  } else if(user.isAuth === true){
+      basket.setDeleteAllProductFromBasket();
+      getProductFromBasket().then(data => {
+          for (let key in data) {
+              basket.setBasket(data[key], true);
+          }
+      })
+  }
+}, [basket, user.isAuth]);
 
 if (loading) {
     return <Spinner animation={"grow"}/>

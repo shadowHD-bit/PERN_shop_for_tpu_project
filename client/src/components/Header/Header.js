@@ -16,6 +16,7 @@ import { Context } from "../..";
 import {
   ABOUT_ROUTE,
   ADMIN_ROUTE,
+  BASKET_ROUTE,
   LOCATIONPLACES_ROUTE,
   LOGIN_ROUTE,
   PRODUCT_ROUTE,
@@ -167,6 +168,7 @@ const Header = observer(() => {
                     variant="none"
                     className="btn btn-outline-success mt-3"
                     type="button"
+                    href={BASKET_ROUTE}
                   >
                     Корзина
                   </Button>

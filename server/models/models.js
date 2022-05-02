@@ -19,9 +19,10 @@ const Basket = sequelize.define('basket', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
-//Models BasketProducs
+//Models BasketProducts
 const BasketProduct = sequelize.define('basket_product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    productId: {type: DataTypes.INTEGER},
 })
 
 //Models Product

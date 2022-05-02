@@ -68,3 +68,20 @@ export const updateProduct = async (id, body) => {
     const {data} = await $authHost({method:'PUT', url:`api/product/${id}`, data: body});
     return data;
 }
+
+
+//Работа с корзиной
+export const addProductToBasket = async (product) => {
+    const {data} = await $authHost.post('api/basket', product);
+    return data;
+}
+
+export const getProductFromBasket = async () => {
+    const {data} = await $authHost.get('api/basket');
+    return data;
+}
+
+export const deleteProductFromBasket = async (id) => {
+    const {data} = await $authHost.delete(`api/basket/${id}`);
+    return data;
+}
