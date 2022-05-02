@@ -49,7 +49,7 @@ const OneItemInBasket = ({product}) => {
                                         );
                                     }
 
-                                }) : "Description absent"}
+                                }) : "Описание отсутствует"}
                             </Col>
                         </Row>
 
@@ -65,7 +65,7 @@ const OneItemInBasket = ({product}) => {
                         </Row>
                         <Row className="mt-5">
                             <Col xs={12} className="d-flex justify-content-center">
-                                Count:
+                                Количество:
                             </Col>
                         </Row>
                         <Row className="mt-2">
@@ -77,7 +77,7 @@ const OneItemInBasket = ({product}) => {
                         </Row>
                         <Row className="mt-5">
                             <Col xs={12} className="d-flex justify-content-center">
-                                Price: {product.price * product.count} Рублей
+                                Цена: {product.price * product.count} Рублей
                             </Col>
                         </Row>
                     </Col>

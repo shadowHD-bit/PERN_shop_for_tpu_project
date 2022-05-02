@@ -1,0 +1,68 @@
+import React, { useContext, useRef, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import "./slider.scss";
+
+// import required modules
+import { Pagination, Navigation, Autoplay } from "swiper";
+import { Context } from "../../..";
+import { fetchSlider } from "../../../http/sliderAPI";
+
+export default function Slider() {
+  const { slider } = useContext(Context);
+
+  React.useEffect(() => {
+    fetchSlider().then((data) => {
+      slider.setSlider(data);
+    });
+  }, []);
+
+  console.log(slider);
+
+  return (
+    <>
+      <Swiper
+        speed={1000}
+        slidesPerView={1}
+        spaceBetween={30}
+        loop={true}
+        pagination={{
+          clickable: true,
+        }}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        navigation={true}
+        modules={[Pagination, Navigation, Autoplay]}
+        className="mySwiper"
+      >
+        {slider.sliders.map(
+          (sliderItem) => (
+            <SwiperSlide>
+              <div className="content_slider" style={{display: 'flex', flexDirection: 'column', alignItems: 'start',justifyContent: 'center', backgroundImage: `url(${process.env.REACT_APP_API_URL +sliderItem.img})`, backgroundPosition: 'center', backgroundSize: 'cover', width: '100%', height:'100%'}}>
+                <div className="text_content" style={{padding: '0px 100px'}}>
+                  <h2>{sliderItem.title}</h2>
+                  <h4>{sliderItem.text}</h4>
+                </div>
+              </div>
+            </SwiperSlide>
+          )
+          // <SwiperSlide>Slide 2</SwiperSlide>
+          // <SwiperSlide>Slide 3</SwiperSlide>
+          // <SwiperSlide>Slide 4</SwiperSlide>
+          // <SwiperSlide>Slide 5</SwiperSlide>
+          // <SwiperSlide>Slide 6</SwiperSlide>
+          // <SwiperSlide>Slide 7</SwiperSlide>
+          // <SwiperSlide>Slide 8</SwiperSlide>
+          // <SwiperSlide>Slide 9</SwiperSlide>
+        )}
+      </Swiper>
+    </>
+  );
+}

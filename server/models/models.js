@@ -55,6 +55,14 @@ const Rating = sequelize.define('rating', {
     rate: {type: DataTypes.INTEGER, allowNull: false}
 })
 
+//Models Slider
+const Slider = sequelize.define('slider', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    img: {type: DataTypes.STRING, allowNull: false},
+    title: {type: DataTypes.STRING, allowNull: false},
+    text: {type: DataTypes.STRING, allowNull: false}
+})
+
 //Models Info Product
 const ProductInfo = sequelize.define('product_info', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
@@ -97,5 +105,5 @@ ProductType.belongsToMany(ProductBrand, {through: ProductTypeBrand})
 ProductBrand.belongsToMany(ProductType, {through: ProductTypeBrand})
 
 module.exports = {
-    User, Basket, BasketProduct, Product, ProductType, ProductBrand, Rating, ProductTypeBrand, ProductInfo
+    User, Basket, BasketProduct, Product, ProductType, ProductBrand, Rating, ProductTypeBrand, ProductInfo, Slider
 }
