@@ -27,8 +27,6 @@ import { useNavigate } from "react-router-dom";
 const Header = observer(() => {
   const navigate = useNavigate();
   const { user } = useContext(Context);
-  console.log(user.isAuth);
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -150,8 +148,6 @@ const Header = observer(() => {
                     )}
                   </Dropdown.Menu>
                 </Dropdown>
-
-                <hr></hr>
 
                 {user.isAuth ? (
                   <Button

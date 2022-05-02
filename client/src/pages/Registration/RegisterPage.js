@@ -1,6 +1,4 @@
 import './RegisterPage.scss';
-import Header from '../../components/Header/Header';
-
 
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
@@ -21,13 +19,19 @@ function Register() {
   const location = useLocation()
   const history = useNavigate()
   const isLogin = location.pathname === LOGIN_ROUTE
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [date, setDate] = useState('')
+  const [gender, setGender] = useState('')
+  const [phone, setPhone] = useState('')
 
   const click = async () => {
       try {
           let data;
-          data = await registration(email, password);
+          data = await registration(email, password, name, lastName, date, phone); //email, password, name, family, date_birthday, numberPhone, role
           user.setUser(user)
           user.setIsAuth(true)
           history(SHOP_ROUTE)
@@ -72,12 +76,31 @@ function Register() {
                <h5>Персональные данные</h5>
                <Form.Group controlId="formBasicName">
                 <Form.Label>Имя*</Form.Label>
-                <Form.Control type="text" placeholder="Иван" />
+                <Form.Control 
+                type="text" 
+                placeholder="Иван" 
+                value={name}
+                onChange={e => setName(e.target.value)}
+                />
               </Form.Group>
 
               <Form.Group controlId="formBasicLastName">
                 <Form.Label>Фамилия*</Form.Label>
-                <Form.Control type="text" placeholder="Иванов" />
+                <Form.Control 
+                type="text" 
+                placeholder="Иванов" 
+                value={lastName}
+                onChange={e => setLastName(e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group controlId="formBasicLastName">
+                <Form.Label>Дата рождения*</Form.Label>
+                <Form.Control 
+                type="date" 
+                value={date}
+                onChange={e => setDate(e.target.value)}
+                />
               </Form.Group>
 
               <Form.Group>
@@ -119,27 +142,23 @@ function Register() {
                   </Form.Group>
 
                   <Form.Group>
-                  <Form.Label htmlFor="inputPassword5">Повторите пароль*</Form.Label>
-                    <Form.Control
-                      type="password"
-                      id="inputPassword5"
-                      aria-describedby="passwordHelpBlock"
-                    />
-                  </Form.Group>
-
-                  <Form.Group>
                   <Form.Label>Номер телефона*</Form.Label>
                   <div className='row classic'>
                     <div className='col-2 p-0'>
                       <Form.Select aria-label="Default select example">
-                        <option value="1">+7</option>
-                        <option value="2">+375</option>
-                        <option value="3">+996</option>
+                        <option value="7">+7</option>
+                        <option value="375">+375</option>
+                        <option value="996">+996</option>
                     </Form.Select>
                     </div>
 
                     <div className='col-9'>
-                    <Form.Control type="tel" placeholder="" />
+                    <Form.Control 
+                    type="tel" 
+                    placeholder="" 
+                    value={phone}
+                    onChange={e => setPhone(e.target.value)}
+                    />
                     </div>
                   </div>
                   

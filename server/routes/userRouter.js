@@ -10,5 +10,7 @@ router.post('/login', userController.login)
 //Method GET to get auth
 router.get('/auth', authMiddleware,userController.checkAuth)
 
+//Get Data User for profile page
+router.get('/:id', authMiddleware,userController.getDataUser)
 
 module.exports = router
