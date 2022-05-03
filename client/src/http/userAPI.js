@@ -23,6 +23,5 @@ export const checkAuth = async () => {
 
 export const getData = async (userID) => {
     const {data} = await $authHost.get(`api/user/${userID}` )
-    const resData = await data.rows
-    return resData
+    return data
 }

@@ -6,7 +6,7 @@ import AppRouter from './components/AppRouter';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import {Spinner} from "react-bootstrap";
-import { checkAuth } from './http/userAPI';
+import { checkAuth, getData } from './http/userAPI';
 import { getProductFromBasket } from './http/productAPI';
 import { fetchSlider } from './http/sliderAPI';
 
@@ -46,6 +46,9 @@ useEffect(() => {
       })
       fetchSlider().then((data) => {
         slider.setSlider(data);
+      })
+      getData(user.user.id).then((data) => {
+        user.setUserProf(data)
       })
   }
 }, [basket, user.isAuth]);
