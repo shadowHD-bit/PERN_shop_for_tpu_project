@@ -2,12 +2,13 @@ import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
 
 
-import {Button, Col, Image, Row} from "react-bootstrap";
+import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import OneItemInBasket from "./OneItemBasket";
 import { Context } from '../..';
 
 const BasketCard = observer(() => {
     const {basket} = useContext(Context);
+    const {product} = useContext(Context)
 
     console.log(basket.Basket);
 
@@ -23,11 +24,13 @@ const BasketCard = observer(() => {
     return (
         <>
             <br/>
-            <Row className="mt-3">
+            <Container>
+            <Row className="mt-3 ml-3 w-100">
                 <Col xs={12}>
                     {basket.Basket.map(product => <OneItemInBasket key={product.id} product={product}/>)}
                 </Col>
             </Row>
+            </Container>
         </>
     );
 });

@@ -28,7 +28,6 @@ const SimpleProduct = observer(() => {
             basket.setBasket(product);
         }
     }
-    console.log(basket.Basket);
 
     return (
         <Container className="mt-3">

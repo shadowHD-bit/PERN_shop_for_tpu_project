@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 const path = require('path');
-const {Product, ProductInfo} = require('../models/models')
+const {Product, ProductInfo, ProductBrand, ProductType} = require('../models/models')
 const ApiError = require('../errors/ApiErrors')
 
 class ProductController{
@@ -38,16 +38,28 @@ class ProductController{
         let offset = page * limit - limit
         let product;
         if (!productBrandId && !productTypeId) {
-            product = await Product.findAndCountAll({limit, offset})
+            product = await Product.findAndCountAll({limit, include: [
+                {model: ProductBrand},
+                {model: ProductType},
+            ], offset})
         }
         if (productBrandId && !productTypeId) {
-            product = await Product.findAndCountAll({where:{productBrandId}, limit, offset})
+            product = await Product.findAndCountAll({where:{productBrandId}, include: [
+                {model: ProductBrand},
+                {model: ProductType},
+            ], limit, offset})
         }
         if (!productBrandId && productTypeId) {
-            product = await Product.findAndCountAll({where:{productTypeId}, limit, offset})
+            product = await Product.findAndCountAll({where:{productTypeId}, include: [
+                {model: ProductBrand},
+                {model: ProductType},
+            ], limit, offset})
         }
         if (productBrandId && productTypeId) {
-            product = await Product.findAndCountAll({where:{productTypeId, productBrandId}, limit, offset})
+            product = await Product.findAndCountAll({where:{productTypeId, productBrandId}, include: [
+                {model: ProductBrand},
+                {model: ProductType},
+            ], limit, offset})
         }
         return res.json(product)
     }
@@ -57,7 +69,11 @@ class ProductController{
         const product = await Product.findOne(
             {
                 where: {id},
-                include: [{model: ProductInfo, as: 'info'}]
+                include: [
+                    {model: ProductInfo, as: 'info'},
+                    {model: ProductBrand},
+                    {model: ProductType}
+                ]
             }
         )
         return res.json(product)
@@ -137,6 +153,12 @@ class ProductController{
             return res.json(e);
         }
     }
+
+
+    
+
+
+    
 
 }
 

@@ -1,4 +1,4 @@
-const {Basket, BasketProduct, Product, ProductInfo} = require('../models/models');
+const {Basket, BasketProduct, Product, ProductInfo, ProductBrand, ProductType} = require('../models/models');
 const jwt = require('jsonwebtoken');
 const { Op } = require("sequelize");
 
@@ -42,7 +42,8 @@ class BasketController {
                                 ],
                             },
                             required: false}
-                        });
+                        }
+                        );
                 basketArr.push(BasketProduct);
             }
 

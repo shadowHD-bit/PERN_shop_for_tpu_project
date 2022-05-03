@@ -1,13 +1,16 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Image, Row} from "react-bootstrap";
 import {Context} from "../../index";
 import {NavLink} from "react-router-dom";
+import { fetchOneProduct } from '../../http/productAPI';
 
 const OneItemInBasket = ({product}) => {
     const {basket, user} = useContext(Context);
+    
+    const [productIn, setProductIn] = useState({info: []})
 
     return (
-        <Card key={product.id} style={{width: "100%"}} className="mb-3">
+        <Card key={product.id} style={{width: "90%", borderRadius: '30px'}} className="mb-3">
             <Card.Body>
                 <Row>
                     <Col xs={4}>
@@ -16,13 +19,18 @@ const OneItemInBasket = ({product}) => {
                     <Col xs={4}>
                         <Row>
                             <Col xs={12}>
-                                <b>Название:</b> <NavLink to={`/product/${product.id}`}>{product.name}</NavLink>
+                                <b>Название товара:</b> <NavLink to={`/product/${product.id}`}>{product.name}</NavLink>
+                            </Col>
+                            <Col xs={12}>
+                                <b>Тип:</b> <NavLink to={`/product/${product.id}`}>{productIn.name}</NavLink>
+                            </Col>
+                            <Col xs={12}>
+                                <b>Бренд:</b> <NavLink to={`/product/${product.id}`}>{productIn.name}</NavLink>
                             </Col>
                         </Row>
-                        <br/><br/>
                         <Row>
                             <Col xs={12}>
-                                <b>Описание:</b><br/><br/>
+                                <b>Описание товара:</b><br/><br/>
                                 {product.info && product.info.length !== 0? product.info.map((info, i) => {
 
                                     if(i % 2 === 0 ) {
