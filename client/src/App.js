@@ -21,10 +21,14 @@ const App = observer(() => {
         user.setIsAdmin(data.role == 'ADMIN' ? true : false)
         user.setIsAuth(true)
     }).finally(() => setLoading(false))
-    fetchSlider().then((data) => {
-      slider.setSlider(data);
-    })
 }, [])
+
+
+useEffect(() => {
+  fetchSlider().then((data) => {
+    slider.setSlider(data);
+  })
+}, [loading, user.isAuth])
 
 //Loading Basket
 useEffect(() => {
@@ -34,9 +38,6 @@ useEffect(() => {
       for (let key in savedBasket) {
           basket.setBasket(savedBasket[key]);
       }
-      fetchSlider().then((data) => {
-        slider.setSlider(data);
-      })
   } else if(user.isAuth === true){
       basket.setDeleteAllProductFromBasket();
       getProductFromBasket().then(data => {
@@ -44,17 +45,16 @@ useEffect(() => {
               basket.setBasket(data[key], true);
           }
       })
-      fetchSlider().then((data) => {
-        slider.setSlider(data);
-      })
-      getData(user.user.id).then((data) => {
-        user.setUserProf(data)
-      })
   }
 }, [basket, user.isAuth]);
 
 if (loading) {
-    return <Spinner animation={"grow"}/>
+    return (
+      <div style={{height: '100vh'}} className='d-flex justify-content-center align-items-center'>
+        <h1 className='spinner__text'>To Be Sure Yourself....</h1>
+        <Spinner animation="border" variant="danger" />
+      </div>
+    )
 }
 
   return (

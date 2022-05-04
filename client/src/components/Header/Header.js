@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import "./Header.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { Offcanvas, Dropdown, Button } from "react-bootstrap";
+import { Offcanvas, Dropdown, Button, Badge } from "react-bootstrap";
 import { BsFacebook } from "react-icons/bs";
 import { BsTwitter } from "react-icons/bs";
 import { BsGoogle } from "react-icons/bs";
@@ -27,7 +27,7 @@ import { useNavigate } from "react-router-dom";
 
 const Header = observer(() => {
   const navigate = useNavigate();
-  const { user } = useContext(Context);
+  const { user, basket } = useContext(Context);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,6 +36,7 @@ const Header = observer(() => {
     window.location.href = "/";
   }
 
+  console.log(basket);
   return (
     <div className="header h-100">
       <div className="container h-100">
@@ -170,7 +171,9 @@ const Header = observer(() => {
                     type="button"
                     href={BASKET_ROUTE}
                   >
-                    Корзина
+                    Корзина <Badge pill bg="success">
+                      {basket.Price} РУБ
+                    </Badge>{' '}
                   </Button>
                 ) : (
                   <div></div>

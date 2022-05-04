@@ -1,13 +1,21 @@
 import { observer } from 'mobx-react-lite';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Context } from '../..';
+import { getData } from '../../http/userAPI';
 import './UserProfile.scss'
 
 
  const UserProfile = observer(() => {
 
     const [changeData, setChangeData] = useState(false)
+    const [load, setload] = useState(false)
     const {user} = useContext(Context);
+
+    useEffect(() => {
+        getData(user.user.id).then((data) => {
+            user.setUserProf(data)
+        })
+    },[load] )
     
   return (
     <div class="container rounded bg-white mt-5 mb-5 profile">
