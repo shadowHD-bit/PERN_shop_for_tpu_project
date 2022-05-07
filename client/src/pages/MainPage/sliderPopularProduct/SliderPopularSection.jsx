@@ -16,6 +16,7 @@ import { observer } from 'mobx-react-lite';
 import { fetchBrands, fetchProduct, fetchTypes } from '../../../http/productAPI';
 import ProductItem from '../../../components/productItem/ProductItem';
 import { Button, Card, Container, Row } from 'react-bootstrap';
+import { PRODUCT_ROUTE } from '../../../utils/consts';
 
 
 const SliderPopular = observer(() => {
@@ -67,7 +68,7 @@ const SliderPopular = observer(() => {
                           {product.rating}
                         </div>
                       </Card.Title>
-                        <Button variant="outline-danger">Перейти</Button>
+                        <Button href={PRODUCT_ROUTE + '/' + product.id} variant="outline-danger">Посмотреть</Button>
                     </Card.Body>
                 </Card>
           </SwiperSlide>

@@ -38,8 +38,8 @@ const ProductItem = observer(({product}) => {
 			<img src={process.env.REACT_APP_API_URL + product.imgMain} alt="" />
 		</div>
 		<div class="product-details">
-			<span class="product-catagory" onClick={() => history(PRODUCT_ROUTE + '/' + product.id)}>{product.product_type.name}</span>
-			<h4><a href="">{product.name}</a></h4>
+			<span class="product-catagory">{product.product_type.name}</span>
+			<h4><a href={PRODUCT_ROUTE + '/' + product.id}>{product.name}</a></h4>
 			<div class="product-bottom-details">
 				<div class="product-price">{product.price} РУБ</div>
 				<div class="product-links">
