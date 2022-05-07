@@ -44,7 +44,6 @@ const ProductItem = observer(({product}) => {
 			<div class="product-bottom-details">
 				<div class="product-price">{product.price} РУБ</div>
 				<div class="product-links">
-
                     {
                         isProductInBasket(productIn)? 
                         <Button variant="danger" onClick={() => addProductInBasket(productIn)} ><BsCartPlus /></Button>

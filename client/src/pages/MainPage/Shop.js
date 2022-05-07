@@ -1,5 +1,5 @@
 import MainSlider from './sliderMain/slider';
-import PopularSlider from './sliderPopularProduct/sliderPopularSection';
+import PopularSlider from './SliderPopularProduct/SliderPopularSection';
 import LightBox from './lightbox/lightbox';
 import NewProduct from './newProduct/newProduct';
 import News from './newsSlider/news';
