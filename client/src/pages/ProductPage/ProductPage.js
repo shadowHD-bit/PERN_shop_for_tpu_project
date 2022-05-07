@@ -1,12 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Form, FormControl, Button } from 'react-bootstrap';
 import { Context } from '../..';
 import BrandBar from '../../components/BrandBar';
 import ProductList from '../../components/ProductList';
 import Pages from '../../components/productPages';
 import TypeBar from '../../components/TypeBar';
 import { fetchBrands, fetchProduct, fetchTypes } from '../../http/productAPI';
+import {BsSearch} from 'react-icons/bs'
 
 const ProductPage = observer(() => {
   
@@ -44,9 +45,23 @@ useEffect(
       <Row className='mt-2'>
         <Col md={3}>
             <TypeBar />
+            <BrandBar />
         </Col>
         <Col md={9}>
-          <BrandBar />
+        <Form>
+          <Row>
+            <Col md={11} style={{padding:0}}>
+            <FormControl
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            </Col>
+            <Col  md={1} style={{padding:0}}>
+            <Button variant="outline-danger"><BsSearch /></Button>
+            </Col>
+          </Row>
+        </Form>
           <ProductList />
           <Pages />
         </Col>

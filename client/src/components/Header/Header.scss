@@ -287,3 +287,27 @@ a {
         padding: 20px
     }
 }
+
+.icons__header_top{
+    position: absolute;
+    right: 50px;
+    a{
+        margin: 0px 5px;
+        color: white !important;
+
+        span{
+           color: white !important; 
+           margin-left: 3px;
+        }
+    }
+
+    a:hover{
+        text-decoration: none;
+        color: #eb5f6d !important;
+    }
+
+    a span:hover{
+        text-decoration: none;
+        color: #eb5f6d !important;
+    }
+}

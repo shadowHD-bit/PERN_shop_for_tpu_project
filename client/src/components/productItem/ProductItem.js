@@ -40,7 +40,6 @@ const ProductItem = observer(({product}) => {
 		<div class="product-details">
 			<span class="product-catagory" onClick={() => history(PRODUCT_ROUTE + '/' + product.id)}>{product.product_type.name}</span>
 			<h4><a href="">{product.name}</a></h4>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, possimus nostrum!</p>
 			<div class="product-bottom-details">
 				<div class="product-price">{product.price} РУБ</div>
 				<div class="product-links">
