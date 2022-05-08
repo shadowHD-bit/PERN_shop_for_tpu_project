@@ -32,7 +32,13 @@ const ProductList = observer(({price, priceMin}) => {
       sort = (a,b) => b.name > a.name ? 1:-1
     }
 
-    console.log(priceMin, price);
+
+    const [searchValue, setSearchValue] = useState('')
+
+    const filteredProduct = product.products.filter(prod => {
+      return prod.name.toLowerCase().includes(searchValue.toLowerCase())
+    })
+
 
   return (
     <div>
@@ -43,6 +49,7 @@ const ProductList = observer(({price, priceMin}) => {
               type="search"
               placeholder="Search"
               aria-label="Search"
+              onChange={e => setSearchValue(e.target.value)}
             />
           </Col>
           <Col md={1} style={{ padding: 0 }}>
@@ -57,7 +64,7 @@ const ProductList = observer(({price, priceMin}) => {
       </Form>
 
       <Row className="d-flex">
-        {product.products.slice().sort(sort).map((product) => (
+        {filteredProduct.slice().sort(sort).map((product) => (
           ((product.price <= (Number(price))) && (product.price >= (Number(priceMin)))) ? <ProductItem key={product.id} product={product} /> : null
         ))}
       </Row>
