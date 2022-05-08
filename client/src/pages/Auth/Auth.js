@@ -27,7 +27,7 @@ const Auth = observer(() => {
           data = await login(email, password);
           user.setUser(user)
           user.setIsAuth(true)
-          history(SHOP_ROUTE)
+          window.location.href = SHOP_ROUTE
       } catch (e) {
           alert(e.response.data.message)
       }

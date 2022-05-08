@@ -40,17 +40,27 @@ useEffect(
     }, [product.page, product.selectedType, product.selectedBrand],
 );
 
-  return (
+const [priceMax, setPriceMax] = useState(999999)
+const [priceMin, setPriceMin] = useState(1)
 
+const handlerMaxPriceChange = (priceMax) => {
+  setPriceMax(priceMax)
+}
+
+const handlerMinPriceChange = (priceMin) => {
+  setPriceMin(priceMin)
+}
+
+return (
     <Container>
       <Row className='mt-2'>
         <Col md={3}>
             <TypeBar />
             <BrandBar />
-            <PriceBar />
+            <PriceBar onChange={handlerMaxPriceChange} onChangeMin={handlerMinPriceChange}/>
         </Col>
         <Col md={9}>
-          <ProductList />
+          <ProductList price={priceMax} priceMin={priceMin}/>
           <Pages />
         </Col>
       </Row>

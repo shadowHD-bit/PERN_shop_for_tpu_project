@@ -6,7 +6,7 @@ import { Context } from "..";
 import { BsSearch } from "react-icons/bs";
 import SortBar from "./SortBar";
 
-const ProductList = observer(() => {
+const ProductList = observer(({price, priceMin}) => {
   const { product } = useContext(Context);
 
     const [methodSort, setSortMethod] = useState('')
@@ -32,6 +32,7 @@ const ProductList = observer(() => {
       sort = (a,b) => b.name > a.name ? 1:-1
     }
 
+    console.log(priceMin, price);
 
   return (
     <div>
@@ -57,7 +58,7 @@ const ProductList = observer(() => {
 
       <Row className="d-flex">
         {product.products.slice().sort(sort).map((product) => (
-         <ProductItem key={product.id} product={product} />
+          ((product.price <= (Number(price))) && (product.price >= (Number(priceMin)))) ? <ProductItem key={product.id} product={product} /> : null
         ))}
       </Row>
     </div>

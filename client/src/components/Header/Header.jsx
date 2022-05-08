@@ -38,7 +38,7 @@ const Header = observer(() => {
   const handleShow = () => setShow(true);
   function logOut() {
     localStorage.clear();
-    window.location.href = "/";
+    window.location.href = SHOP_ROUTE;
   }
 
   const [load, setload] = useState(false)
