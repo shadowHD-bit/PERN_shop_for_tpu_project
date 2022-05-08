@@ -2,6 +2,8 @@ const uuid = require('uuid');
 const path = require('path');
 const {Product, ProductInfo, ProductBrand, ProductType} = require('../models/models')
 const ApiError = require('../errors/ApiErrors')
+const { Op } = require("sequelize");
+
 
 class ProductController{
     async createProduct(req, res, next) {
@@ -151,6 +153,76 @@ class ProductController{
                 })
             } catch (e) {
             return res.json(e);
+        }
+    }
+
+
+
+    async getSearchAllProductByName(req, res, next) {
+        try {
+            let {limit, page, name, filter} = req.query;
+
+            page = page || 1;
+            limit = limit || 7;
+            let offset = page * limit - limit
+            if(filter === "All") {
+                const productes =  await Product.findAndCountAll({
+                    attributes: ["name", "price", "imgMain", "id"],
+                    where:
+                        {
+                            name: {
+                                [Op.like]: `%${name}%`
+                            }
+                        },
+                    include: [
+                        {
+                            attributes: ["name"],
+                            model: ProductBrand
+                        },
+                        {
+                            attributes: ["name"],
+                            model: ProductType
+                        },
+                    ],
+                    limit,
+                    offset,
+                })
+
+                return res.json(productes);
+            } else {
+                const productes =  await Product.findAndCountAll({
+                    attributes: ["name", "price", "imgMain", "id", "productBrandId", "productTypeId"],
+                    where:
+                        {
+                            name: {
+                                [Op.like]: `%${name}%`
+                            },
+                            [Op.or]: [
+                                {
+                                    productBrandId: null,
+                                },
+                                {
+                                    productTypeId: null,
+                                },
+                            ],
+                        },
+                    include: [
+                        {
+                            attributes: ["name"],
+                            model: ProductBrand
+                        },
+                        {
+                            attributes: ["name"],
+                            model: ProductType
+                        },
+                    ],
+                    limit,
+                    offset,
+                })
+                return res.json(productes);
+            }
+        } catch (e) {
+            next(ApiError.badRequest(e.message));
         }
     }
 

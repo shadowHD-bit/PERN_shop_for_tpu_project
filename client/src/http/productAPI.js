@@ -85,3 +85,9 @@ export const deleteProductFromBasket = async (id) => {
     const {data} = await $authHost.delete(`api/basket/${id}`);
     return data;
 }
+
+//Поиск товара
+export const getAllProductSearch = async (name, page = 1, filter = "All") => {
+    const {data} = await $host({method:'GET', url:`api/product/search?page=${page}&name=${name}&filter=${filter}`});
+    return data;
+}

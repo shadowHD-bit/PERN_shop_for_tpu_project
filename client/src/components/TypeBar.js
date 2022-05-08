@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useContext } from 'react'
 import { Context } from '..'
 import { ListGroup } from 'react-bootstrap'
+import './bar.scss'
 
 const TypeBar = observer(() => { 
     const {product} = useContext(Context)

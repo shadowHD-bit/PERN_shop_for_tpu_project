@@ -1,0 +1,13 @@
+.list-group-item.active{
+    background-color: rgb(133, 0, 0);
+    border: none;
+}
+div.dropdown-menu.show{
+    padding: 0 !important;
+    margin: 0;
+    background-color: rgba(0, 255, 255, 0);
+
+    a.dropdown-item{
+        background-color: rgb(255, 255, 255);
+    }
+}
