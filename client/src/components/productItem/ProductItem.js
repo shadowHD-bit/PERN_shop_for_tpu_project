@@ -32,6 +32,7 @@ const ProductItem = observer(({product}) => {
         fetchOneProduct(product.id).then(data => setProductIn(data))
     }, [])
 
+    console.log(user.isAuth);
     return (
         <div class="product-card">
 		<div class="product-tumb">
@@ -45,9 +46,9 @@ const ProductItem = observer(({product}) => {
 				<div class="product-links">
                     {
                         isProductInBasket(productIn)? 
-                        <Button variant="danger" onClick={() => addProductInBasket(productIn)} ><BsCartPlus /></Button>
+                        <Button variant="danger" onClick={() => addProductInBasket(productIn)} disabled={!user.isAuth ? true : false}><BsCartPlus /></Button>
                         :
-                        <Button variant="success" href={BASKET_ROUTE}><BsCheckLg /></Button>
+                        <Button variant="success" href={BASKET_ROUTE} disabled={!user.isAuth ? true : false}><BsCheckLg /></Button>
                     }
 				</div>
 			</div>

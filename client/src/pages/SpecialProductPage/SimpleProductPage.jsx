@@ -81,9 +81,9 @@ const SimpleProduct = observer(() => {
             </div>
             {
                         isProductInBasket(product)? 
-                        <button class="buy--btn" onClick={() => addProductInBasket(product)}> <BsCartPlus /> Добавить в корзину</button>
+                        <Button class="buy--btn" variant='outline-danger' onClick={() => addProductInBasket(product)} disabled={!user.isAuth ? true : false}> <BsCartPlus /> Добавить в корзину</Button>
                         :
-                        <a href={BASKET_ROUTE}><button class="yes--buy--btn"> <BsCheckLg /> Уже в корзине</button></a>
+                        <a href={BASKET_ROUTE}><Button class="yes--buy--btn" variant='outline-success'> <BsCheckLg /> Уже в корзине</Button></a>
                     }
         </div>
     </section>

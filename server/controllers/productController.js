@@ -13,7 +13,19 @@ class ProductController{
             let fileName = uuid.v4() + ".jpg"
             img.mv(path.resolve(__dirname, '..', 'static', fileName))
 
-            const product = await Product.create({name, price, productBrandId, productTypeId, imgMain: fileName});
+            const {imgOne} = req.files
+            let fileNameOne = uuid.v4() + ".jpg"
+            imgOne.mv(path.resolve(__dirname, '..', 'static', fileNameOne))
+
+            const {imgTwo} = req.files
+            let fileNameTwo = uuid.v4() + ".jpg"
+            imgTwo.mv(path.resolve(__dirname, '..', 'static', fileNameTwo))
+
+            const {imgThree} = req.files
+            let fileNameThree = uuid.v4() + ".jpg"
+            imgThree.mv(path.resolve(__dirname, '..', 'static', fileNameThree))
+
+            const product = await Product.create({name, price, productBrandId, productTypeId, imgMain: fileName, imgFirst: fileNameOne, imgSecond: fileNameTwo, imgThird: fileNameThree});
 
             if(info){
                 info = JSON.parse(info)

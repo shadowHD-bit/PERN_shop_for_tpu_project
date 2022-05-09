@@ -10,6 +10,10 @@ const CreateProduct = observer(({show, onHide}) => {
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
     const [file, setFile] = useState(null)
+    const [fileOne, setFileOne] = useState(null)
+    const [fileTwo, setFileTwo] = useState(null)
+    const [fileThree, setFileThree] = useState(null)
+    
     const [info, setInfo] = useState([])
 
     useEffect(() => {
@@ -35,11 +39,24 @@ const CreateProduct = observer(({show, onHide}) => {
         setFile(e.target.files[0])
     }
 
+    const selectFileOne = e => {
+        setFileOne(e.target.files[0])
+    }
+    const selectFileTwo = e => {
+        setFileTwo(e.target.files[0])
+    }
+    const selectFileThree = e => {
+        setFileThree(e.target.files[0])
+    }
+
     const addProduct = () => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', `${price}`)
         formData.append('img', file)
+        formData.append('imgOne', fileOne)
+        formData.append('imgTwo', fileTwo)
+        formData.append('imgThree', fileThree)
         formData.append('productBrandId', product.selectedBrand.id)
         formData.append('productTypeId', product.selectedType.id)
         formData.append('info', JSON.stringify(info))
@@ -103,6 +120,21 @@ const CreateProduct = observer(({show, onHide}) => {
                         className="mt-3"
                         type="file"
                         onChange={selectFile}
+                    />
+                    <Form.Control
+                        className="mt-3"
+                        type="file"
+                        onChange={selectFileOne}
+                    />
+                    <Form.Control
+                        className="mt-3"
+                        type="file"
+                        onChange={selectFileTwo}
+                    />
+                    <Form.Control
+                        className="mt-3"
+                        type="file"
+                        onChange={selectFileThree}
                     />
                     <hr/>
                     <Button

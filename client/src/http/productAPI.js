@@ -33,7 +33,7 @@ export const fetchBrands = async () => {
 
 // Удалить бренд
 export const deleteBrand = async (id) => {
-    const {data} = await $authHost({method:'DELETE', url:'api/brand/'+id});
+    const {data} = await $authHost({method:'DELETE', url:'api/productBrand/'+id});
     return data;
 }
 
