@@ -75,6 +75,22 @@ const ProductTypeBrand = sequelize.define('product_type_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
+//Orders 
+const Orders = sequelize.define('orders', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    complete: {type: DataTypes.BOOLEAN, defaultValue: false},
+    mobile: {type: DataTypes.STRING(25), allowNull: false},
+    userId: {type: DataTypes.INTEGER, allowNull: true},
+})
+
+//Connection Table Orders and Product
+const OrderProduct = sequelize.define('order_product', {
+    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+    productId: {type: DataTypes.INTEGER, allowNull: false},
+    orderId: {type: DataTypes.INTEGER, allowNull: false},
+    count: {type: DataTypes.INTEGER, allowNull: false},
+})
+
 
 //Description dependencies models db
 User.hasOne(Basket)
@@ -104,6 +120,23 @@ ProductInfo.belongsTo(Product)
 ProductType.belongsToMany(ProductBrand, {through: ProductTypeBrand})
 ProductBrand.belongsToMany(ProductType, {through: ProductTypeBrand})
 
+User.hasMany(Orders);
+Orders.belongsTo(User,
+    {
+        foreignKey: { name: 'userId' },
+        onDelete: 'CASCADE',
+    }
+);
+
+Orders.hasMany(OrderProduct);
+OrderProduct.belongsTo(Orders,
+    {
+        foreignKey: { name: 'orderId' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+    }
+);
+
 module.exports = {
-    User, Basket, BasketProduct, Product, ProductType, ProductBrand, Rating, ProductTypeBrand, ProductInfo, Slider
+    User, Basket, BasketProduct, Product, ProductType, ProductBrand, Rating, ProductTypeBrand, ProductInfo, Slider, OrderProduct, Orders
 }

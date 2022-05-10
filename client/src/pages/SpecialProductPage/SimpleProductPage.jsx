@@ -10,11 +10,11 @@ import {BsCartPlus} from 'react-icons/bs'
 import './Simple.scss'
 
 const SimpleProduct = observer(() => {
+    
     const {user, basket} = useContext(Context);
 
     const [product, setProduct] = useState({info: []})
     const {id} = useParams()
-
     
     useEffect(() => {
         fetchOneProduct(id).then(data => setProduct(data))
@@ -33,12 +33,15 @@ const SimpleProduct = observer(() => {
         }
     }
 
+    const [photoProduct, setProductPhoto] = useState(product.imgMain)
+
+
     return (
         <section class="product">
         
         <div class="product__photo">
             <div class="photo-container">
-                <div class="photo-main" style={{backgroundImage: `url(${process.env.REACT_APP_API_URL + product.imgMain})`}}>
+                <div class="photo-main" style={photoProduct ? {backgroundImage: `url(${process.env.REACT_APP_API_URL + photoProduct})`} :{backgroundImage: `url(${process.env.REACT_APP_API_URL + product.imgMain})`}}>
                     <div class="controls">
                         <i class="material-icons">share</i>
                         <i class="material-icons">favorite_border</i>
@@ -46,10 +49,10 @@ const SimpleProduct = observer(() => {
                 </div>
                 <div class="photo-album">
                     <ul>
-                        <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png" alt="green apple"/></li>
-                        <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303532/codepen/delicious-apples/half-apple.png" alt="half apple"/></li>
-                        <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303160/codepen/delicious-apples/green-apple-flipped.png" alt="green apple"/></li>
-                        <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537303708/codepen/delicious-apples/apple-top.png" alt="apple top"/></li>
+                        <li><img src={process.env.REACT_APP_API_URL + product.imgMain} onClick={() => setProductPhoto(product.imgMain)}/></li>
+                        <li><img src={process.env.REACT_APP_API_URL + product.imgFirst} onClick={() => setProductPhoto(product.imgFirst)}/></li>
+                        <li><img src={process.env.REACT_APP_API_URL + product.imgSecond} onClick={() => setProductPhoto(product.imgSecond)}/></li>
+                        <li><img src={process.env.REACT_APP_API_URL + product.imgThird} onClick={() => setProductPhoto(product.imgThird)}/></li>
                     </ul>
                 </div>
             </div>

@@ -26,7 +26,6 @@ const ProductItem = observer(({product}) => {
         }
     }
     const [productIn, setProductIn] = useState({info: []})
-    const history = useNavigate()
 
     useEffect(() => {
         fetchOneProduct(product.id).then(data => setProductIn(data))
