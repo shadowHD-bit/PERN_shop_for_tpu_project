@@ -79,7 +79,6 @@ const ProductTypeBrand = sequelize.define('product_type_brand', {
 const Orders = sequelize.define('orders', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     complete: {type: DataTypes.BOOLEAN, defaultValue: false},
-    mobile: {type: DataTypes.STRING(25), allowNull: false},
     userId: {type: DataTypes.INTEGER, allowNull: true},
 })
 

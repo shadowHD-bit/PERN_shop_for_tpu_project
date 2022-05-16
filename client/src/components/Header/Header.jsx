@@ -19,6 +19,7 @@ import {
   BASKET_ROUTE,
   LOCATIONPLACES_ROUTE,
   LOGIN_ROUTE,
+  ORDERS_ROUTE,
   PRODUCT_ROUTE,
   RULES_ROUTE,
   SHOP_ROUTE,
@@ -59,7 +60,7 @@ const Header = observer(() => {
             <div className="icons__header_top">
                 <a href={USERPROFILE_ROUTE}><CgProfile /><span>Профиль</span></a>
                 <a href={BASKET_ROUTE}><BsCart /> <span>{basket.Price} РУБ</span></a>
-                <a href="">Заказы</a>
+                <a href={ORDERS_ROUTE}>Заказы</a>
             </div>
           </div>
         </div>

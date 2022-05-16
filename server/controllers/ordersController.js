@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 class OrdersController {
     async create(req, res) {
         const auth = req.headers.authorization || "";
-        const {mobile, basket} = req.body;
+        const {basket} = req.body;
 
         try {
             let parseProducts = [];
@@ -19,7 +19,7 @@ class OrdersController {
             });
 
             if(isProductInDB.count === parseProducts.length) { //if all devices was found in DB
-                const row = {mobile};
+                const row = {};
                 if(auth) {
                     const token = auth.split(' ')[1];
                     const {id} = jwt.verify(token, process.env.SECRET_KEY);

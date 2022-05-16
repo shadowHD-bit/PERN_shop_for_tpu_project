@@ -38,7 +38,8 @@ export default class BasketStoreStore {
 
     setDeleteAllProductFromBasket() {
         this._totalPrice = 0;
-        return this._basket = [];
+        this._basket = [];
+
     }
 
     setCountProduct(productId, action, isAuth = false) {

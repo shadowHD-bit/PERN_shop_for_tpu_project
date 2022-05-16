@@ -69,6 +69,7 @@ class BasketController {
             console.error(e);
         }
     }
+
 }
 
 module.exports = new BasketController();

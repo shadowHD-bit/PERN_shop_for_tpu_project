@@ -6,7 +6,7 @@ import {Button, Col, Container, Image, Row} from "react-bootstrap";
 import OneItemInBasket from "./OneItemBasket";
 import { Context } from '../..';
 import './BasketCard.scss'
-import { SHOP_ROUTE } from '../../utils/consts';
+import { CHECKOUTING_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 
 const BasketCard = observer(() => {
     const {basket} = useContext(Context);
@@ -123,7 +123,7 @@ const BasketCard = observer(() => {
 										</tbody>
 									</table>
 									<div class="wc-proceed-to-checkout">
-										<a href="#">Купить</a>
+										<a onClick={() => window.location.href = CHECKOUTING_ROUTE}>Купить</a>
 									</div>
 								</div>
 							</div>

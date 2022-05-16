@@ -1,5 +1,7 @@
 //Scroll-bar steles
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
 
 body::-webkit-scrollbar {
   width: 12px;              
@@ -11,6 +13,7 @@ body::-webkit-scrollbar-thumb {
   background-color: rgb(252, 41, 41);    
   border-radius: 20px;      
   border: 3px solid #434240;  
+  font-family: 'Roboto', sans-serif !important;
 }
 
 //Card Style
