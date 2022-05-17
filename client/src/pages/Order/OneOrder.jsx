@@ -3,11 +3,10 @@ import { Button, Card, Col, Image, ListGroup, Modal, NavLink, Row } from 'react-
 import { Context } from '../..';
 import { getOneOrderProducts } from '../../http/orderAPI';
 import { fetchOneProduct, fetchProduct } from '../../http/productAPI';
-import { ORDERS_ROUTE } from '../../utils/consts';
+import { ORDERS_ROUTE, PRODUCT_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 
-const OneOrder = ({id, complete, createdAt, updatedAt, data}) => {
+const OneOrder = ({id, complete, createdAt, updatedAt, reRender}) => {
 
-    const [productItem, setProductItem] = useState({})
     const [modalDelete, setShowDelete] = useState(false);
     const [productInfo, setProductInfo] = useState([])
 
@@ -15,12 +14,13 @@ const OneOrder = ({id, complete, createdAt, updatedAt, data}) => {
     const handleCloseDelete = () => setShowDelete(false);
     const handleShowDelete = () => {
         setShowDelete(true)
-
     };
 
-    if(productInfo == undefined){
-        data.then(data => setProductInfo([data]))
-    }
+    useEffect(() => {
+        getOneOrderProducts(id).then(data => setProductInfo(data))
+    }, [])
+
+
 
     //Format date (createdAt)
     const formatDate = (propsDate) => {
@@ -41,8 +41,6 @@ const OneOrder = ({id, complete, createdAt, updatedAt, data}) => {
         <>
             <ListGroup.Item className="mt-3" key={id}>
                 <Row>
-                    <Col md={2}>
-                    </Col>
                     <Col md={6}>
                         <Row>
                             <Col xs={12}>
@@ -65,7 +63,7 @@ const OneOrder = ({id, complete, createdAt, updatedAt, data}) => {
                             </Col>
                         </Row>
                     </Col>
-                    <Col md={4}>
+                    <Col md={4} className="d-flex justify-content-center align-items-center">
                         <Button variant='outline-success' onClick={() => handleShowDelete()}>Подробности заказа</Button>
                     </Col>
                 </Row>
@@ -75,41 +73,42 @@ const OneOrder = ({id, complete, createdAt, updatedAt, data}) => {
 
 
             {/*modal confirm delete order*/}
-            <Modal show={modalDelete} onHide={handleCloseDelete}>
+            <Modal show={modalDelete} onHide={handleCloseDelete} dialogClassName="modal-90w"  aria-labelledby="example-custom-modal-styling-title" size="xl">
                 <Modal.Header closeButton>
-                    <Modal.Title>Информационное окно</Modal.Title>
+                    <Modal.Title id="example-custom-modal-styling-title">Информационное окно</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     Информация о заказе (Номер заказа: {id})
-                    <br/><br/>
+                    <br/><br/>  
                     {
-                    // productInfo.map(item => {
-                    //     <Card>
-                    //         <Row>
-                    //             <Col md={4}>
-                    //                 <img src={process.env.REACT_APP_API_URL + item.prod.imgMain} alt=""/>
-                    //             </Col>
-                    //             <Col>
-                    //                 <ul>
-                    //                     <li>sdvsdv</li>
-                    //                     <li>Номер товара: {item.prod.id}</li>
-                    //                     <li>Имя товара: {item.prod.name}</li>
-                    //                     <li>Цена товара: {item.prod.price}</li>
-                    //                     <li>Количество: {item.count}</li>
-                    //                 </ul>
-                    //             </Col>
-                    //             <Col>
-                                
-                    //             </Col>
-                    //         </Row>
-                    //     </Card>
-                    // })
+                    productInfo.prod?.map(item => {
+                        return(
+                        <Card className='mt-2'>
+                            <Row>
+                                <Col md={2}>
+                                    <img style={{width: '100%'}} src={process.env.REACT_APP_API_URL + item.descr.imgMain} alt=""/>
+                                </Col>
+                                <Col className='d-flex justify-content-center align-items-center'>
+                                    <ul style={{listStyle: 'none'}}>
+                                        <li>Номер товара: {item.descr.id}</li>
+                                        <li>Имя товара: {item.descr.name}</li>
+                                        <li>Цена товара: {item.descr.price} РУБ</li>
+                                        <li>Количество: {item.count}</li>
+                                    </ul>
+                                </Col>
+                                <Col className='d-flex justify-content-center align-items-center'>
+                                <a style={{padding: '5px 20px', border: '1px solid red', color: 'red', textDecoration: 'none', borderRadius: '10px'}} href={PRODUCT_ROUTE +'/'+item.descr.id}>Просмотреть товар</a>
+                                </Col>
+                            </Row>
+                        </Card>
+                        )
+                    })
                     }
 
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseDelete}>
-                        Cancel
+                        Закрыть
                     </Button>
                 </Modal.Footer>
             </Modal>

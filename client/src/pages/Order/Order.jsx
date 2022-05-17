@@ -77,7 +77,7 @@ const Order = () => {
         <Container className="d-flex flex-column">
             <Row>
                 <Col xs={12} className="mt-3 d-flex justify-content-center align-items-center">
-                    <div className="mr-3">Filter:</div>
+                    <div className="mr-3">Фильтр:</div>
                     <Dropdown>
                         <Dropdown.Toggle variant="success">
                             {filter == 'all' ? 'Все' : filter == 'completed' ? 'Завершенные' : 'Не завершенные'}
@@ -92,14 +92,13 @@ const Order = () => {
                 </Col>
             </Row>
             <ListGroup>
-                {orders.rows?.map( ({id, complete, createdAt, updatedAt, userId}) =>
+                {orders.rows?.map( ({id, complete, createdAt, updatedAt}) =>
                     <OneOrder
                         key={id}
                         id={id}
                         complete={complete}
                         createdAt={createdAt}
                         updatedAt={updatedAt}
-                        userId={userId}
                         reRender={reRender}/>)}
             </ListGroup>
             <Pagination size="sm" className="mt-4 mb-4" style={{margin: "0 auto"}}>
