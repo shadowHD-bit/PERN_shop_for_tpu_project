@@ -18,7 +18,7 @@ class OrdersController {
                 attributes: ["id"]
             });
 
-            if(isProductInDB.count === parseProducts.length) { //if all devices was found in DB
+            if(isProductInDB.count === parseProducts.length) { 
                 const row = {};
                 if(auth) {
                     const token = auth.split(' ')[1];
@@ -37,7 +37,7 @@ class OrdersController {
                         });
                     });
                 });
-            } else { //send msg about devices that didnt found in DB
+            } else { 
                 const notFoundIdProducts = [];
                 const arrProducts = []; //found id
                 isProductInDB.rows.forEach(item => arrProducts.push(item.id));
@@ -46,7 +46,7 @@ class OrdersController {
                         notFoundIdProducts.push(productId);
                     }
                 });
-                return ApiError.badRequest(res.json(`Some Devices of id(${notFoundIdProducts.join(', ')}) not exist in DB`));
+                return ApiError.badRequest(res.json(`Some productes of id(${notFoundIdProducts.join(', ')}) not exist in DB`));
             }
 
             return res.json("Thank you for you order! We will contact you shortly");
@@ -108,25 +108,25 @@ class OrdersController {
             products = await Orders.findAndCountAll({limit, offset});
         }
 
-        return res.json(devices);
+        return res.json(products);
     }
 
     async getOne(req, res) {
         const {id} = req.params;
         const order = {};
         try {
-            let products;
-            let infoProduct = [];
+            let prod;
+            let infoProductes = [];
             await Orders.findOne({where:{id}}).then(async data => {
                 order.descr = data;
-                products = await OrderDevice.findAll({
+                prod = await OrderProduct.findAll({
                     attributes: ["productId", "count"],
-                    where:{productId: data.id},
+                    where:{orderId: data.id},
                 });
 
-                for (let product of products) {
+                for (let product of prod) {
                     await Product.findOne({
-                        attributes: ["name", "imgMain", "price"],
+                        attributes: ["id", "name", "imgMain", "price"],
                         where: {id: product.productId},
                         include: [
                             {
@@ -143,10 +143,10 @@ class OrdersController {
                             descr: item,
                             count: product.count
                         }
-                        infoProduct.push(newObj);
+                        infoProductes.push(newObj);
                     });
                 }
-                order.products = infoProduct;
+                order.prod = infoProductes;
 
                 return res.json(order);
             }).catch(() => {
