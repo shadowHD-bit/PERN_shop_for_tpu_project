@@ -3,11 +3,12 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Button, Card, Col, Container, Image, Row} from "react-bootstrap";
 import {useParams} from 'react-router-dom'
 import { Context } from '../..';
-import { fetchOneProduct, addProductToBasket } from '../../http/productAPI';
+import { fetchOneProduct, addProductToBasket, addRating, checkRating } from '../../http/productAPI';
 import { BASKET_ROUTE } from '../../utils/consts';
 import {BsCheckLg} from 'react-icons/bs'
 import {BsCartPlus} from 'react-icons/bs'
 import './Simple.scss'
+import RatingStars from '../../components/RatingStar';
 
 const SimpleProduct = observer(() => {
     
@@ -35,6 +36,32 @@ const SimpleProduct = observer(() => {
 
     const [photoProduct, setProductPhoto] = useState(product.imgMain)
 
+//////////
+
+
+    const [resRate, setResRate] = useState("");
+    const [isAccessRating, setSsAccessRating] = useState(false);
+
+
+
+    useEffect( () => {
+        fetchOneProduct(id).then(data => setProduct(data))
+        if(user.isAuth) {
+            checkRating({productId: id}).then(res => setSsAccessRating(res.allow));
+        }
+    },[id, resRate]);
+
+
+    const ratingChanged = (rate) => {
+        addRating({
+            rate,
+            productId: id
+        }).then(res => {
+            setResRate(res);
+        });
+    };
+
+
 
     return (
         <section class="product">
@@ -42,10 +69,10 @@ const SimpleProduct = observer(() => {
         <div class="product__photo">
             <div class="photo-container">
                 <div class="photo-main" style={photoProduct ? {backgroundImage: `url(${process.env.REACT_APP_API_URL + photoProduct})`} :{backgroundImage: `url(${process.env.REACT_APP_API_URL + product.imgMain})`}}>
-                    <div class="controls">
+                    {/* <div class="controls">
                         <i class="material-icons">share</i>
                         <i class="material-icons">favorite_border</i>
-                    </div>
+                    </div> */}
                 </div>
                 <div class="photo-album">
                     <ul>
@@ -74,6 +101,15 @@ const SimpleProduct = observer(() => {
                     <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png" alt="red apple"/></li>
                 </ul>
             </div> */}
+            <div class="description">
+                <h3>Рейтинг</h3>
+                <RatingStars
+                    ratingChanged={ratingChanged}
+                    ratingVal={product?.rating || 0}
+                    isAuth={user.isAuth}
+                    isAccessRating={isAccessRating}
+                />
+            </div>
             <div class="description">
                 <h3>Характеристики</h3>
                 <ul>

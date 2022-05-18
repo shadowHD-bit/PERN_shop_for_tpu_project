@@ -9,6 +9,7 @@ import './productItem.scss'
 import { Context } from '../..';
 import { addProductToBasket, fetchOneProduct } from '../../http/productAPI';
 import { observer } from 'mobx-react-lite';
+import {AiOutlineStar} from 'react-icons/ai'
 
 const ProductItem = observer(({product}) => {
     const {user, basket} = useContext(Context);
@@ -38,7 +39,15 @@ const ProductItem = observer(({product}) => {
 			<img src={process.env.REACT_APP_API_URL + product.imgMain} alt="" />
 		</div>
 		<div class="product-details">
-			<span class="product-catagory">{product.product_type.name}</span>
+            <div className='d-flex justify-content-between'>
+                <div className='mb-2'>
+                    <span class="product-catagory">{product.product_type.name}</span>
+                    <span class="product-catagory">{product.product_brand.name}</span>
+                </div>
+                <div className='d-flex align-items-center'>
+                {product.rating.toFixed(1)} <AiOutlineStar className='ml-1'/>
+                </div>
+            </div>
 			<h4><a href={PRODUCT_ROUTE + '/' + product.id}>{product.name}</a></h4>
 			<div class="product-bottom-details">
 				<div class="product-price">{product.price} РУБ</div>

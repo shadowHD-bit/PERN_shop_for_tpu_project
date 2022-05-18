@@ -91,3 +91,15 @@ export const getAllProductSearch = async (name, page = 1, filter = "All") => {
     const {data} = await $host({method:'GET', url:`api/product/search?page=${page}&name=${name}&filter=${filter}`});
     return data;
 }
+
+
+//Rating
+export const addRating = async (body) => {
+    const {data} = await $authHost.post('api/rating', body);
+    return data;
+}
+
+export const checkRating = async (body) => {
+    const {data} = await $authHost.post('api/rating/check-rating', body);
+    return data;
+}
