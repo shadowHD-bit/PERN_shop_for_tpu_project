@@ -30,7 +30,7 @@ const Product = sequelize.define('product', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
-    rating: {type: DataTypes.INTEGER, defaultValue: 0},
+    rating: {type: DataTypes.DOUBLE, defaultValue: 0},
     imgMain: {type: DataTypes.STRING, allowNull: false},
     imgFirst: {type: DataTypes.STRING, allowNull: true},
     imgSecond: {type: DataTypes.STRING, allowNull: true},
@@ -52,7 +52,7 @@ const ProductBrand = sequelize.define('product_brand', {
 //Models Rating
 const Rating = sequelize.define('rating', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    rate: {type: DataTypes.INTEGER, allowNull: false}
+    rate: {type: DataTypes.DOUBLE, allowNull: false}
 })
 
 //Models Slider
