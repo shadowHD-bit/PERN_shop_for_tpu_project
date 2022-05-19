@@ -31,6 +31,7 @@ const Auth = observer(() => {
       } catch (e) {
           alert(e.response.data.message)
       }
+      
 
   }
 

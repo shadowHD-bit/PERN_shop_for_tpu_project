@@ -111,6 +111,23 @@ class OrdersController {
         return res.json(products);
     }
 
+    async getAllUser(req, res) {
+        let {userId, limit, page, complete} = req.query;
+        page = page || 1;
+        limit = limit || 7;
+        let offset = page * limit - limit;
+        let products;
+        if(complete === "not-completed") {
+            products = await Orders.findAndCountAll({where:{complete: false, userId: userId}, limit, offset});
+        } else if(complete === "completed") {
+            products = await Orders.findAndCountAll({where:{complete: true, userId: userId}, limit, offset});
+        } else {
+            products = await Orders.findAndCountAll({where:{userId: userId},limit, offset});
+        }
+
+        return res.json(products);
+    }
+
     async getOne(req, res) {
         const {id} = req.params;
         const order = {};

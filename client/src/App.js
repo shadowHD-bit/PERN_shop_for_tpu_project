@@ -30,23 +30,28 @@ useEffect(() => {
   })
 }, [loading, user.isAuth])
 
+const [renderBasket, setRenderBasket] = useState(false)
+
 //Loading Basket
 useEffect(() => {
-  if(user.isAuth === false) {
-      basket.setDeleteAllProductFromBasket();
-      const savedBasket = JSON.parse(localStorage.getItem("basket"));
-      for (let key in savedBasket) {
-          basket.setBasket(savedBasket[key]);
-      }
-  } else if(user.isAuth === true){
-      basket.setDeleteAllProductFromBasket();
+  if(user.isAuth != true){
+    basket.setDeleteAllProductFromBasket();
       getProductFromBasket().then(data => {
           for (let key in data) {
               basket.setBasket(data[key], true);
           }
       })
   }
-}, [basket, user.isAuth]);
+}, [user.isAuth]);
+
+//Loading Basket
+useEffect(() => {
+      basket.setDeleteAllProductFromBasket();
+      const savedBasket = JSON.parse(localStorage.getItem("basket"));
+      for (let key in savedBasket) {
+          basket.setBasket(savedBasket[key]);
+      }
+}, [basket]);
 
 if (loading) {
     return (

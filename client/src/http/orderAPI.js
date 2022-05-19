@@ -15,6 +15,11 @@ export const fetchOrders = async ({limit, page, complete}) => {
     return data;
 }
 
+export const fetchOrdersUser = async ({userId,limit, page, complete}) => {
+    const {data} = await $authHost.get(`api/orderuser?userId=${userId}&limit=${limit}&page=${page}&complete=${complete}`);
+    return data;
+}
+
 export const fetchChangeStatusOrder = async ({complete, id}) => {
     const {data} = await $authHost.put('api/order', {complete, id});
     return data;

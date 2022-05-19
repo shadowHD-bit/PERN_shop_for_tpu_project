@@ -39,6 +39,8 @@ function Register() {
           alert(e.response.data.message)
       }
 
+      
+
   }
 
     return (

@@ -1,8 +1,6 @@
 import React, {useContext} from 'react';
 import {observer} from "mobx-react-lite";
-
-
-import {Button, Col, Container, Image, Row} from "react-bootstrap";
+import {Image} from "react-bootstrap";
 import OneItemInBasket from "./OneItemBasket";
 import { Context } from '../..';
 import './BasketCard.scss'
@@ -10,10 +8,7 @@ import { CHECKOUTING_ROUTE, SHOP_ROUTE } from '../../utils/consts';
 
 const BasketCard = observer(() => {
     const {basket} = useContext(Context);
-    const {product} = useContext(Context)
-
-    console.log(basket.Basket);
-
+	
     if(basket.Basket.length == 0) {
         return (
             <div className="d-flex flex-column align-items-center mt-5">
@@ -24,17 +19,6 @@ const BasketCard = observer(() => {
     }
 
     return (
-        // <>
-        //     <br/>
-        //     <Container>
-        //     <Row className="mt-3 ml-3 w-100">
-        //         <Col xs={12}>
-        //             {basket.Basket.map(product => <OneItemInBasket key={product.id} product={product}/>)}
-        //         </Col>
-        //     </Row>
-        //     </Container>
-        // </>
-
         <>
         <div class="entry-header-area">
 		<div class="container">

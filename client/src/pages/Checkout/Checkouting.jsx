@@ -27,6 +27,7 @@ const Checkouting = () => {
                 basket.setDeleteItemBasket(item, true)
             })
             basket.setDeleteAllProductFromBasket();
+            localStorage.removeItem('basket')
             window.location.href = (CHECKOUT_ROUTE)
         });
     }

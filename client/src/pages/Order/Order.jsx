@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Card, Col, Container, Dropdown, ListGroup, Pagination, Row, Spinner } from 'react-bootstrap';
-import { fetchOrders, getOneOrderProducts } from '../../http/orderAPI';
+import { Context } from '../..';
+import { fetchOrders, fetchOrdersUser, getOneOrderProducts } from '../../http/orderAPI';
 import OneOrder from './OneOrder';
 import './Order.scss'
 
 const Order = () => {
-    
+
+    const {user} = useContext(Context)
+    console.log(user.user.id);
     const [loading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -19,7 +22,7 @@ const Order = () => {
     const pages = [];
 
     useEffect(() => {
-        fetchOrders({limit, page: 1}).then(data => {
+        fetchOrdersUser({userId: user.user.id ,limit, page: 1}).then(data => {
             setOrders(data);
             setLoading(false);
             setCount(data.count);
@@ -28,7 +31,7 @@ const Order = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetchOrders({limit, page: currentPage}).then(data => {
+        fetchOrdersUser({userId: user.user.id ,limit, page: currentPage}).then(data => {
             setOrders(data);
             setLoading(false);
         })
@@ -36,7 +39,7 @@ const Order = () => {
 
     useEffect(() => {
         setLoading(true);
-        fetchOrders({limit, page: 1, complete: filter}).then(data => {
+        fetchOrdersUser({userId: user.user.id ,limit, page: 1, complete: filter}).then(data => {
             setOrders(data);
             setLoading(false);
             setCount(data.count);
@@ -47,7 +50,7 @@ const Order = () => {
     //re-render after change status, or delete some order
     useEffect(() => {
         setLoading(true);
-        fetchOrders({limit, page: currentPage, complete: filter}).then(data => {
+        fetchOrdersUser({userId: user.user.id ,limit, page: currentPage, complete: filter}).then(data => {
             setOrders(data);
             setLoading(false);
             setCount(data.count);
