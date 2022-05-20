@@ -14,9 +14,9 @@ import { useContext, useEffect } from 'react';
 import { Context } from '../../..';
 import { observer } from 'mobx-react-lite';
 import { fetchBrands, fetchProduct, fetchTypes } from '../../../http/productAPI';
-import ProductItem from '../../../components/productItem/ProductItem';
 import { Button, Card, Container, Row } from 'react-bootstrap';
 import { PRODUCT_ROUTE } from '../../../utils/consts';
+import {AiOutlineStar} from 'react-icons/ai'
 
 
 const SliderPopular = observer(() => {
@@ -31,6 +31,8 @@ const SliderPopular = observer(() => {
       product.setTotalCount(data.count);
     });
 }, []);
+
+  let sort = (a,b) => a.rating < b.rating ? 1:-1
 
     return (
       <div className="sliderPopular">
@@ -57,21 +59,24 @@ const SliderPopular = observer(() => {
         modules={[EffectCoverflow, Pagination]}
         className="mySwiper"
       >
-        {product.products.map(product =>
+        {product.products.slice().sort(sort).map((product) => //{product.products.slice().sort(sort).splice(1, 1).map((product) => добавить для ограничения
           <SwiperSlide>
             <Card>
                     <Card.Img variant="top" src={process.env.REACT_APP_API_URL + product.imgMain} />
                     <Card.Body>
                       <Card.Title>
-                        <div style={{display: 'flex', flexDirection: 'row', justifyContent:'space-between'}}>
+                        <div style={{display: 'flex', flexDirection: 'column', justifyContent:'space-between'}}>
                           {product.name}
-                          {product.rating}
+                          <div className="rating" style={{display: 'flex', flexDirection: 'row', justifyContent:'center'}}>
+                          <span><AiOutlineStar className='ml-1'/> Рейтинг: {product.rating.toFixed(1)}</span>
+                          </div>
                         </div>
                       </Card.Title>
                         <Button href={PRODUCT_ROUTE + '/' + product.id} variant="outline-danger">Посмотреть</Button>
                     </Card.Body>
                 </Card>
           </SwiperSlide>
+        
         )}
       </Swiper>
 
