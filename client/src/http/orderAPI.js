@@ -26,7 +26,7 @@ export const fetchChangeStatusOrder = async ({complete, id}) => {
 }
 
 export const fetchDeleteOrder = async ({id}) => {
-    const {data} = await $authHost({method:'DELETE', url: 'api/order', data: {id}});
+    const {data} = await $authHost.delete('api/order/'+id);
     return data;
 }
 

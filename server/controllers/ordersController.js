@@ -77,8 +77,7 @@ class OrdersController {
 
     async deleteOrder(req, res) {
         try {
-            const { id } = req.body;
-
+            const {id} = req.params;
             await Orders.findOne({where:{id}})
                 .then( async data => {
                     if(data) {

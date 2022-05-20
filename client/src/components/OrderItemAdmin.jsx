@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Modal, Row } from 'react-bootstrap';
-import { fetchChangeStatusOrder, getOneOrderProducts } from '../http/orderAPI';
+import { fetchChangeStatusOrder, fetchDeleteOrder, getOneOrderProducts } from '../http/orderAPI';
 import { fetchOneProduct } from '../http/productAPI';
 import { PRODUCT_ROUTE } from '../utils/consts';
 
@@ -13,7 +13,7 @@ const OrderItemAdmin = ({id, complete, createdAt, updatedAt, userId, reRender}) 
     const handleCloseDelete = () => setShowDelete(false);
     const handleShowDelete = () => setShowDelete(true);
     const deleteOrder = () => {
-        fetchOneProduct({id}).then(() => {
+        fetchDeleteOrder({id}).then(() => {
             setShowStatus(false);
             setTimeout(() => reRender(), 250);
         })

@@ -8,6 +8,6 @@ router.post('/', ordersController.create)
 router.get('/', ordersController.getAll)
 router.get('/:id', ordersController.getOne)
 router.put('/', checkRole("ADMIN"), ordersController.updateOrder)
-router.delete('/', checkRole("ADMIN"), ordersController.deleteOrder);
+router.delete('/:id', checkRole("ADMIN"), ordersController.deleteOrder);
 
 module.exports = router;
