@@ -38,8 +38,8 @@ export default function Slider() {
             <SwiperSlide>
               <div className="content_slider" style={{display: 'flex', flexDirection: 'column', alignItems: 'start',justifyContent: 'center', backgroundImage: `url(${process.env.REACT_APP_API_URL +sliderItem.img})`, backgroundPosition: 'center', backgroundSize: 'cover', width: '100%', height:'100%'}}>
                 <div className="text_content" style={{padding: '0px 100px'}}>
-                  <h2>{sliderItem.title}</h2>
-                  <h4>{sliderItem.text}</h4>
+                  <h2 style={{color: 'white'}}>{sliderItem.title}</h2>
+                  <h4 style={{color: 'white'}}>{sliderItem.text}</h4>
                 </div>
               </div>
             </SwiperSlide>
