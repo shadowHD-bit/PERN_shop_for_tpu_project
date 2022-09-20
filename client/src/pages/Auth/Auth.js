@@ -80,10 +80,6 @@ const Auth = observer(() => {
   }
 
 
-
-
-
-
   const click = async () => {
     try {
       let data;

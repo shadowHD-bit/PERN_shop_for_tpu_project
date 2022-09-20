@@ -25,6 +25,7 @@
     "react-scripts": "5.0.0",
     "react-yandex-maps": "^4.6.0",
     "sass": "^1.49.9",
+    "swiper": "^8.4.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

@@ -44,18 +44,13 @@ const ProductList = observer(({price, priceMin}) => {
     <div>
       <Form>
         <Row>
-          <Col md={8} style={{ padding: 0 }}>
+          <Col md={9} style={{ padding: 0 }}>
             <FormControl
               type="search"
-              placeholder="Search"
+              placeholder="Поиск"
               aria-label="Search"
               onChange={e => setSearchValue(e.target.value)}
             />
-          </Col>
-          <Col md={1} style={{ padding: 0 }}>
-            <Button variant="outline-danger" style={{marginLeft: '5px'}}>
-              <BsSearch />
-            </Button>
           </Col>
           <Col md={3}>
             <SortBar onChange={handlerSortMethodChange}/>

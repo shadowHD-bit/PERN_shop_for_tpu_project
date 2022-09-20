@@ -13,7 +13,7 @@ const BasketCard = observer(() => {
         return (
             <div className="d-flex flex-column align-items-center mt-5">
                 <Image src={process.env.PUBLIC_URL + '/img/basket/basketEmpty.png'} width="200"/>
-                <div className="text-center mt-5" style={{fontSize: 28, marginBottom: 100}}><b>Ваша корзина покупок сейчас пустая...</b></div>
+                <div className="text-center mt-5" style={{fontSize: 28, marginBottom: 200}}><b>Ваша корзина покупок сейчас пустая...</b></div>
             </div>
         )
     }
