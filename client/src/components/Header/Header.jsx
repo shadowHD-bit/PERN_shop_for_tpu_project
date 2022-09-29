@@ -53,7 +53,7 @@ const Header = observer(() => {
     return (
       <div className="header h-100">
         <div className="header_top" style={{width: '100%', height: '30px', borderBottom: '1px solid rgb(132 83 82)', color: 'white', fontWeight: '100', display: 'flex', alignItems: 'center'}}>
-          <div className="container d-flex flex-row">
+          <div className="container d-flex flex-row justify-content-between">
             <div className="info__header">
                 Здравствуйте, <a href={USERPROFILE_ROUTE}>{user.userProf.name}</a>
             </div>
