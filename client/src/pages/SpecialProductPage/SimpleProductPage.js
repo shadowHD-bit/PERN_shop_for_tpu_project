@@ -8,6 +8,7 @@ import {
   addProductToBasket,
   addRating,
   checkRating,
+  getProductDescription,
 } from "../../http/productAPI";
 import { BASKET_ROUTE } from "../../utils/consts";
 import { BsCheckLg } from "react-icons/bs";
@@ -184,7 +185,9 @@ const SimpleProduct = observer(() => {
           justify
         >
           <Tab eventKey="description" title="Описание">
-            sdbvsdv
+            {
+              <p>{product.description}</p>
+            }
           </Tab>
           <Tab eventKey="characteristics" title="Характеристики">
             sdvsdv

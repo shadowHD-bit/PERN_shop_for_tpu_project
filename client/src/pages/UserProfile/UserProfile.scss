@@ -44,3 +44,14 @@
     cursor: pointer;
     border: solid 1px rgb(120, 39, 39);
 }
+
+.lastest_product{
+    .lastest_product_item{
+        border: 1px solid rgb(120, 39, 39);
+        border-radius: 10px;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

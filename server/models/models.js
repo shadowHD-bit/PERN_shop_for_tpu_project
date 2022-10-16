@@ -30,6 +30,7 @@ const Product = sequelize.define("product", {
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
+  description: { type: DataTypes.STRING, defaultValue: "Нет описания...",allowNull: true},
   imgMain: { type: DataTypes.STRING, allowNull: false },
   imgFirst: { type: DataTypes.STRING, allowNull: true },
   imgSecond: { type: DataTypes.STRING, allowNull: true },
@@ -89,19 +90,9 @@ const OrderProduct = sequelize.define("order_product", {
   count: { type: DataTypes.INTEGER, allowNull: false },
 });
 
-//Description product
-const DescriptionProduct = sequelize.define("product_description", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  productId: { type: DataTypes.INTEGER, allowNull: false },
-  description: { type: DataTypes.INTEGER, allowNull: true },
-});
-
 //Description dependencies models db
 User.hasOne(Basket);
 Basket.belongsTo(User);
-
-Product.hasMany(DescriptionProduct);
-DescriptionProduct.belongsTo(Product);
 
 User.hasMany(Rating);
 Rating.belongsTo(User);
@@ -153,5 +144,4 @@ module.exports = {
   Slider,
   OrderProduct,
   Orders,
-  DescriptionProduct,
 };

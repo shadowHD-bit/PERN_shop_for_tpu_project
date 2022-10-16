@@ -26,10 +26,9 @@ import {
   USERPROFILE_ROUTE,
 } from "../../utils/consts";
 import { useNavigate } from "react-router-dom";
-import { getData } from '../../http/userAPI';
-import {CgProfile} from 'react-icons/cg'
-import {BsCart} from 'react-icons/bs'
-
+import { getData } from "../../http/userAPI";
+import { CgProfile } from "react-icons/cg";
+import { BsCart } from "react-icons/bs";
 
 const Header = observer(() => {
   const navigate = useNavigate();
@@ -42,25 +41,45 @@ const Header = observer(() => {
     window.location.href = SHOP_ROUTE;
   }
 
-  const [load, setload] = useState(false)
-    useEffect(() => {
-        getData(user.user.id).then((data) => {
-            user.setUserProf(data)
-        })
-    },[load] )
+  const [load, setload] = useState(false);
+  useEffect(() => {
+    getData(user.user.id).then((data) => {
+      user.setUserProf(data);
+    });
+  }, [load]);
 
-  if(user.isAuth){
+  if (user.isAuth) {
     return (
       <div className="header h-100">
-        <div className="header_top" style={{width: '100%', height: '30px', borderBottom: '1px solid rgb(132 83 82)', color: 'white', fontWeight: '100', display: 'flex', alignItems: 'center'}}>
+        <div
+          className="header_top"
+          style={{
+            width: "100%",
+            height: "30px",
+            borderBottom: "1px solid rgb(132 83 82)",
+            color: "white",
+            fontWeight: "100",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <div className="container d-flex flex-row justify-content-between">
             <div className="info__header">
-                Здравствуйте, <a href={USERPROFILE_ROUTE}>{user.userProf.name}</a>
+              Здравствуйте, <a href={USERPROFILE_ROUTE}>{user.userProf.name}</a>
             </div>
             <div className="icons__header_top">
-                <a href={USERPROFILE_ROUTE}><CgProfile /><span>Профиль</span></a>
-                <a href={BASKET_ROUTE}><BsCart /> <span>{basket.Price} РУБ</span></a>
-                <a href={ORDERS_ROUTE}>Заказы</a>
+              <a href="#">
+                <BsFacebook className="social_header" size={"20px"} />
+              </a>
+              <a href="#">
+                <BsTwitter className="social_header" size={"20px"} />
+              </a>
+              <a href="#">
+                <BsGoogle className="social_header" size={"20px"} />
+              </a>
+              <a href="#">
+                <FaVk className="social_header last" size={"20px"} />
+              </a>
             </div>
           </div>
         </div>
@@ -72,22 +91,33 @@ const Header = observer(() => {
               </a>
             </div>
             <div className="col text-right">
-              <div className="col social_header_block">
-                <a href="dsv">
-                  <BsFacebook className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <BsTwitter className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <BsGoogle className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <FaVk className="social_header last" size={"30px"} />
-                </a>
-                <a className="right_menu" type="button" onClick={handleShow}>
-                  <MdMenu className="mdmenu" size={"30px"} />
-                </a>
+              <div className="col main_header_block">
+                <div className="link_block">
+                  <a href={USERPROFILE_ROUTE}>
+                    <CgProfile size={"30px"} />
+                    <span>Профиль</span>
+                  </a>
+                </div>
+                <div className="link_block">
+                  <a href={BASKET_ROUTE}>
+                    <BsCart size={"30px"} /> <span>{basket.Price} РУБ</span>
+                  </a>
+                </div>
+                <div className="link_block">
+                  <a href={ORDERS_ROUTE}>
+                    <span>Заказы</span>
+                  </a>
+                </div>
+                <div className="link_block">
+                  <a
+                    className="right_menu"
+                    style={{ border: "none" }}
+                    type="button"
+                    onClick={handleShow}
+                  >
+                    <MdMenu className="mdmenu" size={"30px"} />
+                  </a>
+                </div>
               </div>
               <Offcanvas
                 className="Offs"
@@ -121,13 +151,22 @@ const Header = observer(() => {
                       >
                         Все товары
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-1">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-1"
+                      >
                         Мужская одежда
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-2">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-2"
+                      >
                         Женская одежда
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-3">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-3"
+                      >
                         Обувь
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -148,10 +187,16 @@ const Header = observer(() => {
                       Прочее
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item className="dropdown-item" href={ABOUT_ROUTE}>
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href={ABOUT_ROUTE}
+                      >
                         О нас
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-2">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-2"
+                      >
                         Контакты
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -160,7 +205,10 @@ const Header = observer(() => {
                       >
                         Основные адреса
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href={RULES_ROUTE}>
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href={RULES_ROUTE}
+                      >
                         Правила
                       </Dropdown.Item>
                       {user.isAuth && user.isAdmin == true ? (
@@ -175,7 +223,7 @@ const Header = observer(() => {
                       )}
                     </Dropdown.Menu>
                   </Dropdown>
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"
@@ -188,7 +236,7 @@ const Header = observer(() => {
                   ) : (
                     <div></div>
                   )}
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"
@@ -196,16 +244,17 @@ const Header = observer(() => {
                       type="button"
                       href={BASKET_ROUTE}
                     >
-                      Корзина <Badge pill bg="success">
+                      Корзина{" "}
+                      <Badge pill bg="success">
                         {basket.Price} РУБ
-                      </Badge>{' '}
+                      </Badge>{" "}
                     </Button>
                   ) : (
                     <div></div>
                   )}
-  
+
                   <hr></hr>
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"
@@ -233,8 +282,7 @@ const Header = observer(() => {
         </div>
       </div>
     );
-  }
-  else{
+  } else {
     return (
       <div className="header h-100">
         <div className="container h-100">
@@ -294,13 +342,22 @@ const Header = observer(() => {
                       >
                         Все товары
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-1">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-1"
+                      >
                         Мужская одежда
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-2">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-2"
+                      >
                         Женская одежда
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-3">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-3"
+                      >
                         Обувь
                       </Dropdown.Item>
                     </Dropdown.Menu>
@@ -321,10 +378,16 @@ const Header = observer(() => {
                       Прочее
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item className="dropdown-item" href={ABOUT_ROUTE}>
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href={ABOUT_ROUTE}
+                      >
                         О нас
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href="#/action-2">
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href="#/action-2"
+                      >
                         Контакты
                       </Dropdown.Item>
                       <Dropdown.Item
@@ -333,7 +396,10 @@ const Header = observer(() => {
                       >
                         Основные адреса
                       </Dropdown.Item>
-                      <Dropdown.Item className="dropdown-item" href={RULES_ROUTE}>
+                      <Dropdown.Item
+                        className="dropdown-item"
+                        href={RULES_ROUTE}
+                      >
                         Правила
                       </Dropdown.Item>
                       {user.isAuth && user.isAdmin == true ? (
@@ -348,7 +414,7 @@ const Header = observer(() => {
                       )}
                     </Dropdown.Menu>
                   </Dropdown>
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"
@@ -361,7 +427,7 @@ const Header = observer(() => {
                   ) : (
                     <div></div>
                   )}
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"
@@ -369,16 +435,17 @@ const Header = observer(() => {
                       type="button"
                       href={BASKET_ROUTE}
                     >
-                      Корзина <Badge pill bg="success">
+                      Корзина{" "}
+                      <Badge pill bg="success">
                         {basket.Price} РУБ
-                      </Badge>{' '}
+                      </Badge>{" "}
                     </Button>
                   ) : (
                     <div></div>
                   )}
-  
+
                   <hr></hr>
-  
+
                   {user.isAuth ? (
                     <Button
                       variant="none"

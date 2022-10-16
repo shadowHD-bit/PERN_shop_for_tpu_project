@@ -44,10 +44,6 @@ a.dropdown-item:hover{
 
     }
 
-    .right_menu{
-        width: 20px;
-    }
-
     .social_header{
         color: white;
         margin: 0px 5px;
@@ -313,4 +309,31 @@ a {
         text-decoration: none;
         color: #eb5f6d !important;
     }
+}
+
+.col .main_header_block{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    a{
+        color: white;
+        text-align: center;
+        margin: 0 5px;
+        
+        span{
+            color: white;
+            font-weight: 200;
+        }
+    
+        svg{
+            color: white;
+            size: 30px;
+            margin: 0 5px;
+        }
+    }
+}
+
+.right_menu{
+    width: 20px;
+    border: none;
 }

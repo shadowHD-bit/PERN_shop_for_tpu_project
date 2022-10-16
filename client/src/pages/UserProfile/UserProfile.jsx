@@ -38,14 +38,7 @@ import './UserProfile.scss'
                     <div class="col-md-12"><label class="labels">Почта</label><input disabled={true} type="text" class="form-control" placeholder="enter address line 2" value={user.userProf.email} /></div>
                     <div class="col-md-12"><label class="labels">Роль</label><input disabled={true} type="text" class="form-control" placeholder="enter address line 2" value={user.userProf.role} /></div>
                     <div class="col-md-12"><label class="labels">Дата регистрации</label><input disabled={true} type="datetime" class="form-control" placeholder="enter address line 2" value={user.userProf.createdAt} /></div>
-                    {/* <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value="" /></div>
-                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value="" /></div>
-                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value="" /></div> */}
                 </div>
-                {/* <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value="" /></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state" /></div>
-                </div> */}
 
                 {!changeData ? 
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button" onClick={() => setChangeData(true)}>Изменить</button></div>
@@ -58,7 +51,16 @@ import './UserProfile.scss'
         <div class="col-md-4">
             <div class="p-3 py-5">
             <h4 class="text-center">Последнии покупки</h4>
-                
+                <div className="lastest_product">
+                    <div className="lastest_product_item">
+                        <div className="lastest_product_item_name">
+
+                        </div>
+                        <div className="lastest_product_item_price">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
