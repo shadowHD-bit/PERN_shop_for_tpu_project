@@ -28,6 +28,8 @@ import { observer } from "mobx-react-lite";
 import ChangeSlides from "../components/modals/ChangeSlide";
 import { fetchOrders } from "../http/orderAPI";
 import OrderItemAdmin from "../components/OrderItemAdmin";
+import { fetchQuestion } from "../http/questionAPI";
+import QuestionItemAdmin from "../components/QuestionItemAdmin";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -84,8 +86,6 @@ const Admin = observer(() => {
   const filteredProduct = product.products.filter((prod) => {
     return prod.name.toLowerCase().includes(searchValue.toLowerCase());
   });
-
-
 
   //Orders Logic
 
@@ -154,6 +154,78 @@ const Admin = observer(() => {
     );
   }
 
+  /////////////
+  //Question Logic
+
+  const [questions, setQuestions] = useState([]);
+  const [currentPageQuestion, setCurrentPageQuestion] = useState(1);
+  const [countQuestion, setCountQuestion] = useState(0);
+  const [filterQuestion, setFilterQuestion] = useState("all");
+  const [rerenderQuestions, setRerenderQuestion] = useState(false);
+
+  //Question pagination
+  const limitQuestion = 5;
+  const pageCountQuestion = Math.ceil(Number(countQuestion) / limitQuestion);
+  const pagesQuestion = [];
+
+  useEffect(() => {
+    fetchQuestion({ limit: limitQuestion, page: 1 }).then((data) => {
+      setQuestions(data);
+      setCountQuestion(data.count);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchQuestion({ limit: limitQuestion, page: 1 }).then((data) => {
+      setQuestions(data);
+      setCountQuestion(data.count);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchQuestion({ limit: limitQuestion, page: currentPageQuestion }).then((data) => {
+      setQuestions(data);
+    });
+  }, [currentPageQuestion]);
+
+  useEffect(() => {
+    fetchQuestion({ limit: limitQuestion, page: 1, complete: filterQuestion }).then((data) => {
+      setQuestions(data);
+      setCountQuestion(data.count);
+      setCurrentPageQuestion(1);
+      console.log(data);
+    });
+  }, [filterQuestion]);
+
+  //re-render after change status, or delete some order
+  useEffect(() => {
+    fetchQuestion({ limit: limitQuestion, page: currentPageQuestion, complete: filterQuestion }).then((data) => {
+      setQuestions(data);
+      setCountQuestion(data.count);
+      setCurrentPageQuestion(1);
+    });
+  }, [rerenderQuestions]);
+
+  const reRenderQuestion = () => {
+    setRerenderQuestion(!rerenderQuestions);
+  };
+
+  //Question pagination
+  for (
+    let numberQuestion = 1;
+    numberQuestion < pageCountQuestion + 1;
+    numberQuestion++
+  ) {
+    pagesQuestion.push(
+      <Pagination.Item
+        key={numberQuestion}
+        active={numberQuestion === currentPageQuestion}
+        onClick={() => setCurrentPageQuestion(numberQuestion)}
+      >
+        {numberQuestion}
+      </Pagination.Item>
+    );
+  }
 
   return (
     <Container className="d-flex flex-column">
@@ -334,14 +406,14 @@ const Admin = observer(() => {
                     className="mt-3 d-flex justify-content-center align-items-center"
                   >
                     <FormControl
-                    type="search"
-                    placeholder="Поиск заказа по id"
-                    className="me-2"
-                    aria-label="Search"
-                    onChange={(e) => setSearchValueOrder(e.target.value)}
-                    // value={searchDevice}
-                    // onChange={e => setSearchDevice(e.target.value)}
-                  />
+                      type="search"
+                      placeholder="Поиск заказа по id"
+                      className="me-2"
+                      aria-label="Search"
+                      onChange={(e) => setSearchValueOrder(e.target.value)}
+                      // value={searchDevice}
+                      // onChange={e => setSearchDevice(e.target.value)}
+                    />
                     <div className="mr-3">Фильтр:</div>
                     <Dropdown>
                       <Dropdown.Toggle variant="success">
@@ -393,10 +465,15 @@ const Admin = observer(() => {
                     </tr>
                   </thead>
                   <tbody>
-                    {orders.rows?.filter((ord) => {
-                      return ord.id.toString().toLowerCase().includes(searchValueOrder.toLowerCase());
-                    }).slice().map(
-                      ({ id, complete, createdAt, updatedAt, userId }) => (
+                    {orders.rows
+                      ?.filter((ord) => {
+                        return ord.id
+                          .toString()
+                          .toLowerCase()
+                          .includes(searchValueOrder.toLowerCase());
+                      })
+                      .slice()
+                      .map(({ id, complete, createdAt, updatedAt, userId }) => (
                         <OrderItemAdmin
                           key={id}
                           id={id}
@@ -405,6 +482,114 @@ const Admin = observer(() => {
                           updatedAt={updatedAt}
                           userId={userId}
                           reRender={reRender}
+                        />
+                      ))}
+                  </tbody>
+                </Table>
+                <Pagination
+                  size="sm"
+                  className="mt-4 mb-4"
+                  style={{ margin: "0 auto" }}
+                >
+                  {pages}
+                </Pagination>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </Card.Body>
+      </Card>
+
+      <Card className="mb-3">
+        <Card.Title className="text-center">
+          <h2 className="mt-2 ml-2">Работа с вопросами</h2>
+        </Card.Title>
+        <Card.Body>
+          <Accordion>
+            <Accordion.Item
+              eventKey=""
+              className="mt-4 mb-4"
+              onClick={() => setStateAccordion(true)}
+            >
+              <Accordion.Header>Список вопросов</Accordion.Header>
+              <Accordion.Body>
+                <Row>
+                  <Col
+                    xs={12}
+                    className="mt-3 d-flex justify-content-center align-items-center"
+                  >
+                    <div className="mr-3">Фильтр:</div>
+                    <Dropdown>
+                      <Dropdown.Toggle variant="success">
+                        {filterQuestion == "all"
+                          ? "Все"
+                          : filterQuestion == "completed"
+                          ? "Закрытые"
+                          : "Не закрытые"}
+                      </Dropdown.Toggle>
+
+                      <Dropdown.Menu>
+                        {filterQuestion === "all" ? (
+                          <Dropdown.Item disabled>Все</Dropdown.Item>
+                        ) : (
+                          <Dropdown.Item
+                            onClick={() => setFilterQuestion("all")}
+                          >
+                            Все
+                          </Dropdown.Item>
+                        )}
+                        {filterQuestion === "completed" ? (
+                          <Dropdown.Item disabled>Закрытые</Dropdown.Item>
+                        ) : (
+                          <Dropdown.Item
+                            onClick={() => setFilterQuestion("completed")}
+                          >
+                            Закрытые
+                          </Dropdown.Item>
+                        )}
+                        {filterQuestion === "not-completed" ? (
+                          <Dropdown.Item disabled>Не Закрытые</Dropdown.Item>
+                        ) : (
+                          <Dropdown.Item
+                            onClick={() => setFilterQuestion("not-completed")}
+                          >
+                            Не Закрытые
+                          </Dropdown.Item>
+                        )}
+                      </Dropdown.Menu>
+                    </Dropdown>
+                  </Col>
+                </Row>
+                <Table striped bordered hover className="mt-4 p-2">
+                  <thead>
+                    <tr>
+                      <th>ID вопроса</th>
+                      <th>ID товара</th>
+                      <th>ID пользователя</th>
+                      <th>Название товара</th>
+                      <th>Дата создания вопроса</th>
+                      <th>Статус</th>
+                      <th>Дата изменения</th>
+                      <th>Подробнее</th>
+                      <th>Завершить</th>
+                      <th>Удалить</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {questions.rows?.map(
+                      ({ id_question, userId, productId, createdAt, updatedAt, complete_question, question_text, product, answer_to_question}) => (
+                        <QuestionItemAdmin
+                          key={id_question}
+                          id_question={id_question}
+                          userId={userId}
+                          productId={productId}
+                          question_text = {question_text}
+                          product_name={productId}
+                          completeQuestion = {complete_question}
+                          updatedAt={updatedAt}
+                          createdAt={createdAt}
+                          product={product}
+                          answer={answer_to_question}
+                          reRenderQuestion={reRenderQuestion}
                         />
                       )
                     )}
@@ -415,7 +600,7 @@ const Admin = observer(() => {
                   className="mt-4 mb-4"
                   style={{ margin: "0 auto" }}
                 >
-                  {pages}
+                  {pagesQuestion}
                 </Pagination>
               </Accordion.Body>
             </Accordion.Item>
@@ -450,7 +635,6 @@ const Admin = observer(() => {
         onHide={() => setSlideChangeVisible(false)}
         showSuccessMsgFunc={showSuccessMsgFunc}
       />
-      
     </Container>
   );
 });

@@ -34,3 +34,8 @@ export const getOneOrderProducts = async (id) => {
     const {data} = await $authHost.get('api/order/' + id);
     return data;
 }
+
+export const getAllProductsOneUser = async ({userId,limit, page, complete}) => {
+    const {data} = await $authHost.get(`api/orderuser?userId=${userId}&limit=${limit}&page=${page}&complete=${complete}`);
+    return data;
+}

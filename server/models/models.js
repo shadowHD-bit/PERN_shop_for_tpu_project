@@ -82,6 +82,19 @@ const Orders = sequelize.define("orders", {
   userId: { type: DataTypes.INTEGER, allowNull: true },
 });
 
+//Question
+const Question = sequelize.define("question_about_product", {
+  id_question: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  question_text: { type: DataTypes.STRING, allowNull: false},
+  complete_question: { type: DataTypes.BOOLEAN, defaultValue: false},
+});
+
+//Answer
+const Answer = sequelize.define("answer_to_question", {
+  id_answer: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  answer_text: { type: DataTypes.STRING, allowNull: false},
+});
+
 //Connection Table Orders and Product
 const OrderProduct = sequelize.define("order_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -96,6 +109,18 @@ Basket.belongsTo(User);
 
 User.hasMany(Rating);
 Rating.belongsTo(User);
+
+Product.hasMany(Question);
+Question.belongsTo(Product);
+
+User.hasMany(Question);
+Question.belongsTo(User);
+
+Question.hasOne(Answer);
+Answer.belongsTo(Question);
+
+User.hasMany(Answer);
+Answer.belongsTo(User);
 
 Basket.hasMany(BasketProduct);
 BasketProduct.belongsTo(Basket);
@@ -144,4 +169,6 @@ module.exports = {
   Slider,
   OrderProduct,
   Orders,
+  Question,
+  Answer,
 };

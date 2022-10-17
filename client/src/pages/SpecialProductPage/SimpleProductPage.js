@@ -1,6 +1,16 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Image,
+  InputGroup,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { Context } from "../..";
 import {
@@ -18,6 +28,11 @@ import RatingStars from "../../components/RatingStar";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Nav from "react-bootstrap/Nav";
+import {
+  createQuestion,
+  fetchQuestion,
+  fetchQuestionProduct,
+} from "../../http/questionAPI";
 
 const SimpleProduct = observer(() => {
   const { user, basket } = useContext(Context);
@@ -68,6 +83,30 @@ const SimpleProduct = observer(() => {
       setResRate(res);
     });
   };
+
+  ////
+
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const handleCloseQuestionModal = () => setShowQuestionModal(false);
+  const handleShowQuestionModal = () => setShowQuestionModal(true);
+
+  const [stateQuestion, setStateQuestion] = useState("");
+
+  const createQuestionUser = () => {
+    // id_product, id_user_question, text_question
+    const formData = new FormData();
+    formData.append("text_question", stateQuestion);
+    formData.append("id_product", id);
+    formData.append("id_user_question", user.user.id);
+    createQuestion(formData).then((data) => setShowQuestionModal(false));
+  };
+
+  const [QA, setQA] = useState();
+
+  useEffect(() => {
+    fetchQuestionProduct({ id }).then((data) => setQA(data));
+    console.log(QA);
+  }, [product]);
 
   return (
     <section class="product">
@@ -185,9 +224,7 @@ const SimpleProduct = observer(() => {
           justify
         >
           <Tab eventKey="description" title="Описание">
-            {
-              <p>{product.description}</p>
-            }
+            {<p>{product.description}</p>}
           </Tab>
           <Tab eventKey="characteristics" title="Характеристики">
             sdvsdv
@@ -196,7 +233,25 @@ const SimpleProduct = observer(() => {
             sdvsdv
           </Tab>
           <Tab eventKey="question" title="Вопросы">
-            dsvsdvdsv
+            <Button onClick={handleShowQuestionModal}>
+              Задать вопрос по товару
+            </Button>
+            <br />
+            <br />
+
+            {QA?.map((question) => {
+              return (
+                <>
+                  <div className="question">
+                    Вопрос: {question.question.question_text} ({question.question.user.name} {question.question.user.family})
+                  </div>
+                  <div className="answer">
+                    Ответ: {question.answer.answer_text} ({question.answer.user.name} {question.answer.user.family})
+                  </div>
+                  <br />
+                </>
+              );
+            })}
           </Tab>
           <Tab eventKey="comment" title="Комментарии">
             dsvsdvdsv
@@ -206,6 +261,30 @@ const SimpleProduct = observer(() => {
           </Tab>
         </Tabs>
       </div>
+
+      <Modal show={showQuestionModal} onHide={handleCloseQuestionModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Введите свой вопрос:
+          <InputGroup>
+            <Form.Control
+              value={stateQuestion}
+              as="textarea"
+              onChange={(e) => setStateQuestion(e.target.value)}
+            />
+          </InputGroup>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseQuestionModal}>
+            Закрыть
+          </Button>
+          <Button variant="primary" onClick={createQuestionUser}>
+            Задать вопрос
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </section>
   );
 });

@@ -202,6 +202,37 @@ class OrdersController {
       return res.json("Delete didn't complete because was error: " + e);
     }
   }
+
+  async getOneUserOrders(req, res) {
+    let {userId, limit, page, complete } = req.query;
+
+    page = page || 1;
+    limit = limit || 7;
+
+    let offset = page * limit - limit;
+    let products;
+    if (complete === "not-completed") {
+      products = await Orders.findAndCountAll({
+        where: { complete: false, userId: userId },
+        limit,
+        offset,
+      });
+    } else if (complete === "completed") {
+      products = await Orders.findAndCountAll({
+        where: { complete: true, userId: userId },
+        limit,
+        offset,
+      });
+    } else {
+      products = await Orders.findAndCountAll({
+        where: { userId: userId },
+        limit,
+        offset,
+      });
+    }
+
+    return res.json(products);
+  }
 }
 
 module.exports = new OrdersController();
