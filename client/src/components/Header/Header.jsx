@@ -27,7 +27,7 @@ import {
 } from "../../utils/consts";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../../http/userAPI";
-import { CgProfile } from "react-icons/cg";
+import { CgProfile, CgShoppingBag, CgShoppingCart, CgUser } from "react-icons/cg";
 import { BsCart } from "react-icons/bs";
 
 const Header = observer(() => {
@@ -58,7 +58,7 @@ const Header = observer(() => {
             height: "30px",
             borderBottom: "1px solid rgb(132 83 82)",
             color: "white",
-            fontWeight: "100",
+            fontWeight: "600",
             display: "flex",
             alignItems: "center",
           }}
@@ -93,19 +93,18 @@ const Header = observer(() => {
             <div className="col text-right">
               <div className="col main_header_block">
                 <div className="link_block">
-                  <a href={USERPROFILE_ROUTE}>
-                    <CgProfile size={"30px"} />
-                    <span>Профиль</span>
+                  <a href={USERPROFILE_ROUTE} className="header__main_link">
+                    <CgUser size={"30px"} />
                   </a>
                 </div>
                 <div className="link_block">
-                  <a href={BASKET_ROUTE}>
-                    <BsCart size={"30px"} /> <span>{basket.Price} РУБ</span>
+                  <a href={BASKET_ROUTE} className="header__main_link">
+                    <CgShoppingCart size={"30px"} /> <span>{basket.Price} РУБ</span>
                   </a>
                 </div>
                 <div className="link_block">
-                  <a href={ORDERS_ROUTE}>
-                    <span>Заказы</span>
+                  <a href={ORDERS_ROUTE} className="header__main_link">
+                    <CgShoppingBag  size={"30px"}/>
                   </a>
                 </div>
                 <div className="link_block">

@@ -8,6 +8,7 @@ import {
   Dropdown,
   Form,
   FormControl,
+  Offcanvas,
   Pagination,
   Row,
   Table,
@@ -15,21 +16,23 @@ import {
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import { useNavigate, useParams } from "react-router-dom";
-import { Context } from "..";
-import CreateBrand from "../components/modals/CreateBrand";
-import CreateProduct from "../components/modals/CreateProduct";
-import CreateSlider from "../components/modals/CreateSlides";
-import CreateType from "../components/modals/CreateType";
-import ChangeProduct from "../components/modals/ChangeProduct";
-import DeleteTypeBrand from "../components/modals/DeleteTypeBrand";
-import { fetchDeleteProduct, fetchProduct } from "../http/productAPI";
-import { ADMIN_ROUTE } from "../utils/consts";
+import { Context } from "../..";
+import CreateBrand from "../../components/modals/CreateBrand";
+import CreateProduct from "../../components/modals/CreateProduct";
+import CreateSlider from "../../components/modals/CreateSlides";
+import CreateType from "../../components/modals/CreateType";
+import ChangeProduct from "../../components/modals/ChangeProduct";
+import DeleteTypeBrand from "../../components/modals/DeleteTypeBrand";
+import { fetchDeleteProduct, fetchProduct } from "../../http/productAPI";
+import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ROUTE } from "../../utils/consts";
 import { observer } from "mobx-react-lite";
-import ChangeSlides from "../components/modals/ChangeSlide";
-import { fetchOrders } from "../http/orderAPI";
-import OrderItemAdmin from "../components/OrderItemAdmin";
-import { fetchQuestion } from "../http/questionAPI";
-import QuestionItemAdmin from "../components/QuestionItemAdmin";
+import ChangeSlides from "../../components/modals/ChangeSlide";
+import { fetchOrders } from "../../http/orderAPI";
+import OrderItemAdmin from "../../components/OrderItemAdmin";
+import { fetchQuestion } from "../../http/questionAPI";
+import QuestionItemAdmin from "../../components/QuestionItemAdmin";
+import "./Admin.scss";
+import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineUser } from "react-icons/ai";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -43,6 +46,11 @@ const Admin = observer(() => {
   const [stateAccordion, setStateAccordion] = useState(false);
   const [temp, setTemp] = useState(false);
   const { product } = useContext(Context);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const toggleShow = () => setShow((s) => !s);
 
   React.useEffect(() => {
     fetchProduct(null, null, 1, 10).then((data) => {
@@ -183,13 +191,19 @@ const Admin = observer(() => {
   }, []);
 
   useEffect(() => {
-    fetchQuestion({ limit: limitQuestion, page: currentPageQuestion }).then((data) => {
-      setQuestions(data);
-    });
+    fetchQuestion({ limit: limitQuestion, page: currentPageQuestion }).then(
+      (data) => {
+        setQuestions(data);
+      }
+    );
   }, [currentPageQuestion]);
 
   useEffect(() => {
-    fetchQuestion({ limit: limitQuestion, page: 1, complete: filterQuestion }).then((data) => {
+    fetchQuestion({
+      limit: limitQuestion,
+      page: 1,
+      complete: filterQuestion,
+    }).then((data) => {
       setQuestions(data);
       setCountQuestion(data.count);
       setCurrentPageQuestion(1);
@@ -199,7 +213,11 @@ const Admin = observer(() => {
 
   //re-render after change status, or delete some order
   useEffect(() => {
-    fetchQuestion({ limit: limitQuestion, page: currentPageQuestion, complete: filterQuestion }).then((data) => {
+    fetchQuestion({
+      limit: limitQuestion,
+      page: currentPageQuestion,
+      complete: filterQuestion,
+    }).then((data) => {
       setQuestions(data);
       setCountQuestion(data.count);
       setCurrentPageQuestion(1);
@@ -229,8 +247,12 @@ const Admin = observer(() => {
 
   return (
     <Container className="d-flex flex-column">
-      <h1>Админка (v. 1.0.1)</h1>
-
+      <div className="d-flex">
+        <Button variant="outline" onClick={toggleShow} className="me-2">
+          <AiOutlineMenuFold />
+        </Button>
+        <h1>Админка (v. 1.0.1)</h1>
+      </div>
       <Card className="mt-3">
         <Card.Title className="text-center">
           <h2 className="mt-2 ml-2">Работа с типами и брендами</h2>
@@ -576,15 +598,25 @@ const Admin = observer(() => {
                   </thead>
                   <tbody>
                     {questions.rows?.map(
-                      ({ id_question, userId, productId, createdAt, updatedAt, complete_question, question_text, product, answer_to_question}) => (
+                      ({
+                        id_question,
+                        userId,
+                        productId,
+                        createdAt,
+                        updatedAt,
+                        complete_question,
+                        question_text,
+                        product,
+                        answer_to_question,
+                      }) => (
                         <QuestionItemAdmin
                           key={id_question}
                           id_question={id_question}
                           userId={userId}
                           productId={productId}
-                          question_text = {question_text}
+                          question_text={question_text}
                           product_name={productId}
-                          completeQuestion = {complete_question}
+                          completeQuestion={complete_question}
                           updatedAt={updatedAt}
                           createdAt={createdAt}
                           product={product}
@@ -635,6 +667,44 @@ const Admin = observer(() => {
         onHide={() => setSlideChangeVisible(false)}
         showSuccessMsgFunc={showSuccessMsgFunc}
       />
+
+      <Offcanvas show={show} onHide={handleClose}>
+        <Offcanvas.Header closeButton>
+          <Offcanvas.Title>Навигация</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+          <div className="d-flex flex-column">
+          <Button>
+            <AiOutlineUser></AiOutlineUser>
+            Пользователи
+          </Button>
+          <Button href={ADMIN_BRANDANDTYPE_ROUTE}>
+            <AiOutlineUser></AiOutlineUser>
+            Бренды и типы
+          </Button>
+          <Button>
+            <AiOutlineUser></AiOutlineUser>
+            Заказы
+          </Button>
+          <Button>
+            <AiOutlineUser></AiOutlineUser>
+            Товары
+          </Button>
+          <Button>
+            <AiOutlineUser></AiOutlineUser>
+            Слайдер
+          </Button>
+          <Button>
+            <AiOutlineUser></AiOutlineUser>
+            Вопросы
+          </Button>
+          <Button href={ADMIN_EXCEL_ROUTE}>
+            <AiOutlineUser></AiOutlineUser>
+            Excel
+          </Button>
+          </div>
+        </Offcanvas.Body>
+      </Offcanvas>
     </Container>
   );
 });

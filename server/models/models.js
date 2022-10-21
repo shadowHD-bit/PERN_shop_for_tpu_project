@@ -98,8 +98,6 @@ const Answer = sequelize.define("answer_to_question", {
 //Connection Table Orders and Product
 const OrderProduct = sequelize.define("order_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  productId: { type: DataTypes.INTEGER, allowNull: false },
-  orderId: { type: DataTypes.INTEGER, allowNull: false },
   count: { type: DataTypes.INTEGER, allowNull: false },
 });
 
@@ -151,7 +149,12 @@ Orders.belongsTo(User, {
 
 Orders.hasMany(OrderProduct);
 OrderProduct.belongsTo(Orders, {
-  foreignKey: { name: "orderId" },
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+Product.hasMany(OrderProduct);
+OrderProduct.belongsTo(Product, {
   onDelete: "CASCADE",
   onUpdate: "CASCADE",
 });

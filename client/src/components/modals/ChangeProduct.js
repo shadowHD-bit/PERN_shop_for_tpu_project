@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import {Form, Button} from "react-bootstrap";
 import { updateProduct } from '../../http/productAPI';
-import UpdatePageDataProducts from '../../pages/Admin'
+import UpdatePageDataProducts from '../../pages/Admin/Admin'
 
 const ChangeProduct = ({show, onHide, productChange, updatePage}) => {
     const thisProduct = {...productChange}

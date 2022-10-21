@@ -5,6 +5,7 @@ import { BsFacebook } from 'react-icons/bs';
 import { BsTwitter } from 'react-icons/bs'; 
 import { BsGoogle } from 'react-icons/bs'; 
 import { FaVk } from 'react-icons/fa'; 
+import { SocialButton } from '../UI/Buttons/SocialButton/SocialButton';
 
 export default function Footer() {
   return (

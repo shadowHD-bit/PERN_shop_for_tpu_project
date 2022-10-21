@@ -1,4 +1,12 @@
 export const ADMIN_ROUTE = '/admin'
+export const ADMIN_USER_ROUTE = '/admin'
+export const ADMIN_PRODUCT_ROUTE = '/admin'
+export const ADMIN_BRANDANDTYPE_ROUTE = '/admin_brand_and_type'
+export const ADMIN_SLIDER_ROUTE = '/admin'
+export const ADMIN_ORDER_ROUTE = '/admin'
+export const ADMIN_QUESTION_ROUTE = '/admin'
+export const ADMIN_EXCEL_ROUTE = '/admin_excel'
+
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'
 export const SHOP_ROUTE = '/'
