@@ -42,7 +42,7 @@ const Product = sequelize.define("product", {
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
   description: { type: DataTypes.STRING, defaultValue: "Нет описания...",allowNull: true},
-  imgMain: { type: DataTypes.STRING, allowNull: false },
+  imgMain: { type: DataTypes.STRING, allowNull: true },
   imgFirst: { type: DataTypes.STRING, allowNull: true },
   imgSecond: { type: DataTypes.STRING, allowNull: true },
   imgThird: { type: DataTypes.STRING, allowNull: true },

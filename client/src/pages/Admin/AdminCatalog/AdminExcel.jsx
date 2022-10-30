@@ -1,12 +1,19 @@
 import React from "react";
 import { useState } from "react";
-import { Button, Card, Container, Modal, Offcanvas } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Container,
+  Form,
+  Modal,
+  Offcanvas,
+} from "react-bootstrap";
 import {
   AiFillFileExcel,
   AiOutlineMenuFold,
   AiOutlineUser,
 } from "react-icons/ai";
-import { fetchProduct, getAllProductSearch } from "../../../http/productAPI";
+import { createMoreProduct, fetchProduct, getAllProductSearch } from "../../../http/productAPI";
 import {
   ADMIN_BRANDANDTYPE_ROUTE,
   ADMIN_EXCEL_ROUTE,
@@ -19,6 +26,7 @@ import {
   fetchTypeExcel,
   fetchUserExcel,
 } from "../../../http/excelAPI";
+import UploadData from "./UploadData";
 
 const AdminExcel = () => {
   const [show, setShow] = useState(false);
@@ -26,9 +34,41 @@ const AdminExcel = () => {
   const toggleShow = () => setShow((s) => !s);
 
   const [showModal, setShowModal] = useState(false);
-
   const handleCloseModal = () => setShowModal(false);
   const handleShowModal = () => setShowModal(true);
+
+  const [showModalUpload, setShowModalUpload] = useState(false);
+  const handleCloseModalUpload = () => setShowModalUpload(false);
+  const handleShowModalUpload = () => setShowModalUpload(true);
+
+  const [file, setFile] = useState(null);
+  const selectFile = (e) => {
+    let selectedFile = e.target.files[0];
+    if (selectedFile) {
+      let reader = new FileReader();
+      reader.readAsArrayBuffer(selectedFile);
+      reader.onload = (e) => {
+        setFile(null);
+        setFile(e.target.result);
+      };
+    }
+  };
+
+  const [excelData, setExcelData] = useState(null);
+
+  const getExcelData = () => {
+    if (file) {
+      const workbook = XLSX.read(file, { type: "buffer" });
+      const worksheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[worksheetName];
+      const data = XLSX.utils.sheet_to_json(worksheet);
+      setExcelData(data);
+    }
+  };
+
+  const uploadInDatabase = () => {
+    createMoreProduct(excelData).then(data => handleCloseModalUpload())
+  }
 
   const getProductData = () => {
     fetchProductExcel().then((data) => {
@@ -148,11 +188,19 @@ const AdminExcel = () => {
                 Выгрузить данные о всех товарах
               </Button>
 
-              <Button className="mb-2" variant="success">
+              <Button
+                className="mb-2"
+                variant="success"
+                onClick={handleShowModalUpload}
+              >
                 Загрузить данные товара
               </Button>
 
-              <Button className="mb-2" variant="success" onClick={() => getUserData()}>
+              <Button
+                className="mb-2"
+                variant="success"
+                onClick={() => getUserData()}
+              >
                 <AiFillFileExcel />
                 Выгрузить данные о всех пользователях
               </Button>
@@ -246,6 +294,51 @@ const AdminExcel = () => {
             Не завершенные
           </Button>
         </Modal.Body>
+      </Modal>
+
+      <Modal
+        show={showModalUpload}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        onHide={handleCloseModalUpload}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Импорт данный</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Загрузите файл в формате XLSX или XLS:
+          <Form.Control className="mt-3" type="file" onChange={selectFile} />
+          <br />
+          {!excelData ? (
+            <div>Нет данных</div>
+          ) : (
+            <div className="table-responsive">
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Наименование</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Описание</th>
+                    <th scope="col">ID бренда</th>
+                    <th scope="col">ID типа</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <UploadData excelData={excelData} />
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={() => getExcelData()}>
+            Отобразить данные
+          </Button>
+          <Button onClick={() => uploadInDatabase()} variant="success" disabled={excelData != null ? false : true}>
+            Загрузить данные
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

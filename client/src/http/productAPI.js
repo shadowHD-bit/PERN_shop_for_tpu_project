@@ -43,6 +43,12 @@ export const createProduct = async (product) => {
     return data
 }
 
+// Создать товар excel
+export const createMoreProduct = async (products) => {
+    const {data} = await $authHost.post('api/product_excel', products)
+    return data
+}
+
 // Выбрать товар
 export const fetchProduct = async (productTypeId, productBrandId, page, limit= 5) => {
     const {data} = await $host.get('api/product', {params: {

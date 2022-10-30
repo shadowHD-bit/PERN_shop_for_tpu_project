@@ -57,6 +57,32 @@ class ProductController {
     }
   }
 
+  async createMoreProduct(req, res, next) {
+    let products = req.body
+    await products.map((prod) => {
+        try {
+            // let { name, price, productBrandId, productTypeId } 
+            let name = prod.name
+            let price = prod.price
+            let productBrandId = prod.productBrandId
+            let productTypeId = prod.productTypeId
+            let description = prod.description
+
+            const product = Product.create({
+              name,
+              price,
+              productBrandId,
+              productTypeId,
+              description
+            });
+      
+            return res.json(product);
+          } catch (e) {
+            next(ApiError.badRequest(e.message));
+          }
+    })
+  }
+
   async getProduct(req, res) {
     let { productBrandId, productTypeId, limit, page } = req.query;
     page = page || 1;
