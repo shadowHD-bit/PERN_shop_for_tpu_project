@@ -264,7 +264,7 @@ const SimpleProduct = observer(() => {
 
       <Modal show={showQuestionModal} onHide={handleCloseQuestionModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Задать вопрос...</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           Введите свой вопрос:
