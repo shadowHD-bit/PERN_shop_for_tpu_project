@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import {Card, Col, Button} from "react-bootstrap";
 import Image from "react-bootstrap/Image";
 import {useNavigate} from "react-router-dom"
-import { BASKET_ROUTE, PRODUCT_ROUTE } from '../../utils/consts';
+import { BASKET_ROUTE, LIKES_ROUTER, PRODUCT_ROUTE } from '../../utils/consts';
 import { BsCartPlus } from "react-icons/bs";
 import { BsCheckLg } from "react-icons/bs";
 import './productItem.scss'
@@ -10,12 +10,19 @@ import { Context } from '../..';
 import { addProductToBasket, fetchOneProduct } from '../../http/productAPI';
 import { observer } from 'mobx-react-lite';
 import {AiOutlineStar} from 'react-icons/ai'
+import { addProductToLikes } from '../../http/likesAPI';
+import { CgHeart } from 'react-icons/cg';
 
 const ProductItem = observer(({product}) => {
-    const {user, basket} = useContext(Context);
+    const {user, basket, likes} = useContext(Context);
 
     const isProductInBasket = (prod) => {
         const findProduct = basket.Basket.findIndex(item => Number(item.id) === Number(prod.id));
+        return findProduct < 0;
+    }
+
+    const isProductInLikes = (prod) => {
+        const findProduct = likes.Likes.findIndex(item => Number(item.id) === Number(prod.id));
         return findProduct < 0;
     }
 
@@ -26,6 +33,15 @@ const ProductItem = observer(({product}) => {
             basket.setBasket(product);
         }
     }
+
+    const addProductInLikes = (product) => {
+        if(user.isAuth) {
+            addProductToLikes(product).then(() => likes.setLikes(product, true))
+        } else {
+            likes.setLikes(product);
+        }
+    }
+
     const [productIn, setProductIn] = useState({info: []})
 
     useEffect(() => {
@@ -57,6 +73,14 @@ const ProductItem = observer(({product}) => {
                         <Button variant="danger" onClick={() => addProductInBasket(productIn)} disabled={!user.isAuth ? true : false}><BsCartPlus /></Button>
                         :
                         <Button variant="success" href={BASKET_ROUTE} disabled={!user.isAuth ? true : false}><BsCheckLg /></Button>
+                        
+                    }
+                    {
+                        isProductInLikes(productIn)? 
+                        <Button variant="primary" onClick={() => addProductInLikes(productIn)} disabled={!user.isAuth ? true : false}><CgHeart /></Button>
+                        :
+                        <Button variant="info" onClick={() => likes.setDeleteItemLikes(productIn, true)} disabled={!user.isAuth ? true : false}><CgHeart /></Button>
+                       
                     }
 				</div>
 			</div>

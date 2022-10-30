@@ -6,6 +6,7 @@ import UserStore from './store/UserStore'
 import './index.scss'
 import BasketStoreStore from './store/BasketStore';
 import SliderStore from './store/SliderStore';
+import LikesStoreStore from './store/LikesStore';
 
 export const Context = createContext(null)
 
@@ -15,6 +16,7 @@ ReactDOM.render(
         product: new ProductStore(),
         basket: new BasketStoreStore(),
         slider: new SliderStore(),
+        likes: new LikesStoreStore(),
     }}>
         <App />
     </Context.Provider>,

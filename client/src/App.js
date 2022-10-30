@@ -9,10 +9,11 @@ import {Spinner} from "react-bootstrap";
 import { checkAuth, getData } from './http/userAPI';
 import { getProductFromBasket } from './http/productAPI';
 import { fetchSlider } from './http/sliderAPI';
+import { getProductFromLikes } from './http/likesAPI';
 
 
 const App = observer(() => {
-  const {user, basket, slider} = useContext(Context)
+  const {user, basket, slider, likes} = useContext(Context)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -52,6 +53,27 @@ useEffect(() => {
           basket.setBasket(savedBasket[key]);
       }
 }, [basket]);
+
+//Loading Likes
+useEffect(() => {
+  if(user.isAuth != true){
+    likes.setDeleteAllProductFromLikes();
+    getProductFromLikes().then(data => {
+          for (let key in data) {
+            likes.setLikes(data[key], true);
+          }
+      })
+  }
+}, [user.isAuth]);
+
+//Loading Likes
+useEffect(() => {
+  likes.setDeleteAllProductFromLikes();
+      const savedLike = JSON.parse(localStorage.getItem("likes"));
+      for (let key in savedLike) {
+        likes.setLikes(savedLike[key]);
+      }
+}, [likes]);
 
 if (loading) {
     return (

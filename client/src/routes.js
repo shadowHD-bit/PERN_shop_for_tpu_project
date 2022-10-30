@@ -10,7 +10,7 @@ import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
 import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LOGIN_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
+import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
 import UserProfile from './pages/UserProfile/UserProfile'
@@ -19,6 +19,7 @@ import ResultCheckout from './pages/Checkout/ResultCheckout'
 import Order from './pages/Order/Order'
 import AdminBrandAndType from './pages/Admin/AdminCatalog/AdminBrandAndType'
 import AdminExcel from './pages/Admin/AdminCatalog/AdminExcel'
+import LikesPage from './pages/LikesPage/LikesPage'
 
 export const authRoutes = [
     {
@@ -40,6 +41,10 @@ export const authRoutes = [
     {
         path: ORDERS_ROUTE,
         element: <Order />
+    },
+    {
+        path: LIKES_ROUTER,
+        element: <LikesPage />
     }
 ]
 

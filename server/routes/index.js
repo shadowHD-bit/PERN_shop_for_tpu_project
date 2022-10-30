@@ -18,6 +18,7 @@ const orderExcelRouter = require('./ExcelRouters/orderExcelRouter')
 const brandExcelRouter = require('./ExcelRouters/brandExcelRouter')
 const typeExcelRouter = require('./ExcelRouters/typeExcelRouter')
 const userExcelRouter = require('./ExcelRouters/userExcelRouter')
+const likesRouter = require('./likesRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -36,5 +37,6 @@ router.use('/order_excel', orderExcelRouter)
 router.use('/brand_excel', brandExcelRouter)
 router.use('/type_excel', typeExcelRouter)
 router.use('/user_excel', userExcelRouter)
+router.use('/likes', likesRouter)
 
 module.exports = router

@@ -24,6 +24,17 @@ const BasketProduct = sequelize.define("basket_product", {
   productId: { type: DataTypes.INTEGER },
 });
 
+//Models Likes_product
+const Likes = sequelize.define("likes", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+//Models BasketProducts
+const LikesProduct = sequelize.define("likes_product", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  productId: { type: DataTypes.INTEGER },
+});
+
 //Models Product
 const Product = sequelize.define("product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -105,6 +116,9 @@ const OrderProduct = sequelize.define("order_product", {
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
+User.hasOne(Likes);
+Likes.belongsTo(User);
+
 User.hasMany(Rating);
 Rating.belongsTo(User);
 
@@ -123,6 +137,9 @@ Answer.belongsTo(User);
 Basket.hasMany(BasketProduct);
 BasketProduct.belongsTo(Basket);
 
+Likes.hasMany(LikesProduct);
+LikesProduct.belongsTo(Likes);
+
 ProductType.hasMany(Product);
 Product.belongsTo(ProductType);
 
@@ -134,6 +151,9 @@ Rating.belongsTo(Product);
 
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
+
+Product.hasMany(LikesProduct);
+LikesProduct.belongsTo(Product);
 
 Product.hasMany(ProductInfo, { as: "info" });
 ProductInfo.belongsTo(Product);
@@ -174,4 +194,6 @@ module.exports = {
   Orders,
   Question,
   Answer,
+  Likes,
+  LikesProduct,
 };

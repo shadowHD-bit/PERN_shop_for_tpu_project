@@ -17,6 +17,7 @@ import {
   ABOUT_ROUTE,
   ADMIN_ROUTE,
   BASKET_ROUTE,
+  LIKES_ROUTER,
   LOCATIONPLACES_ROUTE,
   LOGIN_ROUTE,
   ORDERS_ROUTE,
@@ -27,7 +28,7 @@ import {
 } from "../../utils/consts";
 import { useNavigate } from "react-router-dom";
 import { getData } from "../../http/userAPI";
-import { CgProfile, CgShoppingBag, CgShoppingCart, CgUser } from "react-icons/cg";
+import { CgHeart, CgProfile, CgShoppingBag, CgShoppingCart, CgUser } from "react-icons/cg";
 import { BsCart } from "react-icons/bs";
 
 const Header = observer(() => {
@@ -105,6 +106,11 @@ const Header = observer(() => {
                 <div className="link_block">
                   <a href={ORDERS_ROUTE} className="header__main_link">
                     <CgShoppingBag  size={"30px"}/>
+                  </a>
+                </div>
+                <div className="link_block">
+                  <a href={LIKES_ROUTER} className="header__main_link">
+                    <CgHeart  size={"30px"}/>
                   </a>
                 </div>
                 <div className="link_block">
