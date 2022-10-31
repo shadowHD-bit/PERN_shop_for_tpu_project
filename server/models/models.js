@@ -46,6 +46,7 @@ const Product = sequelize.define("product", {
   imgFirst: { type: DataTypes.STRING, allowNull: true },
   imgSecond: { type: DataTypes.STRING, allowNull: true },
   imgThird: { type: DataTypes.STRING, allowNull: true },
+  display: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
 //Models Type Product

@@ -248,6 +248,29 @@ class ProductController {
     }
   }
 
+  async updateDisplay(req, res) {
+    try {
+      const { display, id } = req.body;
+
+      await Product.findOne({ where: { id } }).then(async (data) => {
+        if (data) {
+          await Product.update(
+            {
+              display,
+            },
+            { where: { id } }
+          ).then(() => {
+            return res.json("Продукт обновлен");
+          });
+        } else {
+          return res.json("Этого продукта нет в базе данных!");
+        }
+      });
+    } catch (e) {
+      return res.json(e);
+    }
+  }
+
   async getSearchAllProductByName(req, res, next) {
     try {
       let { limit, page, name, filter } = req.query;

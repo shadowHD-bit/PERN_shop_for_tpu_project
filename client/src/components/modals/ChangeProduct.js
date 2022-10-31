@@ -4,7 +4,7 @@ import { Form, Button, Image } from "react-bootstrap";
 import { updateProduct } from "../../http/productAPI";
 import UpdatePageDataProducts from "../../pages/Admin/Admin";
 
-const ChangeProduct = ({ show, onHide, productChange, updatePage }) => {
+const ChangeProduct = ({ show, onHide, productChange, updatePage, reRenderProduct}) => {
   const thisProduct = { ...productChange };
   const id = thisProduct.id;
   const name = thisProduct.name;
@@ -17,8 +17,6 @@ const ChangeProduct = ({ show, onHide, productChange, updatePage }) => {
 
   const BrandId = thisProduct.productBrandId;
   const TypeId = thisProduct.productTypeId;
-
-  console.log(thisProduct);
 
   const [valueName, setValueName] = useState(name || "");
   const [valuePrice, setValuePrice] = useState(price || "");
@@ -72,7 +70,9 @@ const ChangeProduct = ({ show, onHide, productChange, updatePage }) => {
     formData.append("productBrandId", valueBrand);
     formData.append("productTypeId", valueType);
     console.log(formData);
-    updateProduct(id, formData);
+    updateProduct(id, formData).then(() => {
+      setTimeout(() => reRenderProduct(), 250);
+  });
     onHide();
     updatePage();
   };

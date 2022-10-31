@@ -75,6 +75,11 @@ export const updateProduct = async (id, body) => {
     return data;
 }
 
+// Обновление отображения
+export const updateDisplayProduct = async ({display, id}) => {
+    const {data} = await $authHost.put('api/display_product', {display, id});
+    return data;
+}
 
 //Работа с корзиной
 export const addProductToBasket = async (product) => {

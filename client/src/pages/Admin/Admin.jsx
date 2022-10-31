@@ -24,7 +24,11 @@ import CreateType from "../../components/modals/CreateType";
 import ChangeProduct from "../../components/modals/ChangeProduct";
 import DeleteTypeBrand from "../../components/modals/DeleteTypeBrand";
 import { fetchDeleteProduct, fetchProduct } from "../../http/productAPI";
-import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ROUTE } from "../../utils/consts";
+import {
+  ADMIN_BRANDANDTYPE_ROUTE,
+  ADMIN_EXCEL_ROUTE,
+  ADMIN_ROUTE,
+} from "../../utils/consts";
 import { observer } from "mobx-react-lite";
 import ChangeSlides from "../../components/modals/ChangeSlide";
 import { fetchOrders } from "../../http/orderAPI";
@@ -32,7 +36,12 @@ import OrderItemAdmin from "../../components/OrderItemAdmin";
 import { fetchQuestion } from "../../http/questionAPI";
 import QuestionItemAdmin from "../../components/QuestionItemAdmin";
 import "./Admin.scss";
-import { AiOutlineMenu, AiOutlineMenuFold, AiOutlineUser } from "react-icons/ai";
+import {
+  AiOutlineMenu,
+  AiOutlineMenuFold,
+  AiOutlineUser,
+} from "react-icons/ai";
+import ProductItemAdmin from "../../components/productItemAdmin";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -41,10 +50,7 @@ const Admin = observer(() => {
   const [slideChangeVisible, setSlideChangeVisible] = useState(false);
   const [productVisible, setProductVisible] = useState(false);
   const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false);
-  const [changeVisible, setChangeVisible] = useState(false);
-  const [changeProductData, setChangeProductData] = useState();
   const [stateAccordion, setStateAccordion] = useState(false);
-  const [temp, setTemp] = useState(false);
   const { product } = useContext(Context);
 
   const [show, setShow] = useState(false);
@@ -68,25 +74,12 @@ const Admin = observer(() => {
     setTimeout(() => setShowSuccessMsg(false), 5000);
   };
 
-  const history = useNavigate();
-
-  const deleteProduct = (id) => {
-    fetchDeleteProduct(id).then(() => {
-      history(ADMIN_ROUTE);
-    });
-  };
-
-  const changeProduct = (product) => {
-    setChangeProductData(product);
-    setChangeVisible(true);
-  };
-
-  const UpdatePageDataProducts = () => {
-    fetchProduct(null, null, 1, 10).then((data) => {
-      product.setProduct(data.rows);
-      product.setTotalCount(data.count);
-    });
-  };
+  // const UpdatePageDataProducts = () => {
+  //   fetchProduct(null, null, 1, 10).then((data) => {
+  //     product.setProduct(data.rows);
+  //     product.setTotalCount(data.count);
+  //   });
+  // };
 
   const [searchValue, setSearchValue] = useState("");
   const [searchValueOrder, setSearchValueOrder] = useState("");
@@ -94,6 +87,21 @@ const Admin = observer(() => {
   const filteredProduct = product.products.filter((prod) => {
     return prod.name.toLowerCase().includes(searchValue.toLowerCase());
   });
+
+  const [rerenderProduct, setRerenderProduct] = useState(false);
+
+//re-render after change status, or delete some order
+useEffect(() => {
+  fetchProduct(null, null, 1, 10).then((data) => {
+    product.setProduct(data.rows);
+    product.setTotalCount(data.count);
+  });
+}, [rerenderProduct]);
+
+const reRenderProduct = () => {
+  setRerenderProduct(!rerenderProduct);
+};
+
 
   //Orders Logic
 
@@ -339,15 +347,6 @@ const Admin = observer(() => {
                     // value={searchDevice}
                     // onChange={e => setSearchDevice(e.target.value)}
                   />
-                  <Container className="d-flex flex-row">
-                    <Button
-                      variant="outline-success"
-                      className="ml-1"
-                      onClick={() => UpdatePageDataProducts()}
-                    >
-                      Обновить данные
-                    </Button>
-                  </Container>
                 </Form>
                 <Table striped bordered hover className="mt-4 p-2">
                   <thead>
@@ -362,44 +361,12 @@ const Admin = observer(() => {
                       <th>Тип</th>
                       <th>Удалить</th>
                       <th>Изменить</th>
+                      <th>От-ние</th>
                     </tr>
                   </thead>
                   <tbody>
                     {filteredProduct.slice().map((productItem) => (
-                      <tr key={productItem.id}>
-                        <td key={productItem.id}>{productItem.id}</td>
-                        <td key={productItem.name}>{productItem.name}</td>
-                        <td key={productItem.price}>{productItem.price}</td>
-                        <td key={productItem.rating + Math.random()}>
-                          {productItem.rating}
-                        </td>
-                        <td key={productItem.imgMain}>{productItem.imgMain}</td>
-                        <td key={productItem.createdAt}>
-                          {productItem.createdAt}
-                        </td>
-                        <td key={productItem.productBrandId + Math.random()}>
-                          {productItem.productBrandId}
-                        </td>
-                        <td key={productItem.productTypeId + Math.random()}>
-                          {productItem.productTypeId}
-                        </td>
-                        <td key={Math.random() + Math.random()}>
-                          <Button
-                            variant={"outline-danger"}
-                            onClick={() => deleteProduct(productItem.id)}
-                          >
-                            Удалить
-                          </Button>
-                        </td>
-                        <td key={Math.random() + Math.random()}>
-                          <Button
-                            variant={"outline-primary"}
-                            onClick={() => changeProduct(productItem)}
-                          >
-                            Изменить
-                          </Button>
-                        </td>
-                      </tr>
+                      <ProductItemAdmin productItem = {productItem} reRenderProduct={reRenderProduct} />
                     ))}
                   </tbody>
                 </Table>
@@ -640,16 +607,11 @@ const Admin = observer(() => {
         </Card.Body>
       </Card>
 
-      <ChangeProduct
-        show={changeVisible}
-        onHide={() => setChangeVisible(false)}
-        productChange={changeProductData}
-        updatePage={() => setTemp(!temp)}
-      />
       <CreateBrand show={brandVisible} onHide={() => setBrandVisible(false)} />
       <CreateProduct
         show={productVisible}
         onHide={() => setProductVisible(false)}
+        reRenderProduct={reRenderProduct}
       />
       <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
       <DeleteTypeBrand
@@ -674,34 +636,34 @@ const Admin = observer(() => {
         </Offcanvas.Header>
         <Offcanvas.Body>
           <div className="d-flex flex-column">
-          <Button>
-            <AiOutlineUser></AiOutlineUser>
-            Пользователи
-          </Button>
-          <Button href={ADMIN_BRANDANDTYPE_ROUTE}>
-            <AiOutlineUser></AiOutlineUser>
-            Бренды и типы
-          </Button>
-          <Button>
-            <AiOutlineUser></AiOutlineUser>
-            Заказы
-          </Button>
-          <Button>
-            <AiOutlineUser></AiOutlineUser>
-            Товары
-          </Button>
-          <Button>
-            <AiOutlineUser></AiOutlineUser>
-            Слайдер
-          </Button>
-          <Button>
-            <AiOutlineUser></AiOutlineUser>
-            Вопросы
-          </Button>
-          <Button href={ADMIN_EXCEL_ROUTE}>
-            <AiOutlineUser></AiOutlineUser>
-            Excel
-          </Button>
+            <Button>
+              <AiOutlineUser></AiOutlineUser>
+              Пользователи
+            </Button>
+            <Button href={ADMIN_BRANDANDTYPE_ROUTE}>
+              <AiOutlineUser></AiOutlineUser>
+              Бренды и типы
+            </Button>
+            <Button>
+              <AiOutlineUser></AiOutlineUser>
+              Заказы
+            </Button>
+            <Button>
+              <AiOutlineUser></AiOutlineUser>
+              Товары
+            </Button>
+            <Button>
+              <AiOutlineUser></AiOutlineUser>
+              Слайдер
+            </Button>
+            <Button>
+              <AiOutlineUser></AiOutlineUser>
+              Вопросы
+            </Button>
+            <Button href={ADMIN_EXCEL_ROUTE}>
+              <AiOutlineUser></AiOutlineUser>
+              Excel
+            </Button>
           </div>
         </Offcanvas.Body>
       </Offcanvas>

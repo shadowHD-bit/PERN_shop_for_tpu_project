@@ -5,7 +5,7 @@ import {observer} from "mobx-react-lite";
 import { Context } from '../..';
 import { createProduct, fetchBrands, fetchProduct, fetchTypes } from '../../http/productAPI';
 
-const CreateProduct = observer(({show, onHide}) => {
+const CreateProduct = observer(({show, onHide, reRenderProduct}) => {
     const {product} = useContext(Context)
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
@@ -60,7 +60,10 @@ const CreateProduct = observer(({show, onHide}) => {
         formData.append('productBrandId', product.selectedBrand.id)
         formData.append('productTypeId', product.selectedType.id)
         formData.append('info', JSON.stringify(info))
-        createProduct(formData).then(data => onHide())
+        createProduct(formData).then(() => {
+            setTimeout(() => reRenderProduct(), 250);
+            onHide()
+        });
     }
 
     return (
@@ -71,7 +74,7 @@ const CreateProduct = observer(({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Добавить устройство
+                    Добавить товар
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
