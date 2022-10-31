@@ -58,29 +58,29 @@ class ProductController {
   }
 
   async createMoreProduct(req, res, next) {
-    let products = req.body
+    let products = req.body;
     await products.map((prod) => {
-        try {
-            // let { name, price, productBrandId, productTypeId } 
-            let name = prod.name
-            let price = prod.price
-            let productBrandId = prod.productBrandId
-            let productTypeId = prod.productTypeId
-            let description = prod.description
+      try {
+        // let { name, price, productBrandId, productTypeId }
+        let name = prod.name;
+        let price = prod.price;
+        let productBrandId = prod.productBrandId;
+        let productTypeId = prod.productTypeId;
+        let description = prod.description;
 
-            const product = Product.create({
-              name,
-              price,
-              productBrandId,
-              productTypeId,
-              description
-            });
-      
-            return res.json(product);
-          } catch (e) {
-            next(ApiError.badRequest(e.message));
-          }
-    })
+        const product = Product.create({
+          name,
+          price,
+          productBrandId,
+          productTypeId,
+          description,
+        });
+
+        return res.json(product);
+      } catch (e) {
+        next(ApiError.badRequest(e.message));
+      }
+    });
   }
 
   async getProduct(req, res) {
@@ -120,6 +120,22 @@ class ProductController {
         offset,
       });
     }
+    return res.json(product);
+  }
+
+  async getProductForAdmin(req, res) {
+    let { limit, page } = req.query;
+    page = page || 1;
+    limit = limit || 9;
+    let offset = page * limit - limit;
+    let product;
+
+    product = await Product.findAndCountAll({
+      limit,
+      include: [{ model: ProductBrand }, { model: ProductType }],
+      offset,
+    });
+
     return res.json(product);
   }
 

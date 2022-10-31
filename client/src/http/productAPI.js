@@ -57,6 +57,13 @@ export const fetchProduct = async (productTypeId, productBrandId, page, limit= 5
     return data
 }
 
+// Выбрать товар
+export const fetchProductsForAdmin = async ({limit, page}) => {
+    const {data} = await $authHost.get(`api/display_product?limit=${limit}&page=${page}`);
+    return data;
+}
+
+
 // Выбрать один продукт
 export const fetchOneProduct = async (id) => {
     const {data} = await $host.get('api/product/' + id)

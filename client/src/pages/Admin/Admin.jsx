@@ -23,7 +23,11 @@ import CreateSlider from "../../components/modals/CreateSlides";
 import CreateType from "../../components/modals/CreateType";
 import ChangeProduct from "../../components/modals/ChangeProduct";
 import DeleteTypeBrand from "../../components/modals/DeleteTypeBrand";
-import { fetchDeleteProduct, fetchProduct } from "../../http/productAPI";
+import {
+  fetchDeleteProduct,
+  fetchProduct,
+  fetchProductsForAdmin,
+} from "../../http/productAPI";
 import {
   ADMIN_BRANDANDTYPE_ROUTE,
   ADMIN_EXCEL_ROUTE,
@@ -55,13 +59,24 @@ const Admin = observer(() => {
 
   const [show, setShow] = useState(false);
 
+  const [productData, setProductData] = useState([]);
+
+  const [currentPageProduct, setCurrentPageProduct] = useState(1);
+  const [countProduct, setCountProduct] = useState(0);
+  //pagination
+  const limitProduct = 5;
+  const pageCountProduct = Math.ceil(Number(countProduct) / limitProduct);
+  const pagesProduct = [];
+
+  console.log(productData);
+
   const handleClose = () => setShow(false);
   const toggleShow = () => setShow((s) => !s);
 
   React.useEffect(() => {
-    fetchProduct(null, null, 1, 10).then((data) => {
-      product.setProduct(data.rows);
-      product.setTotalCount(data.count);
+    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+      setProductData(data.rows);
+      setCountProduct(data.count);
     });
   }, [setSlideChangeVisible]);
 
@@ -74,34 +89,64 @@ const Admin = observer(() => {
     setTimeout(() => setShowSuccessMsg(false), 5000);
   };
 
-  // const UpdatePageDataProducts = () => {
-  //   fetchProduct(null, null, 1, 10).then((data) => {
-  //     product.setProduct(data.rows);
-  //     product.setTotalCount(data.count);
-  //   });
-  // };
-
   const [searchValue, setSearchValue] = useState("");
   const [searchValueOrder, setSearchValueOrder] = useState("");
 
-  const filteredProduct = product.products.filter((prod) => {
+  useEffect(() => {
+    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+      setProductData(data.rows);
+      setCountProduct(data.count);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+      setProductData(data.rows);
+      setCountProduct(data.count);
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchProductsForAdmin({ page: currentPageProduct, limit }).then((data) => {
+      setProductData(data.rows);
+      setCountProduct(data.count);
+    });
+  }, [currentPageProduct]);
+
+  const filteredProduct = productData.filter((prod) => {
     return prod.name.toLowerCase().includes(searchValue.toLowerCase());
   });
 
   const [rerenderProduct, setRerenderProduct] = useState(false);
 
-//re-render after change status, or delete some order
-useEffect(() => {
-  fetchProduct(null, null, 1, 10).then((data) => {
-    product.setProduct(data.rows);
-    product.setTotalCount(data.count);
-  });
-}, [rerenderProduct]);
+  //re-render after change status, or delete some order
+  useEffect(() => {
+    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+      setProductData(data.rows);
+      setCountProduct(data.count);
+    });
+  }, [rerenderProduct]);
 
-const reRenderProduct = () => {
-  setRerenderProduct(!rerenderProduct);
-};
+  const reRenderProduct = () => {
+    setRerenderProduct(!rerenderProduct);
+  };
 
+  //Product pagination
+  for (
+    let numberProduct = 1;
+    numberProduct < pageCountProduct + 1;
+    numberProduct++
+  ) {
+    pagesProduct.push(
+      <Pagination.Item
+        key={numberProduct}
+        active={numberProduct === currentPageProduct}
+        onClick={() => setCurrentPageProduct(numberProduct)}
+      >
+        {numberProduct}
+      </Pagination.Item>
+    );
+  }
 
   //Orders Logic
 
@@ -366,10 +411,20 @@ const reRenderProduct = () => {
                   </thead>
                   <tbody>
                     {filteredProduct.slice().map((productItem) => (
-                      <ProductItemAdmin productItem = {productItem} reRenderProduct={reRenderProduct} />
+                      <ProductItemAdmin
+                        productItem={productItem}
+                        reRenderProduct={reRenderProduct}
+                      />
                     ))}
                   </tbody>
                 </Table>
+                <Pagination
+                  size="sm"
+                  className="mt-4 mb-4"
+                  style={{ margin: "0 auto" }}
+                >
+                  {pagesProduct}
+                </Pagination>
               </AccordionBody>
             </Accordion.Item>
           </Accordion>
