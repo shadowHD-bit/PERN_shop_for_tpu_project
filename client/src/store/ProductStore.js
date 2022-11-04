@@ -11,7 +11,7 @@ export default class ProductStore {
         this._selectedBrand = {}
         this._page = 1
         this._totalCount = 0
-        this._limit = 10 //Количество товара на странице по умолчанию
+        this._limit = 6 //Количество товара на странице по умолчанию
         makeAutoObservable(this)
     }
 

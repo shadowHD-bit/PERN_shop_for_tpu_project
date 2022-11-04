@@ -55,7 +55,6 @@ const Admin = observer(() => {
   const [productVisible, setProductVisible] = useState(false);
   const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false);
   const [stateAccordion, setStateAccordion] = useState(false);
-  const { product } = useContext(Context);
 
   const [show, setShow] = useState(false);
 
@@ -74,7 +73,7 @@ const Admin = observer(() => {
   const toggleShow = () => setShow((s) => !s);
 
   React.useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+    fetchProductsForAdmin({ page: 1, limit:limitProduct }).then((data) => {
       setProductData(data.rows);
       setCountProduct(data.count);
     });
@@ -93,35 +92,36 @@ const Admin = observer(() => {
   const [searchValueOrder, setSearchValueOrder] = useState("");
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+    fetchProductsForAdmin({ page: 1, limit:10 }).then((data) => {
       setProductData(data.rows);
       setCountProduct(data.count);
     });
   }, []);
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+    fetchProductsForAdmin({ page: 1, limit:limitProduct }).then((data) => {
       setProductData(data.rows);
       setCountProduct(data.count);
     });
   }, []);
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: currentPageProduct, limit }).then((data) => {
+    fetchProductsForAdmin({ page: currentPageProduct, limit:limitProduct }).then((data) => {
       setProductData(data.rows);
-      setCountProduct(data.count);
     });
   }, [currentPageProduct]);
 
   const filteredProduct = productData.filter((prod) => {
-    return prod.name.toLowerCase().includes(searchValue.toLowerCase());
+    if(searchValue){
+      return prod.name.toLowerCase().includes(searchValue.toLowerCase())
+    } 
+    return prod.name;
   });
 
   const [rerenderProduct, setRerenderProduct] = useState(false);
 
-  //re-render after change status, or delete some order
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit }).then((data) => {
+    fetchProductsForAdmin({ page: 1, limit:limitProduct}).then((data) => {
       setProductData(data.rows);
       setCountProduct(data.count);
     });

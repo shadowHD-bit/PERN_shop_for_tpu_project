@@ -50,9 +50,9 @@ export const createMoreProduct = async (products) => {
 }
 
 // Выбрать товар
-export const fetchProduct = async (productTypeId, productBrandId, page, limit= 5) => {
+export const fetchProduct = async (productTypeId, productBrandId) => {
     const {data} = await $host.get('api/product', {params: {
-        productTypeId, productBrandId, page, limit
+        productTypeId, productBrandId
         }})
     return data
 }

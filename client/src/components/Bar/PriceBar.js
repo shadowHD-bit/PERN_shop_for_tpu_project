@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 import React, { useState } from 'react'
 import { Form, ListGroup } from 'react-bootstrap'
 
-const PriceBar = observer(({onChange, onChangeMin}) => {
+const PriceBar = observer(({onChange, onChangeMin, inFirstPage}) => {
 
   const [minPrice, setMinPrice] = useState(1)
   const [maxPrice, setMaxPrice] = useState(999999)
@@ -10,11 +10,13 @@ const PriceBar = observer(({onChange, onChangeMin}) => {
   const handleChangeMaxPrice = (event) => {
     onChange(event.target.value)
     setMaxPrice(event.target.value)
+    inFirstPage()
   }
 
   const handleChangeMinPrice = (event) => {
     onChangeMin(event.target.value)
     setMinPrice(event.target.value)
+    inFirstPage()
   }
 
   return (

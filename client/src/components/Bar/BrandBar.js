@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { Card, ListGroup, Row } from "react-bootstrap";
-import { Context } from "..";
+import { Context } from "../..";
 
-const BrandBar = observer(() => {
+const BrandBar = observer(({inFirstPage}) => {
   const { product } = useContext(Context);
+
+  const changBrand = (brand) => {
+    product.setSelectedBrand(brand)
+    inFirstPage()
+  }
 
   return (
     <ListGroup className="mt-3">
@@ -12,7 +17,7 @@ const BrandBar = observer(() => {
       <ListGroup.Item
         style={{ cursor: "pointer" }}
         active={'all' === product.selectedBrand}
-        onClick={() => product.setSelectedBrand('all')}
+        onClick={() => changBrand('all')}
         key={'all'}
       >
         Все бренды
@@ -21,7 +26,7 @@ const BrandBar = observer(() => {
         <ListGroup.Item
           style={{ cursor: "pointer" }}
           active={brand.id === product.selectedBrand.id}
-          onClick={() => product.setSelectedBrand(brand)}
+          onClick={() => changBrand(brand)}
           key={brand.id}
         >
           {brand.name}

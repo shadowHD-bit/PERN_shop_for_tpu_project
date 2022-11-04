@@ -1,24 +1,22 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Pagination} from "react-bootstrap";
 import { Context } from '..';
 
-const Pages = observer(() => {
-    const {product} = useContext(Context)
-    const pageCount = Math.ceil(product.totalCount / product.limit)
-    const pages = []
+const Pages = observer(({currentPage, paginate, productPerPage, totalProducts}) => {
+    const pageNumber = []
 
-    for (let i = 0; i < pageCount; i++) {
-        pages.push(i + 1)
+    for(let i = 1; i <= Math.ceil(totalProducts / productPerPage); i++){
+        pageNumber.push(i)
     }
 
     return (
         <Pagination className="mt-3">
-            {pages.map(page =>
+            {pageNumber.map(page =>
                 <Pagination.Item
                     key={page}
-                    active={product.page === page}
-                    onClick={() => product.setPage(page)}
+                    active={currentPage === page}
+                    onClick={() => paginate(page)}
                 >
                     {page}
                 </Pagination.Item>
