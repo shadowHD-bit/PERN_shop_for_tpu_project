@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import { fetchDeleteProduct, updateDisplayProduct } from "../http/productAPI";
-import ChangeProduct from "./modals/ChangeProduct";
+import { fetchDeleteProduct, updateDisplayProduct } from "../../http/productAPI";
+import ChangeProduct from "../modals/ChangeProduct";
 
 const ProductItemAdmin = ({productItem, reRenderProduct }) => {
   const [changeProductData, setChangeProductData] = useState();

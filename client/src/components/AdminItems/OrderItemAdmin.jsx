@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Card, Col, Modal, Row } from 'react-bootstrap';
-import { fetchChangeStatusOrder, fetchDeleteOrder, getOneOrderProducts } from '../http/orderAPI';
-import { fetchOneProduct } from '../http/productAPI';
-import { PRODUCT_ROUTE } from '../utils/consts';
+import { fetchChangeStatusOrder, fetchDeleteOrder, getOneOrderProducts } from '../../http/orderAPI';
+import { fetchOneProduct } from '../../http/productAPI';
+import { PRODUCT_ROUTE } from '../../utils/consts';
 
 const OrderItemAdmin = ({id, complete, createdAt, updatedAt, userId, reRender}) => {
 

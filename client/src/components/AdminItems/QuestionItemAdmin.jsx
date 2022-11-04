@@ -8,9 +8,9 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
-import { createAnswer, updateAnswerText } from "../http/answerAPI";
-import { changeStatusQuestion, deleteQuestion } from "../http/questionAPI";
-import { PRODUCT_ROUTE } from "../utils/consts";
+import { createAnswer, updateAnswerText } from "../../http/answerAPI";
+import { changeStatusQuestion, deleteQuestion } from "../../http/questionAPI";
+import { PRODUCT_ROUTE } from "../../utils/consts";
 
 const QuestionItemAdmin = ({
   id_question,

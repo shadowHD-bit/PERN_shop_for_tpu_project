@@ -15,8 +15,6 @@ import {
 } from "react-bootstrap";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
-import { useNavigate, useParams } from "react-router-dom";
-import { Context } from "../..";
 import CreateBrand from "../../components/modals/CreateBrand";
 import CreateProduct from "../../components/modals/CreateProduct";
 import CreateSlider from "../../components/modals/CreateSlides";
@@ -36,16 +34,16 @@ import {
 import { observer } from "mobx-react-lite";
 import ChangeSlides from "../../components/modals/ChangeSlide";
 import { fetchOrders } from "../../http/orderAPI";
-import OrderItemAdmin from "../../components/OrderItemAdmin";
+import OrderItemAdmin from "../../components/AdminItems/OrderItemAdmin";
 import { fetchQuestion } from "../../http/questionAPI";
-import QuestionItemAdmin from "../../components/QuestionItemAdmin";
+import QuestionItemAdmin from "../../components/AdminItems/QuestionItemAdmin";
 import "./Admin.scss";
 import {
   AiOutlineMenu,
   AiOutlineMenuFold,
   AiOutlineUser,
 } from "react-icons/ai";
-import ProductItemAdmin from "../../components/productItemAdmin";
+import ProductItemAdmin from "../../components/AdminItems/productItemAdmin";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
