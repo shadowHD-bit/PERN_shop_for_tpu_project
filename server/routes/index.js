@@ -20,6 +20,7 @@ const typeExcelRouter = require('./ExcelRouters/typeExcelRouter')
 const userExcelRouter = require('./ExcelRouters/userExcelRouter')
 const likesRouter = require('./likesRouter')
 const displayProductRouter = require('./displayProductRouter')
+const reviewRouter = require('./reviewRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -40,4 +41,6 @@ router.use('/type_excel', typeExcelRouter)
 router.use('/user_excel', userExcelRouter)
 router.use('/likes', likesRouter)
 router.use('/display_product', displayProductRouter)
+router.use('/reviews', reviewRouter)
+
 module.exports = router

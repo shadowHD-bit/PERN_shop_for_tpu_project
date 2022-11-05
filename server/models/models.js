@@ -24,6 +24,21 @@ const BasketProduct = sequelize.define("basket_product", {
   productId: { type: DataTypes.INTEGER },
 });
 
+//Models Reviews
+const Reviews = sequelize.define("reviews", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+//Models ReviewsProduct
+const ReviewsProduct = sequelize.define("reviews_products", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  text_reviews: { type: DataTypes.STRING, allowNull: false },
+  img_reviews: { type: DataTypes.STRING, allowNull: true },
+  description_true: { type: DataTypes.BOOLEAN, defaultValue: false },
+  size_true: { type: DataTypes.BOOLEAN, defaultValue: false },
+  delivery_true: { type: DataTypes.BOOLEAN, defaultValue: false },
+});
+
 //Models Likes_product
 const Likes = sequelize.define("likes", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
@@ -117,6 +132,15 @@ const OrderProduct = sequelize.define("order_product", {
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
+User.hasMany(Reviews);
+Reviews.belongsTo(User);
+
+Reviews.hasMany(ReviewsProduct);
+ReviewsProduct.belongsTo(Reviews);
+
+Product.hasMany(ReviewsProduct);
+ReviewsProduct.belongsTo(Product);
+
 User.hasOne(Likes);
 Likes.belongsTo(User);
 
@@ -197,4 +221,5 @@ module.exports = {
   Answer,
   Likes,
   LikesProduct,
+  Reviews, ReviewsProduct
 };

@@ -33,6 +33,7 @@ import {
   fetchQuestion,
   fetchQuestionProduct,
 } from "../../http/questionAPI";
+import { fetchReviewsProduct } from "../../http/reviewsAPI";
 
 const SimpleProduct = observer(() => {
   const { user, basket } = useContext(Context);
@@ -105,7 +106,13 @@ const SimpleProduct = observer(() => {
 
   useEffect(() => {
     fetchQuestionProduct({ id }).then((data) => setQA(data));
-    console.log(QA);
+  }, [product]);
+
+  const [reviews, setReviews] = useState();
+
+  useEffect(() => {
+    fetchReviewsProduct({ id }).then((data) => setReviews(data));
+    console.log(reviews);
   }, [product]);
 
   return (
@@ -230,7 +237,32 @@ const SimpleProduct = observer(() => {
             sdvsdv
           </Tab>
           <Tab eventKey="reviews" title="Отзывы">
-            sdvsdv
+            {reviews?.map((rew) => {
+              return (
+                <Card>
+                  <b>
+                    {rew.review.user.name} {rew.review.user.family}
+                  </b>
+                  <br />
+                  {rew.img_reviews != "not img" ? (
+                    <img
+                      width={"10%"}
+                      src={process.env.REACT_APP_API_URL + rew.img_reviews}
+                    />
+                  ) : (
+                    <div></div>
+                  )}
+                  <br />
+                  Отзыв: {rew.text_reviews}
+                  <br />
+                  Соответствие описанию: {rew.description_true ? "ДА" : "НЕТ"}
+                  <br />
+                  Соответствие размеру: {rew.size_true ? "ДА" : "НЕТ"}
+                  <br />
+                  Соответствие доставки: {rew.delivery_true ? "ДА" : "НЕТ"}
+                </Card>
+              );
+            })}
           </Tab>
           <Tab eventKey="question" title="Вопросы">
             <Button onClick={handleShowQuestionModal}>
@@ -243,10 +275,13 @@ const SimpleProduct = observer(() => {
               return (
                 <>
                   <div className="question">
-                    Вопрос: {question.question.question_text} ({question.question.user.name} {question.question.user.family})
+                    Вопрос: {question.question.question_text} (
+                    {question.question.user.name}{" "}
+                    {question.question.user.family})
                   </div>
                   <div className="answer">
-                    Ответ: {question.answer.answer_text} ({question.answer.user.name} {question.answer.user.family})
+                    Ответ: {question.answer.answer_text} (
+                    {question.answer.user.name} {question.answer.user.family})
                   </div>
                   <br />
                 </>
