@@ -1,0 +1,19 @@
+.tag {
+    display: block;
+    width: fit-content;
+    border-radius: 3px;
+    padding: .2em .5em .3em;
+    border-radius: 2px;
+    font-weight: 600;
+    margin: .25em .1em
+}
+
+.tag-bad {
+    background: rgb(187, 7, 7);
+    color: #fff
+}
+
+.tag-lg {
+    font-size: 12px;
+    border-radius: 10px
+}

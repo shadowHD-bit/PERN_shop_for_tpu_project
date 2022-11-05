@@ -34,6 +34,7 @@ import {
   fetchQuestionProduct,
 } from "../../http/questionAPI";
 import { fetchReviewsProduct } from "../../http/reviewsAPI";
+import ReviewUI from "../../components/UI/Review/ReviewUI";
 
 const SimpleProduct = observer(() => {
   const { user, basket } = useContext(Context);
@@ -239,28 +240,14 @@ const SimpleProduct = observer(() => {
           <Tab eventKey="reviews" title="Отзывы">
             {reviews?.map((rew) => {
               return (
-                <Card>
-                  <b>
-                    {rew.review.user.name} {rew.review.user.family}
-                  </b>
-                  <br />
-                  {rew.img_reviews != "not img" ? (
-                    <img
-                      width={"10%"}
-                      src={process.env.REACT_APP_API_URL + rew.img_reviews}
-                    />
-                  ) : (
-                    <div></div>
-                  )}
-                  <br />
-                  Отзыв: {rew.text_reviews}
-                  <br />
-                  Соответствие описанию: {rew.description_true ? "ДА" : "НЕТ"}
-                  <br />
-                  Соответствие размеру: {rew.size_true ? "ДА" : "НЕТ"}
-                  <br />
-                  Соответствие доставки: {rew.delivery_true ? "ДА" : "НЕТ"}
-                </Card>
+                <ReviewUI name_user={rew.review.user.name}
+                family_user={rew.review.user.family}
+                // img_user={}
+                text_review={rew.text_reviews}
+                img_review={rew.img_reviews}
+                description_true={rew.description_true}
+                size_true={rew.size_true}
+                delivery_true={rew.delivery_true} />
               );
             })}
           </Tab>
