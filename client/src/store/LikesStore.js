@@ -34,7 +34,6 @@ export default class LikesStoreStore {
       );
       this._totalPrice = totalPrice;
     }
-    console.log(item.count);
 
     if (!isAuth) {
       localStorage.setItem("likes", JSON.stringify(this._likes));

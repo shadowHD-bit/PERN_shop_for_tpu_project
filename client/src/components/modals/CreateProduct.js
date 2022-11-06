@@ -17,8 +17,8 @@ const CreateProduct = observer(({show, onHide, reRenderProduct}) => {
     const [info, setInfo] = useState([])
 
     useEffect(() => {
-        fetchTypes().then(data => product.setTypes(data))
-        fetchBrands().then(data => product.setBrands(data))
+        fetchTypes().then(data => product.setTypes(data.rows))
+        fetchBrands().then(data => product.setBrands(data.rows))
         fetchProduct(null, null, 1, 2).then(data => {
           product.setProduct(data.rows)
           product.setTotalCount(data.count)

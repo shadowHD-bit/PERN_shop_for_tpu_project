@@ -37,6 +37,19 @@ export const deleteBrand = async (id) => {
     return data;
 }
 
+// Update бренд
+export const updateBrand= async (id, body) => {
+    const {data} = await $authHost({method:'PUT', url:`api/productBrand/${id}`, data: body});
+    return data;
+}
+
+// Update type
+export const updateType= async (id, body) => {
+    const {data} = await $authHost({method:'PUT', url:`api/productType/${id}`, data: body});
+    return data;
+}
+
+
 // Создать товар
 export const createProduct = async (product) => {
     const {data} = await $authHost.post('api/product', product)

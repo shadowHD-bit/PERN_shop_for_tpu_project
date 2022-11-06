@@ -17,7 +17,7 @@ import UserProfile from './pages/UserProfile/UserProfile'
 import Checkouting from './pages/Checkout/Checkouting'
 import ResultCheckout from './pages/Checkout/ResultCheckout'
 import Order from './pages/Order/Order'
-import AdminBrandAndType from './pages/Admin/AdminCatalog/AdminBrandAndType'
+import AdminBrandAndType from './pages/Admin/AdminCatalog/BrandAndType/AdminBrandAndType'
 import AdminExcel from './pages/Admin/AdminCatalog/AdminExcel'
 import LikesPage from './pages/LikesPage/LikesPage'
 

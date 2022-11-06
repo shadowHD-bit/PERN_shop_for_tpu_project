@@ -20,7 +20,6 @@ import CreateProduct from "../../components/modals/CreateProduct";
 import CreateSlider from "../../components/modals/CreateSlides";
 import CreateType from "../../components/modals/CreateType";
 import ChangeProduct from "../../components/modals/ChangeProduct";
-import DeleteTypeBrand from "../../components/modals/DeleteTypeBrand";
 import {
   fetchDeleteProduct,
   fetchProduct,
@@ -44,6 +43,7 @@ import {
   AiOutlineUser,
 } from "react-icons/ai";
 import ProductItemAdmin from "../../components/AdminItems/productItemAdmin";
+import SideBar from "../../components/UI/AdminSideBar/SideBar";
 
 const Admin = observer(() => {
   const [brandVisible, setBrandVisible] = useState(false);
@@ -51,7 +51,6 @@ const Admin = observer(() => {
   const [slideCreateVisible, setSlideCreateVisible] = useState(false);
   const [slideChangeVisible, setSlideChangeVisible] = useState(false);
   const [productVisible, setProductVisible] = useState(false);
-  const [typeBrandDeleteVisible, setDeleteTypeBrandVisible] = useState(false);
   const [stateAccordion, setStateAccordion] = useState(false);
 
   const [show, setShow] = useState(false);
@@ -304,37 +303,7 @@ const Admin = observer(() => {
         </Button>
         <h1>Админка (v. 1.0.1)</h1>
       </div>
-      <Card className="mt-3">
-        <Card.Title className="text-center">
-          <h2 className="mt-2 ml-2">Работа с типами и брендами</h2>
-        </Card.Title>
-        <Card.Body>
-          <div className="d-flex flex-row justify-content-around">
-            <Button
-              variant={"outline-dark"}
-              className="mt-4 mr-2 w-50"
-              onClick={() => setTypeVisible(true)}
-            >
-              Добавить тип
-            </Button>
-            <Button
-              variant={"outline-dark"}
-              className="mt-4 ml-2 w-50"
-              onClick={() => setBrandVisible(true)}
-            >
-              Добавить бренд
-            </Button>
-          </div>
-          <Button
-            variant={"outline-dark"}
-            className="mt-4 p-2 w-100"
-            onClick={() => setDeleteTypeBrandVisible(true)}
-          >
-            Удалить тип/бренд
-          </Button>
-        </Card.Body>
-      </Card>
-
+      
       <Card className="mt-3">
         <Card.Title className="text-center">
           <h2 className="mt-2 ml-2">Работа со слайдером</h2>
@@ -667,11 +636,6 @@ const Admin = observer(() => {
         reRenderProduct={reRenderProduct}
       />
       <CreateType show={typeVisible} onHide={() => setTypeVisible(false)} />
-      <DeleteTypeBrand
-        show={typeBrandDeleteVisible}
-        onHide={() => setDeleteTypeBrandVisible(false)}
-        showSuccessMsgFunc={showSuccessMsgFunc}
-      />
       <CreateSlider
         show={slideCreateVisible}
         onHide={() => setSlideCreateVisible(false)}
@@ -683,43 +647,7 @@ const Admin = observer(() => {
         showSuccessMsgFunc={showSuccessMsgFunc}
       />
 
-      <Offcanvas show={show} onHide={handleClose}>
-        <Offcanvas.Header closeButton>
-          <Offcanvas.Title>Навигация</Offcanvas.Title>
-        </Offcanvas.Header>
-        <Offcanvas.Body>
-          <div className="d-flex flex-column">
-            <Button>
-              <AiOutlineUser></AiOutlineUser>
-              Пользователи
-            </Button>
-            <Button href={ADMIN_BRANDANDTYPE_ROUTE}>
-              <AiOutlineUser></AiOutlineUser>
-              Бренды и типы
-            </Button>
-            <Button>
-              <AiOutlineUser></AiOutlineUser>
-              Заказы
-            </Button>
-            <Button>
-              <AiOutlineUser></AiOutlineUser>
-              Товары
-            </Button>
-            <Button>
-              <AiOutlineUser></AiOutlineUser>
-              Слайдер
-            </Button>
-            <Button>
-              <AiOutlineUser></AiOutlineUser>
-              Вопросы
-            </Button>
-            <Button href={ADMIN_EXCEL_ROUTE}>
-              <AiOutlineUser></AiOutlineUser>
-              Excel
-            </Button>
-          </div>
-        </Offcanvas.Body>
-      </Offcanvas>
+      <SideBar show={show} handleClose={handleClose} />
     </Container>
   );
 });

@@ -9,9 +9,28 @@ class ProductTypeController{
     }
 
     async getProductType(req, res) {
-        const types = await ProductType.findAll()
+        const types = await ProductType.findAndCountAll()
         return res.json(types)
     }
+
+    async updateType(req, res) {
+        try {
+          const { id } = req.params;
+          const { name } = req.body;
+    
+          await ProductType.findOne({ where: { id: id } }).then(async (data) => {
+            if (data) {
+              await ProductType.update({ name: name }, {where:{id: id}}).then(() => {
+                return res.json("Type updated");
+              });
+            } else {
+              return res.json("This Type doesn't exist in DB");
+            }
+          });
+        } catch (e) {
+          return res.json("Updated didn't complete because was error: " + e);
+        }
+      }
 
     async deleteProductType(req, res) {
         try {

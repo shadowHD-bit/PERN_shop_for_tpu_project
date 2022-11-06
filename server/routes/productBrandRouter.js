@@ -10,6 +10,7 @@ router.post('/', checkRole('ADMIN'),productBrandController.createProductBrand)
 //Method GET to get brands
 router.get('/', productBrandController.getProductBrand)
 router.delete('/:id', checkRole('ADMIN'), productBrandController.deleteProductBrand)
+router.put('/:id', checkRole("ADMIN"), productBrandController.updateBrand)
 
 
 module.exports = router

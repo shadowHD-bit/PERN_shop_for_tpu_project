@@ -3,13 +3,14 @@ import Modal from "react-bootstrap/Modal";
 import {Button, Form} from "react-bootstrap";
 import { createBrand } from '../../http/productAPI';
 
-const CreateBrand = ({show, onHide}) => {
+const CreateBrand = ({show, onHide, reRender}) => {
     const [value, setValue] = useState('')
 
     const addBrand = () => {
         createBrand({name: value}).then(data => {
             setValue('')
             onHide()
+            reRender()
         })
     }
     return (

@@ -9,6 +9,7 @@ router.post('/', checkRole('ADMIN'),productTypeController.createProductType)
 //Method GET to get brands
 router.get('/', productTypeController.getProductType)
 
+router.put('/:id', checkRole("ADMIN"), productTypeController.updateType)
 
 router.delete('/:id', checkRole('ADMIN'), productTypeController.deleteProductType)
 
