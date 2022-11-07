@@ -4,3 +4,4 @@ server/.env
 server/static
 
 server/static_review
+server/files

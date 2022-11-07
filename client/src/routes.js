@@ -18,8 +18,12 @@ import Checkouting from './pages/Checkout/Checkouting'
 import ResultCheckout from './pages/Checkout/ResultCheckout'
 import Order from './pages/Order/Order'
 import AdminBrandAndType from './pages/Admin/AdminCatalog/BrandAndType/AdminBrandAndType'
-import AdminExcel from './pages/Admin/AdminCatalog/AdminExcel'
 import LikesPage from './pages/LikesPage/LikesPage'
+import AdminProduct from './pages/Admin/AdminCatalog/Product/AdminProduct'
+import AdminDocument from './pages/Admin/AdminCatalog/Document/AdminDocument'
+import AdminOrder from './pages/Admin/AdminCatalog/Order/AdminOrder'
+import AdminSlider from './pages/Admin/AdminCatalog/Slider/AdminSlider'
+import AdminQuestion from './pages/Admin/AdminCatalog/Question/AdminQuestion'
 
 export const authRoutes = [
     {
@@ -61,25 +65,25 @@ export const adminRoutes = [
         path: ADMIN_BRANDANDTYPE_ROUTE,
         element: <AdminBrandAndType />
     },
-    // {
-    //     path: ADMIN_PRODUCT_ROUTE,
-    //     element: <Admin />
-    // },
-    // {
-    //     path: ADMIN_QUESTION_ROUTE,
-    //     element: <Admin />
-    // },
-    // {
-    //     path: ADMIN_SLIDER_ROUTE,
-    //     element: <Admin />
-    // },
-    // {
-    //     path: ADMIN_ORDER_ROUTE,
-    //     element: <Admin />
-    // },
+    {
+        path: ADMIN_PRODUCT_ROUTE,
+        element: <AdminProduct />
+    },
+    {
+        path: ADMIN_QUESTION_ROUTE,
+        element: <AdminQuestion />
+    },
+    {
+        path: ADMIN_SLIDER_ROUTE,
+        element: <AdminSlider />
+    },
+    {
+        path: ADMIN_ORDER_ROUTE,
+        element: <AdminOrder />
+    },
     {
         path: ADMIN_EXCEL_ROUTE,
-        element: <AdminExcel />
+        element: <AdminDocument />
     },
 ]
 

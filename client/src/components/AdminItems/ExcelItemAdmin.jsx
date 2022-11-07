@@ -1,6 +1,6 @@
 import React from "react";
 
-const UploadData = ({ excelData }) => {
+const ExcelItemAdmin = ({ excelData }) => {
   return excelData.map((prod) => (
     <tr>
       <th>{prod.name}</th>
@@ -11,4 +11,4 @@ const UploadData = ({ excelData }) => {
     </tr>
   ));
 };
-export default UploadData;
+export default ExcelItemAdmin;

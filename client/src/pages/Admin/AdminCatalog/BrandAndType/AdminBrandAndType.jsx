@@ -13,12 +13,13 @@ import {
   Toast,
   Card,
 } from "react-bootstrap";
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineMenuFold, AiOutlinePlus } from "react-icons/ai";
 import { FaFeather } from "react-icons/fa";
 import BrandItemAdmin from "../../../../components/AdminItems/BrandItemAdmin";
 import TypeItemAdmin from "../../../../components/AdminItems/TypeItemAdmin";
 import CreateBrand from "../../../../components/modals/CreateBrand";
 import CreateType from "../../../../components/modals/CreateType";
+import SideBar from "../../../../components/UI/AdminSideBar/SideBar";
 import { fetchBrands, fetchTypes } from "../../../../http/productAPI";
 import "./AdminBrandAndType.scss";
 
@@ -39,6 +40,16 @@ const AdminBrandAndType = () => {
   const [rerenderTypes, setRerenderTypes] = useState(false);
 
   const [searchType, setSearchType] = useState("");
+
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const handleShowSidebar = () => {
+    setShowSidebar(true);
+  };
+
+  const handleCloseSidebar = () => {
+    setShowSidebar(false);
+  };
 
   useEffect(() => {
     fetchBrands().then((data) => {
@@ -92,7 +103,11 @@ const AdminBrandAndType = () => {
     <>
       <Container className="admin_container">
         <Row className="admin_title">
-          <Col xs={12}>Админ-панель (v.1.2)</Col>
+        <Col xs={12}>
+          <Button variant="outline-info" onClick={() => handleShowSidebar()} className="me-2">
+          <AiOutlineMenuFold />
+        </Button>
+          Админ-панель (v.1.2)</Col>
         </Row>
         <Row className="admin_subtitle">
           <Col xs={12}>Раздел "Типы и бренды"</Col>
@@ -327,6 +342,7 @@ const AdminBrandAndType = () => {
         show={typeVisible}
         onHide={() => setTypeVisible(false)}
       />
+      <SideBar show={showSidebar} handleClose={handleCloseSidebar} />
     </>
   );
 };

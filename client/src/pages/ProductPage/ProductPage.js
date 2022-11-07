@@ -13,8 +13,8 @@ const ProductPage = observer(() => {
   const { product } = useContext(Context);
 
   useEffect(() => {
-    fetchTypes().then((data) => product.setTypes(data));
-    fetchBrands().then((data) => product.setBrands(data));
+    fetchTypes().then((data) => product.setTypes(data.rows));
+    fetchBrands().then((data) => product.setBrands(data.rows));
     fetchProduct(null, null).then((data) => {
       product.setProduct(data.rows);
       product.setTotalCount(data.count);

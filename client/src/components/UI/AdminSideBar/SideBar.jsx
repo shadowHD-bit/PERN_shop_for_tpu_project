@@ -16,7 +16,7 @@ import {
   MdToys,
 } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_ROUTE } from "../../../utils/consts";
+import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE } from "../../../utils/consts";
 import "./SideBar.scss";
 
 const SideBar = ({show, handleClose}) => {
@@ -78,6 +78,7 @@ const SideBar = ({show, handleClose}) => {
             </Row>
 
             <Row className="sidebar_row">
+              <Link to={ADMIN_PRODUCT_ROUTE}>
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -88,9 +89,11 @@ const SideBar = ({show, handleClose}) => {
                   </Col>
                 </Row>
               </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
+              <Link to={ADMIN_ORDER_ROUTE}>
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -101,9 +104,11 @@ const SideBar = ({show, handleClose}) => {
                   </Col>
                 </Row>
               </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
+              <Link to={ADMIN_EXCEL_ROUTE}>
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -114,9 +119,11 @@ const SideBar = ({show, handleClose}) => {
                   </Col>
                 </Row>
               </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
+              <Link to={ADMIN_SLIDER_ROUTE}>
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -127,9 +134,11 @@ const SideBar = ({show, handleClose}) => {
                   </Col>
                 </Row>
               </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
+              <Link to={ADMIN_QUESTION_ROUTE}>
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -140,6 +149,7 @@ const SideBar = ({show, handleClose}) => {
                   </Col>
                 </Row>
               </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
