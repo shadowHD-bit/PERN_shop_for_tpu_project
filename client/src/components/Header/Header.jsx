@@ -1,46 +1,51 @@
 import React, { useState, useContext, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-
-//import style Bootstrap
 import "./Header.scss";
-import "bootstrap/dist/css/bootstrap.min.css";
-
-import { Offcanvas, Dropdown, Button, Badge } from "react-bootstrap";
-import { BsFacebook } from "react-icons/bs";
+import {
+  Button,
+  Badge,
+  Container,
+  Col,
+  Row,
+  InputGroup,
+  Form,
+} from "react-bootstrap";
+import {
+  BsBag,
+  BsBasket,
+  BsBell,
+  BsHeart,
+  BsPerson,
+  BsPinMap,
+  BsSearch,
+  BsTruck,
+} from "react-icons/bs";
 import { BsTwitter } from "react-icons/bs";
 import { BsGoogle } from "react-icons/bs";
 import { FaVk } from "react-icons/fa";
 
-import { MdMenu } from "react-icons/md";
+import { MdOutlineLogin } from "react-icons/md";
 import { Context } from "../..";
 import {
-  ABOUT_ROUTE,
-  ADMIN_ROUTE,
   BASKET_ROUTE,
   LIKES_ROUTER,
   LOCATIONPLACES_ROUTE,
   LOGIN_ROUTE,
   ORDERS_ROUTE,
-  PRODUCT_ROUTE,
-  RULES_ROUTE,
   SHOP_ROUTE,
   USERPROFILE_ROUTE,
 } from "../../utils/consts";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getData } from "../../http/userAPI";
-import { CgHeart, CgProfile, CgShoppingBag, CgShoppingCart, CgUser } from "react-icons/cg";
-import { BsCart } from "react-icons/bs";
+import SocialHeader from "../UI/Social/Header/SocialHeader";
+import { AiOutlineMenu } from "react-icons/ai";
+import Sidebar from "../UI/SideBar/Sidebar";
 
 const Header = observer(() => {
-  const navigate = useNavigate();
-  const { user, basket } = useContext(Context);
+  const { user, basket, likes } = useContext(Context);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  function logOut() {
-    localStorage.clear();
-    window.location.href = SHOP_ROUTE;
-  }
 
   const [load, setload] = useState(false);
   useEffect(() => {
@@ -51,432 +56,256 @@ const Header = observer(() => {
 
   if (user.isAuth) {
     return (
-      <div className="header h-100">
-        <div
-          className="header_top"
-          style={{
-            width: "100%",
-            height: "30px",
-            borderBottom: "1px solid rgb(132 83 82)",
-            color: "white",
-            fontWeight: "600",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <div className="container d-flex flex-row justify-content-between">
-            <div className="info__header">
-              Здравствуйте, <a href={USERPROFILE_ROUTE}>{user.userProf.name}</a>
-            </div>
-            <div className="icons__header_top">
-              <a href="#">
-                <BsFacebook className="social_header" size={"20px"} />
-              </a>
-              <a href="#">
-                <BsTwitter className="social_header" size={"20px"} />
-              </a>
-              <a href="#">
-                <BsGoogle className="social_header" size={"20px"} />
-              </a>
-              <a href="#">
-                <FaVk className="social_header last" size={"20px"} />
-              </a>
-            </div>
-          </div>
-        </div>
-        <div className="container h-100">
-          <div className="row align-items-center justify-content-center align-middle">
-            <div className="col">
-              <a href="/">
-                <img src="../../img/header/default_logo.png" />
-              </a>
-            </div>
-            <div className="col text-right">
-              <div className="col main_header_block">
-                <div className="link_block">
-                  <a href={USERPROFILE_ROUTE} className="header__main_link">
-                    <CgUser size={"30px"} />
-                  </a>
-                </div>
-                <div className="link_block">
-                  <a href={BASKET_ROUTE} className="header__main_link">
-                    <CgShoppingCart size={"30px"} /> <span>{basket.Price} РУБ</span>
-                  </a>
-                </div>
-                <div className="link_block">
-                  <a href={ORDERS_ROUTE} className="header__main_link">
-                    <CgShoppingBag  size={"30px"}/>
-                  </a>
-                </div>
-                <div className="link_block">
-                  <a href={LIKES_ROUTER} className="header__main_link">
-                    <CgHeart  size={"30px"}/>
-                  </a>
-                </div>
-                <div className="link_block">
-                  <a
-                    className="right_menu"
-                    style={{ border: "none" }}
-                    type="button"
-                    onClick={handleShow}
-                  >
-                    <MdMenu className="mdmenu" size={"30px"} />
-                  </a>
-                </div>
-              </div>
-              <Offcanvas
-                className="Offs"
-                placement="end"
-                show={show}
-                onHide={handleClose}
+      <>
+        <header className="header">
+          <Container fluid className="header_container">
+            <Row className="header_top">
+              <Col
+                className="header_top_left"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+                xl={4}
+                xxl={4}
               >
-                <Offcanvas.Header>
-                  <h5 id="offcanvasRightLabel">Be sure of yourself...</h5>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  <Button
-                    variant="none"
-                    className="btn btn-outline-danger mt-3"
-                    type="button"
-                    href="/shop-news"
+                <SocialHeader />
+              </Col>
+              <Col
+                className="header_top_center d-none d-xl-flex"
+                xl={4}
+                xxl={4}
+              >
+                <p className="top_text">
+                  Dress stylishly and be confident in yourself...
+                </p>
+              </Col>
+              <Col
+                className="header_top_right d-none d-md-flex"
+                md={6}
+                lg={6}
+                xl={4}
+                xxl={4}
+              >
+                <a className="right_text" href="tel:+7 (908) 956-60-33">
+                  +7 (908) 956-60-33
+                </a>
+                <a className="right_text" href="mailto:adk26@tpu.ru">
+                  adk26@tpu.ru
+                </a>
+              </Col>
+            </Row>
+            <Row className="header_main">
+              <Container>
+                <Row>
+                  <Col
+                    className="header_logo"
+                    xs={6}
+                    sm={6}
+                    md={6}
+                    lg={6}
+                    xl={4}
+                    xxl={4}
                   >
-                    Главная
-                  </Button>
-                  <Dropdown className="dropdown mt-3">
-                    <Dropdown.Toggle
-                      variant="none"
-                      className="btn btn-outline-danger dropdown-toggle"
-                    >
-                      Товары
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={PRODUCT_ROUTE}
-                      >
-                        Все товары
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-1"
-                      >
-                        Мужская одежда
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-2"
-                      >
-                        Женская одежда
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-3"
-                      >
-                        Обувь
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <Button
-                    variant="none"
-                    className="btn btn-outline-danger mt-3"
-                    type="button"
-                    href="/shop-news"
+                    <Link to={SHOP_ROUTE}>
+                      <p className="text_logo">
+                        SHOP<span className="logo_dot">.</span>RU
+                      </p>
+                    </Link>
+                  </Col>
+                  <Col
+                    className="header_search d-none d-xl-flex"
+                    xl={4}
+                    xxl={4}
                   >
-                    Новости
-                  </Button>
-                  <Dropdown className="dropdown mt-3">
-                    <Dropdown.Toggle
-                      variant="none"
-                      className="btn btn-outline-danger dropdown-toggle"
-                    >
-                      Прочее
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={ABOUT_ROUTE}
+                    <InputGroup>
+                      <InputGroup.Text
+                        id="basic-addon1"
+                        className="search_text"
                       >
-                        О нас
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-2"
-                      >
-                        Контакты
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={LOCATIONPLACES_ROUTE}
-                      >
-                        Основные адреса
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={RULES_ROUTE}
-                      >
-                        Правила
-                      </Dropdown.Item>
-                      {user.isAuth && user.isAdmin == true ? (
-                        <Dropdown.Item
-                          className="dropdown-item"
-                          onClick={() => navigate(ADMIN_ROUTE)}
-                        >
-                          Админка
-                        </Dropdown.Item>
+                        <BsSearch />
+                      </InputGroup.Text>
+                      <Form.Control
+                        className="search_input"
+                        placeholder="Что вас интересует?"
+                        aria-label="search"
+                        aria-describedby="basic-addon1"
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col
+                    className="header_user_navigation"
+                    xs={6}
+                    md={6}
+                    sm={6}
+                    lg={6}
+                    xl={4}
+                    xxl={4}
+                  >
+                    <Link to={BASKET_ROUTE}>
+                      <BsBell className="user_icon" size={25} />
+                    </Link>
+                    <Link to={BASKET_ROUTE}>
+                      <BsBasket className="user_icon" size={25} />
+                      {basket._basket.length != 0 ? (
+                        <Badge pill={true}>{basket._basket.length}</Badge>
                       ) : (
-                        <div></div>
+                        ""
                       )}
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-                  {user.isAuth ? (
+                    </Link>
+                    <Link to={ORDERS_ROUTE}>
+                      <BsBag className="user_icon" size={25} />
+                    </Link>
+                    <Link to={LIKES_ROUTER}>
+                      <BsHeart className="user_icon" size={25} />
+                      {likes._likes.length != 0 ? (
+                        <Badge pill={true}>{likes._likes.length}</Badge>
+                      ) : (
+                        ""
+                      )}
+                    </Link>
+                    <Link to={USERPROFILE_ROUTE}>
+                      <BsPerson className="user_icon" size={25} />
+                    </Link>
                     <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      href="/myprofile"
+                      variant="outline-dark"
+                      className="off_btn"
+                      onClick={handleShow}
                     >
-                      Личный кабинет
+                      <AiOutlineMenu className="off_icons" />
                     </Button>
-                  ) : (
-                    <div></div>
-                  )}
+                  </Col>
+                </Row>
+              </Container>
+            </Row>
+          </Container>
+        </header>
 
-                  {user.isAuth ? (
-                    <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      href={BASKET_ROUTE}
-                    >
-                      Корзина{" "}
-                      <Badge pill bg="success">
-                        {basket.Price} РУБ
-                      </Badge>{" "}
-                    </Button>
-                  ) : (
-                    <div></div>
-                  )}
-
-                  <hr></hr>
-
-                  {user.isAuth ? (
-                    <Button
-                      variant="none"
-                      id="exit"
-                      className="btn btn-outline-danger exit mt-3"
-                      type="button"
-                      onClick={() => logOut()}
-                    >
-                      Выйти
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      onClick={() => navigate(LOGIN_ROUTE)}
-                    >
-                      Вход / Регистрация
-                    </Button>
-                  )}
-                </Offcanvas.Body>
-              </Offcanvas>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Sidebar
+          show={show}
+          handleClose={handleClose}
+          isAdmin={user.isAdmin}
+          isAuth={user.isAuth}
+          basket={basket}
+          likes={likes}
+        />
+      </>
     );
   } else {
     return (
-      <div className="header h-100">
-        <div className="container h-100">
-          <div className="row align-items-center justify-content-center align-middle">
-            <div className="col">
-              <a href="/">
-                <img src="../../img/header/default_logo.png" />
-              </a>
-            </div>
-            <div className="col text-right">
-              <div className="col social_header_block">
-                <a href="dsv">
-                  <BsFacebook className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <BsTwitter className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <BsGoogle className="social_header" size={"30px"} />
-                </a>
-                <a>
-                  <FaVk className="social_header last" size={"30px"} />
-                </a>
-                <a className="right_menu" type="button" onClick={handleShow}>
-                  <MdMenu className="mdmenu" size={"30px"} />
-                </a>
-              </div>
-              <Offcanvas
-                className="Offs"
-                placement="end"
-                show={show}
-                onHide={handleClose}
+      <>
+        <header className="header">
+          <Container fluid className="header_container">
+            <Row className="header_top">
+              <Col
+                className="header_top_left"
+                xs={12}
+                sm={12}
+                md={6}
+                lg={6}
+                xl={4}
+                xxl={4}
               >
-                <Offcanvas.Header>
-                  <h5 id="offcanvasRightLabel">Be sure of yourself...</h5>
-                </Offcanvas.Header>
-                <Offcanvas.Body>
-                  <Button
-                    variant="none"
-                    className="btn btn-outline-danger mt-3"
-                    type="button"
-                    href="/shop-news"
+                <SocialHeader />
+              </Col>
+              <Col
+                className="header_top_center d-none d-xl-flex"
+                xl={4}
+                xxl={4}
+              >
+                <p className="top_text">
+                  Dress stylishly and be confident in yourself...
+                </p>
+              </Col>
+              <Col
+                className="header_top_right d-none d-md-flex"
+                md={6}
+                lg={6}
+                xl={4}
+                xxl={4}
+              >
+                <a className="right_text" href="tel:+7 (908) 956-60-33">
+                  +7 (908) 956-60-33
+                </a>
+                <a className="right_text" href="mailto:adk26@tpu.ru">
+                  adk26@tpu.ru
+                </a>
+              </Col>
+            </Row>
+            <Row className="header_main">
+              <Container>
+                <Row>
+                  <Col
+                    className="header_logo"
+                    xs={12}
+                    sm={12}
+                    md={6}
+                    lg={6}
+                    xl={4}
+                    xxl={4}
                   >
-                    Главная
-                  </Button>
-                  <Dropdown className="dropdown mt-3">
-                    <Dropdown.Toggle
-                      variant="none"
-                      className="btn btn-outline-danger dropdown-toggle"
-                    >
-                      Товары
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={PRODUCT_ROUTE}
-                      >
-                        Все товары
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-1"
-                      >
-                        Мужская одежда
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-2"
-                      >
-                        Женская одежда
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-3"
-                      >
-                        Обувь
-                      </Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  <Button
-                    variant="none"
-                    className="btn btn-outline-danger mt-3"
-                    type="button"
-                    href="/shop-news"
+                    <Link to={SHOP_ROUTE}>
+                      <p className="text_logo">
+                        SHOP<span className="logo_dot">.</span>RU
+                      </p>
+                    </Link>
+                  </Col>
+                  <Col
+                    className="header_search d-none d-xl-flex"
+                    xl={4}
+                    xxl={4}
                   >
-                    Новости
-                  </Button>
-                  <Dropdown className="dropdown mt-3">
-                    <Dropdown.Toggle
-                      variant="none"
-                      className="btn btn-outline-danger dropdown-toggle"
-                    >
-                      Прочее
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu className="dropdown-menu">
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={ABOUT_ROUTE}
+                    <InputGroup>
+                      <InputGroup.Text
+                        id="basic-addon1"
+                        className="search_text"
                       >
-                        О нас
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href="#/action-2"
-                      >
-                        Контакты
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={LOCATIONPLACES_ROUTE}
-                      >
-                        Основные адреса
-                      </Dropdown.Item>
-                      <Dropdown.Item
-                        className="dropdown-item"
-                        href={RULES_ROUTE}
-                      >
-                        Правила
-                      </Dropdown.Item>
-                      {user.isAuth && user.isAdmin == true ? (
-                        <Dropdown.Item
-                          className="dropdown-item"
-                          onClick={() => navigate(ADMIN_ROUTE)}
-                        >
-                          Админка
-                        </Dropdown.Item>
-                      ) : (
-                        <div></div>
-                      )}
-                    </Dropdown.Menu>
-                  </Dropdown>
-
-                  {user.isAuth ? (
+                        <BsSearch />
+                      </InputGroup.Text>
+                      <Form.Control
+                        className="search_input"
+                        placeholder="Что вас интересует?"
+                        aria-label="search"
+                        aria-describedby="basic-addon1"
+                      />
+                    </InputGroup>
+                  </Col>
+                  <Col
+                    className="header_user_navigation"
+                    md={6}
+                    lg={6}
+                    xl={4}
+                    xxl={4}
+                  >
+                    <Link to={LOGIN_ROUTE}>
+                      <MdOutlineLogin className="user_icon" size={25} />
+                    </Link>
+                    <Link to={LOCATIONPLACES_ROUTE}>
+                      <BsPinMap className="user_icon" size={25} />
+                    </Link>
                     <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      href="/myprofile"
+                      variant="outline-dark"
+                      className="off_btn"
+                      onClick={handleShow}
                     >
-                      Личный кабинет
+                      <AiOutlineMenu className="off_icons" />
                     </Button>
-                  ) : (
-                    <div></div>
-                  )}
+                  </Col>
+                </Row>
+              </Container>
+            </Row>
+          </Container>
+        </header>
 
-                  {user.isAuth ? (
-                    <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      href={BASKET_ROUTE}
-                    >
-                      Корзина{" "}
-                      <Badge pill bg="success">
-                        {basket.Price} РУБ
-                      </Badge>{" "}
-                    </Button>
-                  ) : (
-                    <div></div>
-                  )}
-
-                  <hr></hr>
-
-                  {user.isAuth ? (
-                    <Button
-                      variant="none"
-                      id="exit"
-                      className="btn btn-outline-danger exit mt-3"
-                      type="button"
-                      onClick={() => logOut()}
-                    >
-                      Выйти
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="none"
-                      className="btn btn-outline-success mt-3"
-                      type="button"
-                      onClick={() => navigate(LOGIN_ROUTE)}
-                    >
-                      Вход / Регистрация
-                    </Button>
-                  )}
-                </Offcanvas.Body>
-              </Offcanvas>
-            </div>
-          </div>
-        </div>
-      </div>
+        <Sidebar
+          show={show}
+          handleClose={handleClose}
+          isAdmin={user.isAdmin}
+          isAuth={user.isAuth}
+          basket={basket}
+          likes={likes}
+        />
+      </>
     );
   }
 });

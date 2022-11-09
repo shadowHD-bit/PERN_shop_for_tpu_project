@@ -1,0 +1,28 @@
+@import '../../../../index.scss';
+
+.top_social{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+
+    .top_social_link{
+        color: $grey;
+        transition: .5 ease all;
+
+        .social_icon{
+            fill: $grey !important;
+            transition: .5 ease all;
+        }
+
+        &:hover{
+            color: $red;
+            transition: .5 ease all;
+
+            .social_icon{
+                fill: $red !important;
+                transition: .5 ease all;
+            }
+        }
+    }
+}

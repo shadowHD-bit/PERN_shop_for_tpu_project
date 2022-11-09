@@ -1,10 +1,12 @@
 //Scroll-bar steles
-@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @font-face {
   font-family: "CalSans-SemiBold";
-  src: url("./fonts/CalSans-SemiBold.woff") format("woff"), url("./fonts/CalSans-SemiBold.otf") format("opentype");
+  src: url("./fonts/CalSans-SemiBold.woff") format("woff"),
+    url("./fonts/CalSans-SemiBold.otf") format("opentype");
   font-weight: 600;
   font-display: swap;
   font-style: normal;
@@ -55,34 +57,45 @@
   font-style: italic;
 }
 
+
+
+//---------Body Style-----------
+
 body::-webkit-scrollbar {
-  width: 12px;              
+  width: 12px;
 }
-  body::-webkit-scrollbar-track {
-  background: #434240;        
+body::-webkit-scrollbar-track {
+  background: #434240;
 }
 body::-webkit-scrollbar-thumb {
-  background-color: rgb(252, 41, 41);    
-  border-radius: 20px;      
-  border: 3px solid #434240;  
-  font-family: 'Open Sans', sans-serif;
+  background-color: rgb(252, 41, 41);
+  border-radius: 20px;
+  border: 3px solid #434240;
+  font-family: "Open Sans", sans-serif;
   font-weight: 600;
   font-style: normal;
 }
 
-//Card Style
-.card{
-  box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+//---------Card Style-----------
+.card {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-.spinner__text{
+.spinner__text {
   color: rgb(252, 49, 49);
   padding-right: 10px;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-weight: 600;
   font-style: normal;
 }
 
-.spinner-border{
+.spinner-border {
   margin-left: 20px;
 }
+
+//---------Color Style-----------
+$white: #edf2f4;
+$grey: #8d99ae;
+$black: #2b2d42;
+$white_red: #ef233c;
+$red: #d90429;

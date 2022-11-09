@@ -1,0 +1,124 @@
+@import "../../../index.scss";
+
+.offcanvas {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+
+  .offcanvas_header {
+    .text_logo {
+      margin: 0;
+      padding: 0;
+      font-size: 30px;
+      font-weight: 900;
+      color: $black;
+
+      .logo_dot {
+        color: $red;
+      }
+    }
+  }
+
+  .offcanvas_body {
+    .off_navigation_btn {
+      border: 1px solid $white_red;
+      color: $white_red;
+      border-radius: 30px;
+      width: 100%;
+      margin-bottom: 12px;
+      background-color: white;
+
+      &:hover {
+        background-color: $white_red;
+        color: white;
+      }
+    }
+
+    .off_navigation_btn_logout {
+      border: 1px solid $red;
+      color: $red;
+      border-radius: 30px;
+      width: 100%;
+      margin-bottom: 12px;
+      background-color: white;
+
+      &:hover {
+        background-color: $red;
+        color: white;
+      }
+    }
+
+    .off_navigation_btn_simple {
+      border: 1px solid rgb(39, 110, 39);
+      color: rgb(39, 110, 39);
+      border-radius: 30px;
+      width: 100%;
+      margin-bottom: 12px;
+      background-color: white;
+
+      &:hover {
+        background-color: rgb(39, 110, 39);
+        color: white;
+      }
+    }
+
+    .off_navigation_btn_login {
+      border: 1px solid rgb(57, 151, 57);
+      color: rgb(57, 151, 57);
+      border-radius: 30px;
+      width: 100%;
+      margin-bottom: 12px;
+      background-color: white;
+
+      &:hover {
+        background-color: rgb(57, 151, 57);
+        color: white;
+      }
+    }
+
+    .off_navigation_dropdown {
+      .off_navigation_dropdown-toggle {
+        border: 1px solid $white_red;
+        color: $white_red;
+        border-radius: 30px;
+        width: 100%;
+        margin-bottom: 12px;
+        background-color: white;
+
+        &:hover {
+          background-color: $white_red;
+          color: white;
+        }
+      }
+
+      .basket_badge {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 500;
+      }
+
+      .off_navigation_dropdown-menu {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid $white_red;
+        .off_navigation_dropdown-item {
+          width: 100%;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          color: $white_red;
+          padding: 5px 0px;
+
+          &:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+          }
+
+          &:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+          }
+        }
+      }
+    }
+  }
+}
