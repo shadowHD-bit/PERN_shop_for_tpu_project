@@ -1,40 +1,215 @@
-.auth{
-    font-family: 'Montserrat', sans-serif;
+// .auth {
+//   font-family: "Montserrat", sans-serif;
 
+//   h2 {
+//     margin-top: 35px;
+//   }
 
-    h2{
-        margin-top: 35px;
+//   .auth_socweb {
+//     border: 2px solid rgb(212, 212, 212);
+//     padding: 20px 10px;
+//     border-radius: 30px;
+//     margin-top: 20px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+//   }
+
+//   .main_auth {
+//     border: 2px solid rgb(212, 212, 212);
+//     padding: 20px 10px;
+//     border-radius: 30px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+//     .auth_btn {
+//       margin-top: 20px;
+//     }
+
+//     label {
+//       margin-top: 5px;
+//     }
+//   }
+
+//   .dop_reg {
+//     border: 2px solid rgb(212, 212, 212);
+//     padding: 20px 10px;
+//     border-radius: 30px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+//   }
+// }
+@import "../../index.scss";
+
+.auth_container {
+  min-height: 600px;
+  font-family: "Montserrat", sans-serif;
+
+  .auth_card {
+    padding: 0 !important;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 80px 0px;
+
+    .auth_card_left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 100px 20px;
+
+      .title_auth {
+        font-weight: 600;
+        font-size: 20px;
+        text-align: center;
+
+        .name_shop {
+          font-size: 25px;
+          font-weight: 900;
+
+          .dot_shop {
+            color: $red;
+          }
+        }
+      }
+
+      .sub_text {
+        font-size: 14px;
+        color: $grey;
+        text-align: center;
+      }
+
+      .login_btn {
+        border-radius: 20px;
+        background: none;
+        color: rgb(53, 150, 53);
+        border: 1px solid rgb(53, 150, 53);
+        padding: 5px 30px;
+        width: 100%;
+        &:hover {
+          color: white;
+          background-color: rgb(53, 150, 53);
+        }
+      }
+
+      .auth_google_btn {
+        background: none;
+        border-radius: 20px;
+        color: $red;
+        border: 1px solid $red;
+        width: 100%;
+        margin-top: 5px;
+
+        &:hover {
+          color: white;
+          background-color: $red;
+        }
+      }
+
+      .auth_vk_btn {
+        background: none;
+        border-radius: 20px;
+        color: blue;
+        border: 1px solid blue;
+        width: 100%;
+        margin-top: 5px;
+        &:hover {
+          color: white;
+          background-color: blue;
+        }
+      }
+
+      .register_btn {
+        border-radius: 20px;
+        background: none;
+        color: white;
+        border: 1px solid $red;
+        padding: 5px 30px;
+        width: 100%;
+        background-color: $red;
+        &:hover {
+          color: $red;
+          background-color: white;
+        }
+      }
+
+      .auth_form_row {
+        width: 100%;
+      }
+
+      .form-floating {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+      }
+
+      .auth_card_input {
+        border-radius: 20px;
+        margin: 5px 0px;
+      }
     }
 
-    .auth_socweb{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        border-radius: 30px;
-        margin-top: 20px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-    }
+    .auth_card_right {
+      padding: 0;
+      margin: 0;
+      background-image: url("https://i.pinimg.com/736x/5c/e1/99/5ce1993b62f690ef35167acf5ec7d34d.jpg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      position: relative;
 
-    .main_auth{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
+      .img_row {
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.5);
+          z-index: 2;
+        }
+      }
 
-        .auth_btn{
-            margin-top: 20px;
+      .img_col {
+        position: relative;
+        z-index: 3;
+        color: #fff;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        flex-direction: column;
+        padding-bottom: 20px;
+
+        .register_text {
+          text-align: end;
+          font-size: 30px;
+          font-weight: bold;
+          width: 80%;
+          line-height: 30px;
         }
 
-        label{
-            margin-top: 5px;
+        .register_btn {
+          border-radius: 10px;
+          background: none;
+          color: white;
+          border: 1px solid $red;
+          padding: 5px 30px;
+          background-color: $red;
+          &:hover {
+            color: $red;
+            background-color: white;
+          }
         }
+      }
     }
+  }
+}
 
-    .dop_reg{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-
-    }
-
+.errorToast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 4;
+  margin: 10px;
 }

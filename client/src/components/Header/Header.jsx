@@ -237,8 +237,8 @@ const Header = observer(() => {
                 <Row>
                   <Col
                     className="header_logo"
-                    xs={12}
-                    sm={12}
+                    xs={6}
+                    sm={6}
                     md={6}
                     lg={6}
                     xl={4}
@@ -272,7 +272,9 @@ const Header = observer(() => {
                   </Col>
                   <Col
                     className="header_user_navigation"
+                    xs={6}
                     md={6}
+                    sm={6}
                     lg={6}
                     xl={4}
                     xxl={4}
