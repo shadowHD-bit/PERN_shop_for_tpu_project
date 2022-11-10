@@ -1,70 +1,54 @@
-.footer{
-    width: 100%;
-    height: auto;
-    min-height: 100px;
-    background-color: rgb(36, 36, 36);
-    background-image: url(../../../public/img/header/bg_header.png);
-    padding: 20px 0px;
-    bottom: 0;
+@import "../../index.scss";
 
-    
-    .main_text_logo{
-        font-size: 40px;
-        font-weight: 700;
-        text-align: center;
-        padding: 10px 0px;
+.footer {
+  padding-top: 40px;
+  font-family: "Montserrat", sans-serif;
+  .footer_container {
+    a {
+      text-decoration: none;
+      display: block;
+      width: fit-content;
+    }
+    .text_logo {
+      margin: 0;
+      padding: 0;
+      font-size: 30px;
+      font-weight: 900;
+      color: $black;
+      display: block;
+      width: fit-content;
+      text-align: center;
 
-        span{
-            color: white !important;
-        }
+      .logo_dot {
+        color: $red;
+      }
     }
 
-    .main_href{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding: 30px 20px;
+    .footer_link {
+      font-size: 16px;
+      text-decoration: none;
+      color: $grey;
 
-        a{
-            text-decoration: none;
-            margin: 0px 20px;
-            color: white !important;
-            font-weight: 500;
-        }
-
-        a:hover{
-            text-decoration: none;
-            margin: 0px 20px;
-            color: rgb(175, 0, 0) !important;
-            font-weight: 500;
-        }
+      &:hover {
+        color: $red;
+      }
     }
+  }
+}
 
-    .social_media{
-        color: white !important;
-        padding: 20px 0px;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        
-        a{
-            margin: 0px 10px;
-        }
+.copyright {
+  background-color: $white;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0px;
 
-        a:hover{
-            cursor: pointer;
-            color: rgb(175, 0, 0) !important;
-        }
-    }
-
-    .copyright{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        padding-top: 30px;
-
-        span{
-            color: rgb(134, 134, 134);
-        }
-    }
+  .copyright_text {
+    color: $grey;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
 }

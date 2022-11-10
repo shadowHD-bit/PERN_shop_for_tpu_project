@@ -1,37 +1,59 @@
-import React from 'react'
-import './Footer.scss'
+import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
+import { SHOP_ROUTE } from "../../utils/consts";
+import { Link } from "react-router-dom";
 
-import { BsFacebook } from 'react-icons/bs'; 
-import { BsTwitter } from 'react-icons/bs'; 
-import { BsGoogle } from 'react-icons/bs'; 
-import { FaVk } from 'react-icons/fa'; 
-import { SocialButton } from '../UI/Buttons/SocialButton/SocialButton';
+import "./Footer.scss";
 
 export default function Footer() {
   return (
-    <div className='footer'>
-        <div className="container">
-          <div className="main_text_logo">
-            <span>Be sure yourself...</span>
-          </div>
-          <div className="main_href">
-            <a href="/">Главная</a>
-            <a href="/product">Товары</a>
-            <a href="/news">Новости</a>
-            <a href="/about">О нас</a>
-            <a href="/locationshops">Основные адреса</a>
-            <a href="/delivery">Доставка</a>
-          </div>
-          <div className="social_media">
-            <a href='dsv'><BsFacebook  className='social_header' size={'30px'}/></a>
-            <a><BsTwitter className='social_header' size={'30px'}/></a>
-            <a><BsGoogle className='social_header' size={'30px'}/></a>
-            <a><FaVk className='social_header last' size={'30px'}/></a>
-          </div>
-          <div className="copyright">
-            <span>Copyright © 2022. All rights recerved | This app is made by Alexandr Krivikov</span>
-          </div>
-        </div>
-    </div>
-  )
+    <>
+      <footer className="footer">
+        <Container fluid className="m-0 p-0">
+          <Container className="footer_container">
+            <Row>
+              <Col className="d-flex w-100 justify-content-center">
+                <Link to={SHOP_ROUTE}>
+                  <p className="text_logo">
+                    SHOP<span className="logo_dot">.</span>RU
+                  </p>
+                </Link>
+              </Col>
+            </Row>
+            <Row className="d-flex flex-row justify-content-center align-items-center p-4">
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Главная
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Товары
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                О нас
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Правила
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Вопросы
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Основные адреса
+              </Link>
+              <Link className="footer_link" to={SHOP_ROUTE}>
+                Доставка
+              </Link>
+            </Row>
+          </Container>
+          <Row className="copyright">
+            <Col>
+              <p className="copyright_text">
+                Copyright © 2022. All rights recerved | This app is made by
+                Alexandr Krivikov
+              </p>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
+    </>
+  );
 }
