@@ -77,7 +77,7 @@ const Header = observer(() => {
                 xxl={4}
               >
                 <p className="top_text">
-                  Dress stylishly and be confident in yourself...
+                  Одевайся стильно и будь уверен в себе...
                 </p>
               </Col>
               <Col

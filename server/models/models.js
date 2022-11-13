@@ -7,9 +7,18 @@ const User = sequelize.define("user", {
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },
   name: { type: DataTypes.STRING },
+  img_user: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "default_avatar.png",
+  },
   family: { type: DataTypes.STRING },
   date_birthday: { type: DataTypes.STRING },
   numberPhone: { type: DataTypes.STRING },
+  gender: { type: DataTypes.BOOLEAN, allowNull: true },
+  allowSpam: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false },
+  isVK: { type: DataTypes.BOOLEAN, allowNull: false },
+  isGoogle: { type: DataTypes.BOOLEAN, allowNull: false },
   role: { type: DataTypes.STRING, defaultValue: "USER" },
 });
 
@@ -56,7 +65,11 @@ const Product = sequelize.define("product", {
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   price: { type: DataTypes.INTEGER, allowNull: false },
   rating: { type: DataTypes.DOUBLE, defaultValue: 0 },
-  description: { type: DataTypes.STRING, defaultValue: "Нет описания...",allowNull: true},
+  description: {
+    type: DataTypes.STRING,
+    defaultValue: "Нет описания...",
+    allowNull: true,
+  },
   imgMain: { type: DataTypes.STRING, allowNull: true },
   imgFirst: { type: DataTypes.STRING, allowNull: true },
   imgSecond: { type: DataTypes.STRING, allowNull: true },
@@ -111,15 +124,19 @@ const Orders = sequelize.define("orders", {
 
 //Question
 const Question = sequelize.define("question_about_product", {
-  id_question: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  question_text: { type: DataTypes.STRING, allowNull: false},
-  complete_question: { type: DataTypes.BOOLEAN, defaultValue: false},
+  id_question: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  question_text: { type: DataTypes.STRING, allowNull: false },
+  complete_question: { type: DataTypes.BOOLEAN, defaultValue: false },
 });
 
 //Answer
 const Answer = sequelize.define("answer_to_question", {
   id_answer: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  answer_text: { type: DataTypes.STRING, allowNull: false},
+  answer_text: { type: DataTypes.STRING, allowNull: false },
 });
 
 //Connection Table Orders and Product
@@ -128,7 +145,26 @@ const OrderProduct = sequelize.define("order_product", {
   count: { type: DataTypes.INTEGER, allowNull: false },
 });
 
+const VkUsers = sequelize.define("vk_user_data", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  id_social: { type: DataTypes.STRING, allowNull: false },
+});
+
+const GoogleUsers = sequelize.define("google_users_data", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  id_social: { type: DataTypes.STRING, allowNull: false },
+});
+
 //Description dependencies models db
+User.hasOne(Basket);
+Basket.belongsTo(User);
+
+User.hasOne(VkUsers);
+VkUsers.belongsTo(User);
+
+User.hasOne(GoogleUsers);
+GoogleUsers.belongsTo(User);
+
 User.hasOne(Basket);
 Basket.belongsTo(User);
 
@@ -221,5 +257,8 @@ module.exports = {
   Answer,
   Likes,
   LikesProduct,
-  Reviews, ReviewsProduct
+  Reviews,
+  ReviewsProduct,
+  VkUsers,
+  GoogleUsers,
 };

@@ -1,65 +1,217 @@
-.row .classic{
-    margin-left: 0px;
-}
+// .row .classic{
+//     margin-left: 0px;
+// }
 
-.register{
-    font-family: 'Montserrat', sans-serif;
+// .register{
+//     font-family: 'Montserrat', sans-serif;
 
+//     h5{
+//         margin-top: 5px;
+//     }
 
-    h5{
-        margin-top: 5px;
+//     h2{
+//         margin-top: 20px;
+//     }
+
+//     label{
+//         margin-top: 5px;
+//     }
+
+//     button{
+//         margin: 20px 0px;
+//     }
+
+//     .reg_socialweb{
+//         border: 2px solid rgb(212, 212, 212);
+//         padding: 20px 10px;
+//         margin-bottom: 10px;
+//         border-radius: 30px;
+//         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+//         .social_reg_text{
+//             margin-bottom: 10px;
+//         }
+
+//     }
+
+//     .personal_data{
+//         border: 2px solid rgb(212, 212, 212);
+//         padding: 20px 10px;
+//         border-radius: 30px;
+//         margin-bottom: 10px;
+//         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+//     }
+
+//     .data_auth{
+//         border: 2px solid rgb(212, 212, 212);
+//         padding: 20px 10px;
+//         margin-bottom: 10px;
+//         border-radius: 30px;
+//         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+//     }
+
+//     .info_text_right{
+//         border: 2px solid rgb(212, 212, 212);
+//         padding: 20px 10px;
+//         margin-bottom: 10px;
+//         border-radius: 30px;
+//         box-shadow: 0 0 10px rgba(0,0,0,0.5);
+
+//     }
+// }
+
+@import "../../index.scss";
+
+.reg_container {
+  min-height: 600px;
+  font-family: "Montserrat", sans-serif;
+
+  .reg_card {
+    padding: 0 !important;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    margin: 80px 0px;
+  }
+
+  .title {
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+
+    .name_shop {
+      font-size: 25px;
+      font-weight: 900;
+
+      .dot_shop {
+        color: $red;
+      }
+    }
+  }
+
+  .sub_text {
+    font-size: 14px;
+    color: $grey;
+    text-align: center;
+  }
+
+  .title_form {
+    font-weight: 600;
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .form-floating {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0px 10px;
+  }
+
+  .reg_card_input {
+    border-radius: 10px;
+    margin: 5px 0px;
+  }
+
+  .register_btn {
+    border-radius: 20px;
+    background: none;
+    color: white;
+    border: 1px solid $red;
+    padding: 5px 30px;
+    width: 80%;
+    background-color: $red;
+    &:hover {
+      color: $red;
+      background-color: white;
+    }
+  }
+
+  .reg_card_right {
+    margin: 50px 0px;
+  }
+
+  .auth_google_btn {
+    background: none;
+    border-radius: 20px;
+    color: $red;
+    border: 1px solid $red;
+    width: 100%;
+    margin-top: 5px;
+
+    &:hover {
+      color: white;
+      background-color: $red;
+    }
+  }
+
+  .auth_vk_btn {
+    background: none;
+    border-radius: 20px;
+    color: blue;
+    border: 1px solid blue;
+    width: 100%;
+    margin-top: 5px;
+    &:hover {
+      color: white;
+      background-color: blue;
+    }
+  }
+
+  .remove_login{
+    text-decoration: none;
+    color: $grey;
+    text-align: center;
+    &:hover{
+        color: black;
+    }
+  }
+
+  .reg_card_left {
+    padding: 0;
+    margin: 0;
+    background-image: url("http://klublady.ru/uploads/posts/2022-03/1646978761_90-klublady-ru-p-obraz-muzhskaya-letnyaya-odezhda-foto-91.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+
+    .img_row {
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 2;
+      }
     }
 
-    h2{
-        margin-top: 20px;
+    .img_col {
+      position: relative;
+      z-index: 3;
+      color: #fff;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      flex-direction: column;
+      padding-bottom: 20px;
+
+      .register_text {
+        text-align: end;
+        font-size: 30px;
+        font-weight: bold;
+        width: 80%;
+        line-height: 30px;
+      }
     }
-
-    label{
-        margin-top: 5px;
-    }
-
-    button{
-        margin: 20px 0px;
-    }
-
-    .reg_socialweb{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        margin-bottom: 10px;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-
-        .social_reg_text{
-            margin-bottom: 10px;
-        }
-
-    }
-
-    .personal_data{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        border-radius: 30px;
-        margin-bottom: 10px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-
-
-    }
-
-    .data_auth{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        margin-bottom: 10px;
-        border-radius: 30px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-
-    }
-
-    .info_text_right{
-        border: 2px solid rgb(212, 212, 212);
-        padding: 20px 10px;
-        margin-bottom: 10px;
-        border-radius: 30px; 
-        box-shadow: 0 0 10px rgba(0,0,0,0.5); 
-
-    }
+  }
 }

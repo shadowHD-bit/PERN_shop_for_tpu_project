@@ -31,7 +31,15 @@ useEffect(() => {
   })
 }, [loading, user.isAuth])
 
-const [renderBasket, setRenderBasket] = useState(false)
+useEffect(() => {
+  if(slider._sliders == undefined){
+    fetchSlider().then((data) => {
+      slider.setSlider(data);
+    })
+  }
+}, [slider._sliders])
+
+console.log(slider._sliders);
 
 //Loading Basket
 useEffect(() => {

@@ -7,7 +7,7 @@ import { REGISTRATION_ROUTE, SHOP_ROUTE } from "../../utils/consts";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 import { Link } from "react-router-dom";
-import { login } from "../../http/userAPI";
+import { login, social_VK_auth } from "../../http/userAPI";
 import { observer } from "mobx-react-lite";
 import {
   Card,
@@ -25,6 +25,65 @@ const Auth = observer(() => {
   const [password, setPassword] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const VKAuthClick = () => {
+    
+    window.VK.Auth.login(function (data) {
+      if (data.session) {
+        window.VK.Api.call(
+          "users.get",
+          {
+            user_ids: data.session.user.id,
+            v: "5.131",
+            fields: ["photo_100", "sex", "bdate", "email"],
+          },
+          function (r) {
+            let response = r.response[0];
+            let user_data = response;
+            let gender = null;
+            if (user_data.sex == 1) {
+              gender = false;
+            } else if (user_data.sex == 2) {
+              gender = true;
+            }
+            try {
+              let data;
+              let email = user_data.id + "@vk.com";
+              let password = user_data.id + "vk";
+              let name = user_data.first_name;
+              let family = user_data.last_name;
+              let date_birthday = user_data.bdate;
+              let numberPhone = user_data.id;
+              let allowSpam = false;
+              let id_social = user_data.id + "";
+              let img_user = user_data.photo_100;
+              data = social_VK_auth(
+                email,
+                password,
+                name,
+                family,
+                date_birthday,
+                numberPhone,
+                gender,
+                allowSpam,
+                id_social,
+                img_user
+              ).then(data => {
+                user.setUser(user);
+                user.setIsAuth(true);
+                window.location.href = SHOP_ROUTE;
+              })
+              
+            } catch (e) {
+              setErrorMessage(e.response.data.message);
+              setShowToast(true);
+            }
+            console.log(user_data);
+          }
+        );
+      }
+    }, 4194308);
+  };
 
   const emailHandler = (e) => {
     setEmail(e.target.value);
@@ -180,7 +239,10 @@ const Auth = observer(() => {
                       </Button>
                     </Col>
                     <Col>
-                      <Button className="auth_vk_btn">
+                      <Button
+                        className="auth_vk_btn"
+                        onClick={() => VKAuthClick()}
+                      >
                         <BsBootstrapFill /> VKontakte
                       </Button>
                     </Col>

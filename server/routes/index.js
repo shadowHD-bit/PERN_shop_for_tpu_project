@@ -21,6 +21,7 @@ const userExcelRouter = require('./ExcelRouters/userExcelRouter')
 const likesRouter = require('./likesRouter')
 const displayProductRouter = require('./displayProductRouter')
 const reviewRouter = require('./reviewRouter')
+const SocialVkAuthRouter = require('./socialAuthRouters/socialVkAuthRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -42,5 +43,6 @@ router.use('/user_excel', userExcelRouter)
 router.use('/likes', likesRouter)
 router.use('/display_product', displayProductRouter)
 router.use('/reviews', reviewRouter)
+router.use('/social_vk', SocialVkAuthRouter)
 
 module.exports = router
