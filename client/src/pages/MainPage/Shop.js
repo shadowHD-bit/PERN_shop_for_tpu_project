@@ -1,6 +1,6 @@
 import MainSlider from './SliderMain/Slider';
 import PopularSlider from './SliderPopularProduct/SliderPopularSection';
-import LightBox from './lightbox/lightbox';
+import LightBox from './lightbox/Lightbox';
 import NewProduct from './newProduct/newProduct';
 import News from './newsSlider/news';
 import Brands from './brands/brands';
@@ -11,7 +11,8 @@ const mainPage = observer(() => {
     return (
         <div className='mainPage'>
             <MainSlider />
-            {/* <LightBox/>
+            <LightBox/>
+            {/*
             <PopularSlider />
             <NewProduct />
             <News />

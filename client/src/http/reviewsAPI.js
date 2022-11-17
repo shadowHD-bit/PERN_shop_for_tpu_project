@@ -7,8 +7,19 @@ export const createReviews = async (reviews) => {
     return data
 }
 
-// Выбрать вопросы по товару
+// Выбрать review по товару
 export const fetchReviewsProduct = async ({id}) => {
     const {data} = await $host.get('api/reviews/' + id)
+    return data
+}
+
+export const deleteReviewsProduct = async (id) => {
+    const {data} = await $host.delete('api/reviews/' + id)
+    return data
+}
+
+// Выбрать all review
+export const fetchReviews = async () => {
+    const {data} = await $host.get('api/reviews/')
     return data
 }

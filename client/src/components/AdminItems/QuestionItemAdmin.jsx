@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from "react";
 import {
   Button,
   Card,
@@ -8,6 +9,7 @@ import {
   Modal,
   Row,
 } from "react-bootstrap";
+import { Context } from "../..";
 import { createAnswer, updateAnswerText } from "../../http/answerAPI";
 import { changeStatusQuestion, deleteQuestion } from "../../http/questionAPI";
 import { PRODUCT_ROUTE } from "../../utils/consts";
@@ -25,30 +27,12 @@ const QuestionItemAdmin = ({
   reRenderQuestion,
   question_text,
 }) => {
-  // const [modalDelete, setShowDelete] = useState(false);
-  // const [modalStatus, setShowStatus] = useState(false);
+
+
+  const {user} = useContext(Context);
+
   const [modalInfo, setShowInfo] = useState(false);
   const [modalDelete, setShowDelete] = useState(false);
-
-  // //modal delete
-  // const handleCloseDelete = () => setShowDelete(false);
-  // const handleShowDelete = () => setShowDelete(true);
-  // const deleteOrder = () => {
-  //     fetchDeleteOrder({id}).then(() => {
-  //         setShowStatus(false);
-  //         setTimeout(() => reRender(), 250);
-  //     })
-  // }
-
-  // //modal status
-  // const handleCloseStatus = () => setShowStatus(false);
-  // const handleShowStatus = () => setShowStatus(true);
-  // const changeStatusOrder = () => {
-  //     fetchChangeStatusOrder({complete: !complete, id}).then(() => {
-  //         setShowStatus(false);
-  //         setTimeout(() => reRender(), 250);
-  //     })
-  // }
 
   //modal info
   const handleCloseInfo = () => setShowInfo(false);
@@ -123,25 +107,11 @@ const QuestionItemAdmin = ({
   };
 
   const deleteQA = (id) => {
-    deleteQuestion({id}).then(() => {
+    deleteQuestion({ id }).then(() => {
       handleCloseDelete();
       setTimeout(() => reRenderQuestion(), 250);
-    })
-  }
-
-  // const createQuestionUser = () => {
-
-  //   // id_product, id_user_question, text_question
-  //   const formData = new FormData();
-  //   formData.append("text_question", stateQuestion);
-  //   formData.append("id_product", id);
-  //   formData.append("id_user_question", user.user.id);
-  //   createQuestion(formData).then((data) => setShowQuestionModal(false));
-  // };
-
-  // useEffect(() => {
-  //     getOneOrderProducts(id).then(data => setProductInfo(data))
-  // }, [])
+    });
+  };
 
   return (
     <>
@@ -172,7 +142,9 @@ const QuestionItemAdmin = ({
           )}
         </td>
         <td>
-          <Button variant="danger" onClick={handleShowDelete}>Удалить</Button>
+          <Button variant="danger" onClick={handleShowDelete}>
+            Удалить
+          </Button>
         </td>
       </tr>
 
@@ -227,7 +199,7 @@ const QuestionItemAdmin = ({
           </Button>
           <Button
             variant="danger"
-            onClick={() => addAnswer(id_question, userId, stateAnswer)}
+            onClick={() => addAnswer(id_question, user.user.id, stateAnswer)}
           >
             Добавить ответ
           </Button>
@@ -291,11 +263,9 @@ const QuestionItemAdmin = ({
             Подтверждение удаления вопроса
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-         Вы действитель хотите удалить вопрос?
-        </Modal.Body>
+        <Modal.Body>Вы действитель хотите удалить вопрос?</Modal.Body>
         <Modal.Footer>
-        <Button variant="danger" onClick={() => deleteQA(id_question)}>
+          <Button variant="danger" onClick={() => deleteQA(id_question)}>
             Удалить
           </Button>
           <Button variant="secondary" onClick={handleCloseDelete}>

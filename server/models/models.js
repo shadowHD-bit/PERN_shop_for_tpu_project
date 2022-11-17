@@ -81,12 +81,14 @@ const Product = sequelize.define("product", {
 const ProductType = sequelize.define("product_type", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  img:  { type: DataTypes.STRING, allowNull: true, defaultValue: 'default_type.png'},
 });
 
 //Models Brand Product
 const ProductBrand = sequelize.define("product_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
+  img:  { type: DataTypes.STRING, allowNull: true, defaultValue: 'default_brand.png' },
 });
 
 //Models Rating

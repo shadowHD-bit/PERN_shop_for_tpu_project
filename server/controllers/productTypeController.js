@@ -1,10 +1,17 @@
 const {ProductType} = require('../models/models')
 const ApiError = require('../errors/ApiErrors')
+const uuid = require('uuid');
+const path = require('path');
 
 class ProductTypeController{
     async createProductType(req, res) {
         const {name} = req.body
-        const type = await ProductType.create({name})
+
+        const {img} = req.files
+            let fileName = uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'static_brand_and_type', fileName))
+
+        const type = await ProductType.create({name, img: fileName})
         return res.json(type)
     }
 
@@ -18,9 +25,13 @@ class ProductTypeController{
           const { id } = req.params;
           const { name } = req.body;
     
+          const {img} = req.files
+          let fileName = uuid.v4() + ".jpg"
+          img.mv(path.resolve(__dirname, '..', 'static_brand_and_type', fileName))
+
           await ProductType.findOne({ where: { id: id } }).then(async (data) => {
             if (data) {
-              await ProductType.update({ name: name }, {where:{id: id}}).then(() => {
+              await ProductType.update({ name: name, img: fileName }, {where:{id: id}}).then(() => {
                 return res.json("Type updated");
               });
             } else {

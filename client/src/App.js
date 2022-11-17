@@ -39,7 +39,6 @@ useEffect(() => {
   }
 }, [slider._sliders])
 
-console.log(slider._sliders);
 
 //Loading Basket
 useEffect(() => {

@@ -10,7 +10,7 @@ import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
 import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
+import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_REVIEW_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
 import UserProfile from './pages/UserProfile/UserProfile'
@@ -24,6 +24,7 @@ import AdminDocument from './pages/Admin/AdminCatalog/Document/AdminDocument'
 import AdminOrder from './pages/Admin/AdminCatalog/Order/AdminOrder'
 import AdminSlider from './pages/Admin/AdminCatalog/Slider/AdminSlider'
 import AdminQuestion from './pages/Admin/AdminCatalog/Question/AdminQuestion'
+import ReviewAdmin from './pages/Admin/AdminCatalog/Review/ReviewAdmin'
 
 export const authRoutes = [
     {
@@ -57,10 +58,10 @@ export const adminRoutes = [
         path: ADMIN_ROUTE,
         element: <Admin />
     },
-    // {
-    //     path: ADMIN_USER_ROUTE,
-    //     element: <Admin />
-    // },
+    {
+        path: ADMIN_REVIEW_ROUTE,
+        element: <ReviewAdmin />
+    },
     {
         path: ADMIN_BRANDANDTYPE_ROUTE,
         element: <AdminBrandAndType />

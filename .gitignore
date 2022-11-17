@@ -2,6 +2,7 @@ server/node_modules
 client/node_modules
 server/.env
 server/static
-
+server/static_avatar
 server/static_review
+server/static_brand_and_type
 server/files

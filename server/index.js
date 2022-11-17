@@ -26,6 +26,8 @@ app.use(cors())
 app.use(express.json())
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(express.static(path.resolve(__dirname, 'static_review')))
+app.use(express.static(path.resolve(__dirname, 'static_avatar')))
+app.use(express.static(path.resolve(__dirname, 'static_brand_and_type')))
 
 app.use(fileUpload({}))
 app.use('/api', router)

@@ -9,6 +9,8 @@ import {
   Row,
   InputGroup,
   Form,
+  Tooltip,
+  OverlayTrigger,
 } from "react-bootstrap";
 import {
   BsBag,
@@ -142,9 +144,24 @@ const Header = observer(() => {
                     xl={4}
                     xxl={4}
                   >
-                    <Link to={BASKET_ROUTE}>
-                      <BsBell className="user_icon" size={25} />
-                    </Link>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Уведомления</Tooltip>
+                      }
+                    >
+                      <Link to={BASKET_ROUTE}>
+                        <BsBell className="user_icon" size={25} />
+                      </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Корзина</Tooltip>
+                      }
+                    >
                     <Link to={BASKET_ROUTE}>
                       <BsBasket className="user_icon" size={25} />
                       {basket._basket.length != 0 ? (
@@ -153,9 +170,25 @@ const Header = observer(() => {
                         ""
                       )}
                     </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Заказы</Tooltip>
+                      }
+                    >
                     <Link to={ORDERS_ROUTE}>
                       <BsBag className="user_icon" size={25} />
                     </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Лайки</Tooltip>
+                      }
+                    >
                     <Link to={LIKES_ROUTER}>
                       <BsHeart className="user_icon" size={25} />
                       {likes._likes.length != 0 ? (
@@ -164,9 +197,18 @@ const Header = observer(() => {
                         ""
                       )}
                     </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Кабинет</Tooltip>
+                      }
+                    >
                     <Link to={USERPROFILE_ROUTE}>
                       <BsPerson className="user_icon" size={25} />
                     </Link>
+                    </OverlayTrigger>
                     <Button
                       variant="outline-dark"
                       className="off_btn"
@@ -279,12 +321,28 @@ const Header = observer(() => {
                     xl={4}
                     xxl={4}
                   >
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Войти</Tooltip>
+                      }
+                    >
                     <Link to={LOGIN_ROUTE}>
                       <MdOutlineLogin className="user_icon" size={25} />
                     </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                      placement="bottom"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={
+                        <Tooltip id="button-tooltip">Куда идти?</Tooltip>
+                      }
+                    >
                     <Link to={LOCATIONPLACES_ROUTE}>
                       <BsPinMap className="user_icon" size={25} />
                     </Link>
+                    </OverlayTrigger>
                     <Button
                       variant="outline-dark"
                       className="off_btn"

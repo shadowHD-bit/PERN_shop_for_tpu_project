@@ -1,16 +1,22 @@
 import { observer } from "mobx-react-lite";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../..";
 import { ListGroup } from "react-bootstrap";
 import "./bar.scss";
 
-const TypeBar = observer(({inFirstPage}) => {
+const TypeBar = observer(({inFirstPage, state}) => {
   const { product } = useContext(Context);
 
   const changeType = (type) => {
     product.setSelectedType(type)
     inFirstPage()
   }
+
+  useEffect(() => {
+    if(state){
+      product.setSelectedType(state)
+    }
+  },[])
 
   return (
     <ListGroup>

@@ -221,6 +221,7 @@ const AdminBrandAndType = () => {
                               <TypeItemAdmin
                                 key={elem.id}
                                 id={elem.id}
+                                img_now={elem.img}
                                 name={elem.name}
                                 reRender={reRenderTypes}
                               />

@@ -42,10 +42,11 @@ function Register() {
         phone,
         gender,
         allowSpam
-      );
-      user.setUser(user);
-      user.setIsAuth(true);
-      history(SHOP_ROUTE);
+      ).then(() => {
+        user.setUser(user);
+        user.setIsAuth(true);
+        history(SHOP_ROUTE);
+      })
     } catch (e) {
       alert(e.response.data.message);
     }

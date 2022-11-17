@@ -6,6 +6,7 @@ export const ADMIN_SLIDER_ROUTE = '/admin_slider'
 export const ADMIN_ORDER_ROUTE = '/admin_order'
 export const ADMIN_QUESTION_ROUTE = '/admin_question'
 export const ADMIN_EXCEL_ROUTE = '/admin_document'
+export const ADMIN_REVIEW_ROUTE = '/admin_review'
 
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'

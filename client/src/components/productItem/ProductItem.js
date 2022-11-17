@@ -52,7 +52,6 @@ const ProductItem = observer(({ product }) => {
     fetchOneProduct(product.id).then((data) => setProductIn(data));
   }, []);
 
-  console.log(user.isAuth);
   return (
     <div class="product-card">
       <div class="product-tumb">

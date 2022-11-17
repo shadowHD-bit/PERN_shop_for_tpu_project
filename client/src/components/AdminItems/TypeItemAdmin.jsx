@@ -6,7 +6,7 @@ import { BsPencilFill } from "react-icons/bs";
 import ChangeType from "../modals/ChangeType";
 import DeleteTypeModal from "../modals/DeleteTypeModal";
 
-const TypeItemAdmin = ({ id, name, handleShowToast, reRender }) => {
+const TypeItemAdmin = ({ id, name, img_now, handleShowToast, reRender }) => {
   const [showDelete, setShowDelete] = useState(false);
 
   const handleCloseDelete = () => setShowDelete(false);
@@ -37,6 +37,7 @@ const TypeItemAdmin = ({ id, name, handleShowToast, reRender }) => {
       <ChangeType 
       id={id}
       name={name}
+      img_now={img_now}
       show={showChange}
       onHide={handleCloseChange}
       reRender={reRender}
