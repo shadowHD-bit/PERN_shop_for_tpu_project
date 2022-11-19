@@ -3,7 +3,7 @@ import PopularSlider from './SliderPopularProduct/SliderPopularSection';
 import LightBox from './lightbox/Lightbox';
 import NewProduct from './newProduct/newProduct';
 import News from './newsSlider/news';
-import Brands from './brands/brands';
+import Brands from './brands/Brands';
 import { observer } from 'mobx-react-lite';
 
 
@@ -16,7 +16,8 @@ const mainPage = observer(() => {
             <PopularSlider />
             <NewProduct />
             <News />
-            <Brands /> */}
+            */}
+            <Brands /> 
         </div>
     );
   })

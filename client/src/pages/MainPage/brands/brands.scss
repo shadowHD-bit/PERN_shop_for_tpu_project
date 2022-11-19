@@ -1,5 +1,67 @@
-.brands{
-    height: 300px;
-    font-family: 'Montserrat', sans-serif;
+@import "../../../index.scss";
 
+.brands_container_main {
+  font-family: "Montserrat", sans-serif;
+  margin-top: 60px;
+  
+  .catalog_title{
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  .brand_card {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 200px;
+    padding: 0 !important;
+    cursor: pointer;
+    transition: 1s;
+    border-radius: 30px;
+    box-shadow: none;
+
+    &:hover{
+      transition: 1s;
+      .card_product_main_body{
+        background-color: rgba(0, 0, 0, 0.747);
+      }
+    }
+  }
+
+  .card_brand_main_body{
+    background-color: rgba(0, 0, 0, 0.61);
+    border-radius: 30px;
+    width: 100%;
+    height: 100%;
+    color: white;
+    font-weight: bold;
+    margin: 0 !important;
+    display: flex;
+    align-items: flex-end;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .btn_other_product {
+    border-radius: 20px;
+    background-color: $red;
+    border: none;
+    padding: 5px 20px;
+
+    &:hover {
+      background-color: $white_red;
+    }
+  }
+}
+
+.swiper-horizontal>.swiper-pagination-bullets{
+    margin-top: 30px;
+}
+
+.mySwiperBrand > .swiper-wrapper{
+    height: 250px;
+}
+
+.swiper-pagination-bullet-active{
+    background-color: $red;
 }

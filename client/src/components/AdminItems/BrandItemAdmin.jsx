@@ -6,7 +6,7 @@ import { BsPencilFill } from "react-icons/bs";
 import ChangeBrand from "../modals/ChangeBrand";
 import DeleteBrandModal from "../modals/DeleteBrandModal";
 
-const BrandItemAdmin = ({ id, name, handleShowToast, reRender }) => {
+const BrandItemAdmin = ({ id, name, img_now, handleShowToast, reRender }) => {
   const [showDelete, setShowDelete] = useState(false);
 
   const handleCloseDelete = () => setShowDelete(false);
@@ -40,6 +40,7 @@ const BrandItemAdmin = ({ id, name, handleShowToast, reRender }) => {
       show={showChange}
       onHide={handleCloseChange}
       reRender={reRender}
+      img_now={img_now}
       />
 
       <DeleteBrandModal

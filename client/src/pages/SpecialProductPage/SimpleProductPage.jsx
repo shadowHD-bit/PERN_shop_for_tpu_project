@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import {
+  Badge,
   Button,
   Card,
   Col,
@@ -32,12 +33,19 @@ import {
   createQuestion,
   fetchQuestion,
   fetchQuestionProduct,
+  getBoolUserUnCompleteQuestion,
 } from "../../http/questionAPI";
 import { fetchReviewsProduct } from "../../http/reviewsAPI";
 import ReviewUI from "../../components/UI/Review/ReviewUI";
 import { addProductToLikes } from "../../http/likesAPI";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Navigation, Thumbs } from "swiper";
+import QuestionModal from "../../components/UI/Modals/AddQuestionModal/QuestionModal";
+import ErrorAuthModalQuestion from "../../components/UI/Modals/ErrorAuthModalQuestion/ErrorAuthModalQuestion";
+import ErrorAddQuestionModal from "../../components/UI/Modals/ErrorAddQuestionModal/ErrorAddQuestionModal";
 
 const SimpleProduct = observer(() => {
+  const [thumbsSwiper, setThumbsSwiper] = useState(null);
   const { user, basket, likes } = useContext(Context);
 
   const [product, setProduct] = useState({ info: [] });
@@ -104,9 +112,30 @@ const SimpleProduct = observer(() => {
 
   ////
 
+  const [showErrorModal, setShowErrorModal] = useState(false);
+  const handleCloseErrorModal = () => setShowErrorModal(false);
+  const handleShowErrorModal = () => setShowErrorModal(true);
+
   const [showQuestionModal, setShowQuestionModal] = useState(false);
   const handleCloseQuestionModal = () => setShowQuestionModal(false);
-  const handleShowQuestionModal = () => setShowQuestionModal(true);
+  const handleShowQuestionModal = () => {
+    if (user.isAuth) {
+      getBoolUserUnCompleteQuestion({id: user.user.id, product_id: id}).then((data) => {
+        console.log(data);
+        if (data) {
+          handleShowErrorModal();
+        } else {
+          setShowQuestionModal(true);
+        }
+      });
+    } else {
+      handleShowErrorAuthModal();
+    }
+  };
+
+  const [showErrorAuthModal, setShowErrorAuthModal] = useState(false);
+  const handleCloseErrorAuthModal = () => setShowErrorAuthModal(false);
+  const handleShowErrorAuthModal = () => setShowErrorAuthModal(true);
 
   const [stateQuestion, setStateQuestion] = useState("");
 
@@ -302,7 +331,54 @@ const SimpleProduct = observer(() => {
     <>
       <Container className="product_container">
         <Row>
-          <Col xs={12} md={12} xl={6} className="slider_product"></Col>
+          <Col xs={12} md={12} xl={6} className="slider_product">
+            <Swiper
+              style={{
+                "--swiper-navigation-color": "#fff",
+                "--swiper-pagination-color": "#fff",
+              }}
+              spaceBetween={10}
+              navigation={true}
+              thumbs={{ swiper: thumbsSwiper }}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper2"
+            >
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgMain} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgFirst} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgSecond} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgThird} />
+              </SwiperSlide>
+            </Swiper>
+            <Swiper
+              onSwiper={setThumbsSwiper}
+              spaceBetween={10}
+              slidesPerView={4}
+              freeMode={true}
+              watchSlidesProgress={true}
+              modules={[FreeMode, Navigation, Thumbs]}
+              className="mySwiper"
+            >
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgMain} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgFirst} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgSecond} />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={process.env.REACT_APP_API_URL + product.imgThird} />
+              </SwiperSlide>
+            </Swiper>
+          </Col>
           <Col xs={12} md={12} xl={6} className="main_info_product">
             <Row>
               <p className="title_product">{product.name}</p>
@@ -397,32 +473,90 @@ const SimpleProduct = observer(() => {
                 );
               })}
             </Tab>
-            <Tab eventKey="question" title="Вопросы">
-              <Button onClick={handleShowQuestionModal}>
-                Задать вопрос по товару
-              </Button>
-              <br />
-              <br />
-
-              {QA?.map((question) => {
-                return (
-                  <>
-                    <div className="question">
-                      Вопрос: {question.question.question_text} (
-                      {question.question.user.name}{" "}
-                      {question.question.user.family})
-                    </div>
-                    <div className="answer">
-                      Ответ: {question.answer.answer_text} (
-                      {question.answer.user.name} {question.answer.user.family})
-                    </div>
-                    <br />
-                  </>
-                );
-              })}
-            </Tab>
-            <Tab eventKey="comment" title="Комментарии">
-              dsvsdvdsv
+            <Tab
+              eventKey="question"
+              title={
+                <>
+                  Вопросы{" "}
+                  {QA?.length != 0 ? (
+                    <span className="badge_span">{QA?.length}</span>
+                  ) : (
+                    ""
+                  )}
+                </>
+              }
+            >
+              <Row>
+                <Col xs={12} md={12} xl={7}>
+                  {QA?.map((question) => {
+                    return (
+                      <>
+                        <Container fluid>
+                          <Row>
+                            <Card className="card_qa p-1">
+                              <Card.Body>
+                                <Row className="w-100">
+                                  <Col xs={12} md={12}>
+                                    <Card className="card_question">
+                                      <Card.Header>
+                                        {question.question.user.name}{" "}
+                                        {question.question.user.family}
+                                      </Card.Header>
+                                      <Card.Body className="p-1">
+                                        <p className="text">
+                                          {question.question.question_text}
+                                        </p>
+                                      </Card.Body>
+                                    </Card>
+                                  </Col>
+                                  <Col xs={12} md={12}>
+                                    <Card className="card_answer">
+                                      <Card.Header>
+                                        {question.answer.user.name}{" "}
+                                        {question.answer.user.family}
+                                      </Card.Header>
+                                      <Card.Body className="p-1">
+                                        <p className="text">
+                                          {question.answer.answer_text}
+                                        </p>
+                                      </Card.Body>
+                                    </Card>
+                                  </Col>
+                                </Row>
+                              </Card.Body>
+                            </Card>
+                          </Row>
+                        </Container>
+                      </>
+                    );
+                  })}
+                </Col>
+                <Col
+                  xs={12}
+                  md={12}
+                  xl={5}
+                  className="flex align-items-center text-center"
+                >
+                  <p className="title_add">Задать вопрос</p>
+                  <Image
+                    src={
+                      process.env.PUBLIC_URL +
+                      "/img/productcard/question_sticker.png"
+                    }
+                    width={250}
+                  />
+                  <p className="quest_about_text">
+                    Если у вас есть вопрос по данному товару, то вы можете
+                    задать его, нажав на кнопку "Задать вопрос" )
+                  </p>
+                  <Button
+                    className="question_btn"
+                    onClick={handleShowQuestionModal}
+                  >
+                    Задать вопрос по товару
+                  </Button>
+                </Col>
+              </Row>
             </Tab>
             <Tab eventKey="rating" title="Рейтинг">
               dsvsdvdsv
@@ -431,29 +565,20 @@ const SimpleProduct = observer(() => {
         </Row>
       </Container>
 
-      <Modal show={showQuestionModal} onHide={handleCloseQuestionModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>Задать вопрос...</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          Введите свой вопрос:
-          <InputGroup>
-            <Form.Control
-              value={stateQuestion}
-              as="textarea"
-              onChange={(e) => setStateQuestion(e.target.value)}
-            />
-          </InputGroup>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleCloseQuestionModal}>
-            Закрыть
-          </Button>
-          <Button variant="primary" onClick={createQuestionUser}>
-            Задать вопрос
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <QuestionModal
+        id_user={user.user.id}
+        id_product={id}
+        showQuestionModal={showQuestionModal}
+        handleCloseQuestionModal={handleCloseQuestionModal}
+      />
+      <ErrorAuthModalQuestion
+        stateModal={showErrorAuthModal}
+        handleCloseModal={handleCloseErrorAuthModal}
+      />
+      <ErrorAddQuestionModal
+        stateModal={showErrorModal}
+        handleCloseModal={handleCloseErrorModal}
+      />
     </>
   );
 });

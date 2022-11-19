@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Image, Modal, Row } from "react-bootstrap";
 import { updateBrand } from "../../http/productAPI";
 
-const ChangeBrand = ({ show, onHide, id, name, reRender }) => {
+const ChangeBrand = ({ show, onHide, img_now, id, name, reRender }) => {
   const [brandName, setBrandName] = useState(name);
+  const [file, setFile] = useState(null);
+
+  const selectFile = (e) => {
+    setFile(e.target.files[0]);
+  };
 
   const updateBrandInModal = () => {
     const formData = new FormData();
     formData.append("name", brandName);
+    formData.append("img", file);
     updateBrand(id, formData).then(data => {
         onHide()
         reRender()
@@ -39,6 +45,16 @@ const ChangeBrand = ({ show, onHide, id, name, reRender }) => {
                 className="mt-3"
                 placeholder="Название бренда"
               ></Form.Control>
+              <Form.Control
+                className="mt-3"
+                type="file"
+                onChange={selectFile}
+              />
+              {file ? (
+                <Image src={URL.createObjectURL(file)} width={150} />
+              ) : (
+                <Image src={process.env.REACT_APP_API_URL + img_now} width={150} />
+              )}
             </Col>
           </Row>
         </Modal.Body>

@@ -28,3 +28,8 @@ export const changeStatusQuestion = async ({complete_question, id_question}) => 
     const {data} = await $authHost.put('api/question', {complete_question, id_question});
     return data;
 }
+
+export const getBoolUserUnCompleteQuestion= async ({id, product_id}) => {
+    const {data} = await $authHost.post(`api/question_user/user_check_question?id=${id}&product_id=${product_id}`);
+    return data;
+}

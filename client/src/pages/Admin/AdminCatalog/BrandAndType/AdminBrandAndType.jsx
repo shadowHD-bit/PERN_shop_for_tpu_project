@@ -311,6 +311,7 @@ const AdminBrandAndType = () => {
                                 id={elem.id}
                                 name={elem.name}
                                 reRender={reRender}
+                                img_now={elem.img}
                               />
                             );
                           })}
