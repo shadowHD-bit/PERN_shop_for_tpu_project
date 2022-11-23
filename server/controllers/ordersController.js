@@ -204,7 +204,7 @@ class OrdersController {
   }
 
   async getOneUserOrders(req, res) {
-    let {userId, limit, page, complete } = req.query;
+    let { userId, limit, page, complete } = req.query;
 
     page = page || 1;
     limit = limit || 7;

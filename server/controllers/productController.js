@@ -84,7 +84,7 @@ class ProductController {
   }
 
   async getProduct(req, res) {
-    let { productBrandId, productTypeId} = req.query;
+    let { productBrandId, productTypeId } = req.query;
     let product;
     if (!productBrandId && !productTypeId) {
       product = await Product.findAndCountAll({
@@ -113,15 +113,10 @@ class ProductController {
   }
 
   async getProductForAdmin(req, res) {
-    let { limit, page } = req.query;
-    page = page || 1;
-    limit = limit || 7;
-    let offset = page * limit - limit;
     let product;
 
     product = await Product.findAndCountAll({
-      limit,
-      offset,
+      include: [{ model: ProductInfo, as: "info" }],
     });
 
     return res.json(product);
@@ -132,7 +127,12 @@ class ProductController {
     const product = await Product.findOne({
       where: { id },
       include: [
-        { model: ProductInfo, as: "info" },
+        {
+          model: ProductInfo,
+          where: { productId: { [Op.col]: "product.id" } },
+          required: false,
+          as: "info",
+        },
         { model: ProductBrand },
         { model: ProductType },
       ],

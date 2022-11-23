@@ -22,6 +22,8 @@ const likesRouter = require('./likesRouter')
 const displayProductRouter = require('./displayProductRouter')
 const reviewRouter = require('./reviewRouter')
 const SocialVkAuthRouter = require('./socialAuthRouters/socialVkAuthRouter')
+const questionUserRouter = require('./questionUserRouter')
+const infoProductRouter = require('./productInfoRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -44,5 +46,7 @@ router.use('/likes', likesRouter)
 router.use('/display_product', displayProductRouter)
 router.use('/reviews', reviewRouter)
 router.use('/social_vk', SocialVkAuthRouter)
+router.use('/question_user', questionUserRouter)
+router.use('/info_product', infoProductRouter)
 
 module.exports = router

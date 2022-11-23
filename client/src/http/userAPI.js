@@ -74,3 +74,8 @@ export const getData = async (userID) => {
   const { data } = await $authHost.get(`api/user/${userID}`);
   return data;
 };
+
+export const updateUserData = async (id, body) => {
+  const {data} = await $authHost({method:'PUT', url:`api/user/${id}`, data: body});
+  return data;
+}

@@ -54,6 +54,7 @@ const SimpleProduct = observer(() => {
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
   }, []);
+  console.log(product);
 
   const isProductInBasket = () => {
     const findProduct = basket.Basket.findIndex(
@@ -120,14 +121,16 @@ const SimpleProduct = observer(() => {
   const handleCloseQuestionModal = () => setShowQuestionModal(false);
   const handleShowQuestionModal = () => {
     if (user.isAuth) {
-      getBoolUserUnCompleteQuestion({id: user.user.id, product_id: id}).then((data) => {
-        console.log(data);
-        if (data) {
-          handleShowErrorModal();
-        } else {
-          setShowQuestionModal(true);
+      getBoolUserUnCompleteQuestion({ id: user.user.id, product_id: id }).then(
+        (data) => {
+          console.log(data);
+          if (data) {
+            handleShowErrorModal();
+          } else {
+            setShowQuestionModal(true);
+          }
         }
-      });
+      );
     } else {
       handleShowErrorAuthModal();
     }
@@ -158,7 +161,6 @@ const SimpleProduct = observer(() => {
 
   useEffect(() => {
     fetchReviewsProduct({ id }).then((data) => setReviews(data));
-    console.log(reviews);
   }, [product]);
 
   return (
@@ -455,23 +457,36 @@ const SimpleProduct = observer(() => {
               {<p>{product.description}</p>}
             </Tab>
             <Tab eventKey="characteristics" title="Характеристики">
-              sdvsdv
+              {
+                product.info.length == 0 ?
+                <p>На данный товар еще не было отзывов...</p>
+                :
+                product.info.map(item => (
+                  <p><b>{item.title}</b> : {item.description}</p>
+                ))
+              }
             </Tab>
             <Tab eventKey="reviews" title="Отзывы">
-              {reviews?.map((rew) => {
-                return (
-                  <ReviewUI
-                    name_user={rew.review.user.name}
-                    family_user={rew.review.user.family}
-                    // img_user={}
-                    text_review={rew.text_reviews}
-                    img_review={rew.img_reviews}
-                    description_true={rew.description_true}
-                    size_true={rew.size_true}
-                    delivery_true={rew.delivery_true}
-                  />
-                );
-              })}
+              {
+                reviews?.length == 0 ? 
+                <p>На данный товар еще не было отзывов...</p>
+                :
+                reviews?.map((rew) => {
+                  return (
+                    <ReviewUI
+                      name_user={rew.review.user.name}
+                      family_user={rew.review.user.family}
+                      img_user={rew.review.user.img_user}
+                      text_review={rew.text_reviews}
+                      img_review={rew.img_reviews}
+                      description_true={rew.description_true}
+                      size_true={rew.size_true}
+                      delivery_true={rew.delivery_true}
+                    />
+                  );
+                })
+              }
+              
             </Tab>
             <Tab
               eventKey="question"
@@ -488,48 +503,77 @@ const SimpleProduct = observer(() => {
             >
               <Row>
                 <Col xs={12} md={12} xl={7}>
-                  {QA?.map((question) => {
-                    return (
-                      <>
-                        <Container fluid>
-                          <Row>
-                            <Card className="card_qa p-1">
-                              <Card.Body>
-                                <Row className="w-100">
-                                  <Col xs={12} md={12}>
-                                    <Card className="card_question">
-                                      <Card.Header>
-                                        {question.question.user.name}{" "}
-                                        {question.question.user.family}
-                                      </Card.Header>
-                                      <Card.Body className="p-1">
-                                        <p className="text">
-                                          {question.question.question_text}
-                                        </p>
-                                      </Card.Body>
-                                    </Card>
-                                  </Col>
-                                  <Col xs={12} md={12}>
-                                    <Card className="card_answer">
-                                      <Card.Header>
-                                        {question.answer.user.name}{" "}
-                                        {question.answer.user.family}
-                                      </Card.Header>
-                                      <Card.Body className="p-1">
-                                        <p className="text">
-                                          {question.answer.answer_text}
-                                        </p>
-                                      </Card.Body>
-                                    </Card>
-                                  </Col>
-                                </Row>
-                              </Card.Body>
-                            </Card>
-                          </Row>
-                        </Container>
-                      </>
-                    );
-                  })}
+                  {
+                    QA?.length == 0 ?
+                    <p>По данному товару пока что не было вопросов...</p>
+                    :
+                    QA?.map((question) => {
+                      return (
+                        <>
+                          <Container fluid>
+                            <Row>
+                              <Card className="card_qa p-1">
+                                <Card.Body>
+                                  <Row className="w-100">
+                                    <Col xs={12} md={12}>
+                                      <Card className="card_question">
+                                        <Card.Header>
+                                          <Image
+                                            src={
+                                              process.env.REACT_APP_API_URL +
+                                              question.question.user.img_user
+                                            }
+                                            width={35}
+                                            style={{
+                                              borderRadius: "50%",
+                                              padding: 0,
+                                              margin: 0,
+                                            }}
+                                          ></Image>{" "}
+                                          {question.question.user.name}{" "}
+                                          {question.question.user.family}
+                                        </Card.Header>
+                                        <Card.Body className="p-1">
+                                          <p className="text">
+                                            {question.question.question_text}
+                                          </p>
+                                        </Card.Body>
+                                      </Card>
+                                    </Col>
+                                    <Col xs={12} md={12}>
+                                      <Card className="card_answer">
+                                        <Card.Header>
+                                          <Image
+                                            src={
+                                              process.env.REACT_APP_API_URL +
+                                              question.answer.user.img_user
+                                            }
+                                            width={35}
+                                            style={{
+                                              borderRadius: "50%",
+                                              padding: 0,
+                                              margin: 0,
+                                            }}
+                                          ></Image>{" "}
+                                          {question.answer.user.name}{" "}
+                                          {question.answer.user.family}
+                                        </Card.Header>
+                                        <Card.Body className="p-1">
+                                          <p className="text">
+                                            {question.answer.answer_text}
+                                          </p>
+                                        </Card.Body>
+                                      </Card>
+                                    </Col>
+                                  </Row>
+                                </Card.Body>
+                              </Card>
+                            </Row>
+                          </Container>
+                        </>
+                      );
+                    })}
+                
                 </Col>
                 <Col
                   xs={12}

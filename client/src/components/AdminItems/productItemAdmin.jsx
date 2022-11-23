@@ -34,12 +34,6 @@ const ProductItemAdmin = ({productItem, reRenderProduct }) => {
         <td key={productItem.rating + Math.random()}>{productItem.rating}</td>
         <td key={productItem.imgMain}>{productItem.imgMain}</td>
         <td key={productItem.createdAt}>{productItem.createdAt}</td>
-        <td key={productItem.productBrandId + Math.random()}>
-          {productItem.productBrandId}
-        </td>
-        <td key={productItem.productTypeId + Math.random()}>
-          {productItem.productTypeId}
-        </td>
         <td key={Math.random() + Math.random()}>
           <Button
             variant={"outline-danger"}

@@ -13,4 +13,6 @@ router.get('/auth', authMiddleware,userController.checkAuth)
 //Get Data User for profile page
 router.get('/:id', authMiddleware,userController.getDataUser)
 
+router.put('/:id', userController.updateUserData)
+
 module.exports = router

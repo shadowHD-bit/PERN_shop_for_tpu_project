@@ -1,7 +1,18 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Accordion, Alert, Button, Col, Container, Form, FormControl, Pagination, Row, Table } from "react-bootstrap";
+import {
+  Accordion,
+  Alert,
+  Button,
+  Col,
+  Container,
+  Form,
+  FormControl,
+  Pagination,
+  Row,
+  Table,
+} from "react-bootstrap";
 import AccordionBody from "react-bootstrap/esm/AccordionBody";
 import AccordionHeader from "react-bootstrap/esm/AccordionHeader";
 import { AiOutlineMenuFold } from "react-icons/ai";
@@ -9,7 +20,7 @@ import ProductItemAdmin from "../../../../components/AdminItems/productItemAdmin
 import CreateProduct from "../../../../components/modals/CreateProduct";
 import SideBar from "../../../../components/UI/AdminSideBar/SideBar";
 import { fetchProductsForAdmin } from "../../../../http/productAPI";
-import './AdminProduct.scss'
+import "./AdminProduct.scss";
 
 const AdminProduct = () => {
   const [showAlert, setShowAlert] = useState(true);
@@ -20,16 +31,7 @@ const AdminProduct = () => {
   const [productVisible, setProductVisible] = useState(false);
 
   const [searchValue, setSearchValue] = useState("");
-
   const [productData, setProductData] = useState([]);
-
-  //pagination
-  const [currentPageProduct, setCurrentPageProduct] = useState(1);
-  const [countProduct, setCountProduct] = useState(0);
-  const limitProduct = 5;
-  const pageCountProduct = Math.ceil(Number(countProduct) / limitProduct);
-  const pagesProduct = [];
-
 
   const handleShowSidebar = () => {
     setShowSidebar(true);
@@ -40,38 +42,41 @@ const AdminProduct = () => {
   };
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit:10 }).then((data) => {
+    fetchProductsForAdmin().then((data) => {
       setProductData(data.rows);
-      setCountProduct(data.count);
+      setCountProducts(data.rows.length)
     });
   }, []);
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit:limitProduct }).then((data) => {
+    fetchProductsForAdmin().then((data) => {
       setProductData(data.rows);
-      setCountProduct(data.count);
+      setCountProducts(data.rows.length)
     });
   }, []);
 
-  useEffect(() => {
-    fetchProductsForAdmin({ page: currentPageProduct, limit:limitProduct }).then((data) => {
-      setProductData(data.rows);
-    });
-  }, [currentPageProduct]);
+  // useEffect(() => {
+  //   fetchProductsForAdmin({
+  //     page: currentPageProduct,
+  //     limit: limitProduct,
+  //   }).then((data) => {
+  //     setProductData(data.rows);
+  //   });
+  // }, [currentPageProduct]);
 
   const filteredProduct = productData.filter((prod) => {
-    if(searchValue){
-      return prod.name.toLowerCase().includes(searchValue.toLowerCase())
-    } 
+    if (searchValue) {
+      return prod.name.toLowerCase().includes(searchValue.toLowerCase());
+    }
     return prod.name;
   });
 
   const [rerenderProduct, setRerenderProduct] = useState(false);
 
   useEffect(() => {
-    fetchProductsForAdmin({ page: 1, limit:limitProduct}).then((data) => {
+    fetchProductsForAdmin().then((data) => {
       setProductData(data.rows);
-      setCountProduct(data.count);
+      setCountProducts(data.rows.length)
     });
   }, [rerenderProduct]);
 
@@ -80,22 +85,18 @@ const AdminProduct = () => {
   };
 
   //Product pagination
-  for (
-    let numberProduct = 1;
-    numberProduct < pageCountProduct + 1;
-    numberProduct++
-  ) {
-    pagesProduct.push(
-      <Pagination.Item
-        key={numberProduct}
-        active={numberProduct === currentPageProduct}
-        onClick={() => setCurrentPageProduct(numberProduct)}
-      >
-        {numberProduct}
-      </Pagination.Item>
-    );
+  //pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productPerPage] = useState(6);
+  const lastProductIndex = currentPage * productPerPage;
+  const firstProductIndex = lastProductIndex - productPerPage;
+  const [countProducts, setCountProducts] = useState(productData.length);
+  const pageNumber = [];
+  for (let i = 1; i <= Math.ceil(countProducts / productPerPage); i++) {
+    pageNumber.push(i);
   }
 
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <>
@@ -187,15 +188,13 @@ const AdminProduct = () => {
                         <th>Рейтинг</th>
                         <th>Основное изображение</th>
                         <th>Дата добавления</th>
-                        <th>Бренд</th>
-                        <th>Тип</th>
                         <th>Удалить</th>
                         <th>Изменить</th>
                         <th>От-ние</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredProduct.slice().map((productItem) => (
+                      {filteredProduct.slice(firstProductIndex, lastProductIndex).map((productItem) => (
                         <ProductItemAdmin
                           productItem={productItem}
                           reRenderProduct={reRenderProduct}
@@ -203,12 +202,16 @@ const AdminProduct = () => {
                       ))}
                     </tbody>
                   </Table>
-                  <Pagination
-                    size="sm"
-                    className="mt-4 mb-4"
-                    style={{ margin: "0 auto" }}
-                  >
-                    {pagesProduct}
+                  <Pagination className="mt-3">
+                    {pageNumber.map((page) => (
+                      <Pagination.Item
+                        key={page}
+                        active={currentPage === page}
+                        onClick={() => paginate(page)}
+                      >
+                        {page}
+                      </Pagination.Item>
+                    ))}
                   </Pagination>
                 </AccordionBody>
               </Accordion.Item>

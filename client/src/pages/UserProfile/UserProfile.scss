@@ -1,36 +1,39 @@
+@import '../../index.scss';
+
 .profile {
     -webkit-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
     -moz-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
     box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
+    border-radius: 30px !important;
 }
 
 .form-control:focus {
     box-shadow: none;
-    border-color: rgb(120, 39, 39);
+    border-color: $red;
 }
 
 .profile-button {
-    background: rgb(120, 39, 39);
+    background: $red;
     box-shadow: none;
     border: none
 }
 
 .profile-button:hover {
-    background: rgb(120, 39, 39);
+    background: $white_red;
 }
 
 .profile-button:focus {
-    background: rgb(120, 39, 39);
+    background: $red;
     box-shadow: none
 }
 
 .profile-button:active {
-    background: rgb(120, 39, 39);
+    background: $red;
     box-shadow: none
 }
 
 .back:hover {
-    color: rgb(120, 39, 39);
+    color: $white_red;
     cursor: pointer
 }
 
@@ -39,19 +42,37 @@
 }
 
 .add-experience:hover {
-    background: rgb(120, 39, 39);
+    background: $white_red;
     color: #fff;
     cursor: pointer;
-    border: solid 1px rgb(120, 39, 39);
+    border: solid 1px $white_red;
 }
 
 .lastest_product{
     .lastest_product_item{
-        border: 1px solid rgb(120, 39, 39);
+        border: 1px solid $red;
         border-radius: 10px;
         padding: 5px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+    }
+}
+
+.test_avatar{
+    width: 200px;
+    height: 200px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+}
+
+.change_photo_btn{
+    background: $red;
+    border:none;
+
+    &:hover{
+        background-color: $white_red;
     }
 }

@@ -71,8 +71,8 @@ export const fetchProduct = async (productTypeId, productBrandId) => {
 }
 
 // Выбрать товар
-export const fetchProductsForAdmin = async ({limit, page}) => {
-    const {data} = await $authHost.get(`api/display_product?limit=${limit}&page=${page}`);
+export const fetchProductsForAdmin = async () => {
+    const {data} = await $authHost.get(`api/display_product`);
     return data;
 }
 
@@ -132,5 +132,11 @@ export const addRating = async (body) => {
 
 export const checkRating = async (body) => {
     const {data} = await $authHost.post('api/rating/check-rating', body);
+    return data;
+}
+
+// Удалить бренд
+export const deleteInfo = async (id) => {
+    const {data} = await $authHost({method:'DELETE', url:'api/info_product/'+id});
     return data;
 }

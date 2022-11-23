@@ -81,7 +81,7 @@ class QuestionController {
   async getQuestionOneProduct(req, res) {
     const { id } = req.params;
 
-    let info_qa = []
+    let info_qa = [];
     let QA = {};
     await Question.findAll({
       where: { productId: id, complete_question: true },
@@ -92,7 +92,6 @@ class QuestionController {
         },
       ],
     }).then(async (data_question) => {
-
       for (let quest of data_question) {
         await Answer.findOne({
           where: { questionAboutProductIdQuestion: quest.id_question },
@@ -105,14 +104,29 @@ class QuestionController {
         }).then(async (data_answer) => {
           let new_obj = {
             question: quest,
-            answer: data_answer
-          }
-          info_qa.push(new_obj)
+            answer: data_answer,
+          };
+          info_qa.push(new_obj);
         });
       }
     });
-    QA = info_qa
+    QA = info_qa;
     return res.json(QA);
+  }
+
+  async getBoolQuestionOneUserNotComplete(req, res) {
+    const {id, product_id } = req.query;
+    await Question.findAll({
+      where: { productId: product_id, complete_question: false, userId: id},
+    }).then((data) => {
+      console.log(data);
+      if(data.length !== 0){
+        return res.json(true);
+      }
+      else{
+        return res.json(false);
+      }
+    });
   }
 
   async updateStatusQuestion(req, res) {

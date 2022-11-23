@@ -1,10 +1,17 @@
 const { ProductBrand } = require("../models/models");
 const ApiError = require("../errors/ApiErrors");
+const uuid = require('uuid');
+const path = require('path');
 
 class productBrandController {
   async createProductBrand(req, res) {
     const { name } = req.body;
-    const brand = await ProductBrand.create({ name });
+
+    const {img} = req.files
+            let fileName = uuid.v4() + ".jpg"
+            img.mv(path.resolve(__dirname, '..', 'static_brand_and_type', fileName))
+
+    const brand = await ProductBrand.create({ name, img: fileName });
     return res.json(brand);
   }
 
@@ -18,9 +25,14 @@ class productBrandController {
       const { id } = req.params;
       const { name } = req.body;
 
+      const {img} = req.files
+          let fileName = uuid.v4() + ".jpg"
+          img.mv(path.resolve(__dirname, '..', 'static_brand_and_type', fileName))
+
+
       await ProductBrand.findOne({ where: { id: id } }).then(async (data) => {
         if (data) {
-          await ProductBrand.update({ name: name }, {where:{id: id}}).then(() => {
+          await ProductBrand.update({ name: name, img: fileName }, {where:{id: id}}).then(() => {
             return res.json("Brand updated");
           });
         } else {

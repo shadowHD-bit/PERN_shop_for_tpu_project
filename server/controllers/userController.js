@@ -2,6 +2,8 @@ const ApiError = require('../errors/ApiErrors')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const {User, Basket, Likes} = require('../models/models')
+const uuid = require('uuid');
+const path = require('path');
 
 const generateJwt = (id, email, role) => {
     return jwt.sign(
@@ -57,6 +59,43 @@ class UserController{
         )
         return res.json(user)
     }
+
+    async updateUserData(req, res) {
+        try {
+            const {id} = req.params;
+            const {name, family, date_birthday, numberPhone} = req.body;
+
+            await User.findOne({where:{id}})
+                .then( async data => {
+                    if(data) {
+                        let newVal = {};
+                        name ? newVal.name = name : false;
+                        family ? newVal.family = family : false;
+                        date_birthday ? newVal.date_birthday = date_birthday : false;
+                        numberPhone ? newVal.numberPhone = numberPhone : false;
+
+                        if(req.files) {
+                            const {img} = req.files;
+                            const type = img.mimetype.split('/')[1];
+                            let fileName = uuid.v4() + `.${type}`;
+                            img.mv(path.resolve(__dirname, '..', 'static_avatar', fileName));
+                            newVal.img_user = fileName;
+                        }
+
+                        await User.update({
+                            ...newVal
+                        }, {where:{id}} ).then(() => {
+                            return res.json("Пользователь обновлен");
+                        })
+                    } else {
+                        return res.json("Этого Пользователя нет в базе данных!");
+                    }
+                })
+            } catch (e) {
+            return res.json(e);
+        }
+    }
+
 }
 
 module.exports = new UserController()

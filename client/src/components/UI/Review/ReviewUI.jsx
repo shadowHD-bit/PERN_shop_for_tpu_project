@@ -1,5 +1,5 @@
 import React from "react";
-import { Card } from "react-bootstrap";
+import { Card, Col, Image, Row } from "react-bootstrap";
 import BadReviewTag from "../Tags/BadReviewTag/BadReviewTag";
 import GoodReviewTag from "../Tags/GoodReviewTag/GoodReviewTag";
 import "./ReviewUI.scss";
@@ -16,36 +16,58 @@ const ReviewUI = ({
 }) => {
   return (
     <>
-      <Card>
-        <b>
+      <Card className="review_card">
+        <Card.Header>
+          <Image
+            src={process.env.REACT_APP_API_URL + img_user}
+            width={35}
+            style={{
+              borderRadius: "50%",
+              padding: 0,
+              margin: 0,
+            }}
+          ></Image>{" "}
           {name_user} {family_user}
-        </b>
-        <br />
+        </Card.Header>
+        <Card.Body>
+          <Row>
+            <Col className="d-flex flex-row">
+              {description_true ? (
+                <GoodReviewTag children={"Описание соответствует"} />
+              ) : (
+                <BadReviewTag children={"Описание не соответствует"} />
+              )}
+              {size_true ? (
+                <GoodReviewTag children={"Размер соответствует"} />
+              ) : (
+                <BadReviewTag children={"Размер не соответствует"} />
+              )}
+              {delivery_true ? (
+                <GoodReviewTag children={"Доставка соответствует"} />
+              ) : (
+                <BadReviewTag children={"Доставка не соответствует"} />
+              )}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <br />
+              {text_review}
+              <br />
+            </Col>
+          </Row>
+        </Card.Body>
         {img_review != "not img" ? (
-          <img width={"10%"} src={process.env.REACT_APP_API_URL + img_review} />
+          <Card.Footer>
+            <img
+              width={"10%"}
+              src={process.env.REACT_APP_API_URL + img_review}
+            />
+          </Card.Footer>
         ) : (
-          <div></div>
-        )}
-        <br />
-        Отзыв: {text_review}
-        <br />
-        {description_true ? (
-          <GoodReviewTag children={"Описание соответствует"} />
-        ) : (
-          <BadReviewTag children={"Описание не соответствует"} />
-        )}
-        {size_true ? (
-          <GoodReviewTag children={"Размер соответствует"} />
-        ) : (
-          <BadReviewTag children={"Размер не соответствует"} />
-        )}
-        {delivery_true ? (
-          <GoodReviewTag children={"Доставка соответствует"} />
-        ) : (
-          <BadReviewTag children={"Доставка не соответствует"} />
+          <div className="null_img"></div>
         )}
       </Card>
-      ;
     </>
   );
 };
