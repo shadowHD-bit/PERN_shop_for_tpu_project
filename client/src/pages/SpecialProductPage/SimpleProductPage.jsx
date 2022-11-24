@@ -10,6 +10,7 @@ import {
   Image,
   InputGroup,
   Modal,
+  ProgressBar,
   Row,
 } from "react-bootstrap";
 import { useParams } from "react-router-dom";
@@ -17,8 +18,6 @@ import { Context } from "../..";
 import {
   fetchOneProduct,
   addProductToBasket,
-  addRating,
-  checkRating,
   getProductDescription,
 } from "../../http/productAPI";
 import { BASKET_ROUTE } from "../../utils/consts";
@@ -43,6 +42,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 import QuestionModal from "../../components/UI/Modals/AddQuestionModal/QuestionModal";
 import ErrorAuthModalQuestion from "../../components/UI/Modals/ErrorAuthModalQuestion/ErrorAuthModalQuestion";
 import ErrorAddQuestionModal from "../../components/UI/Modals/ErrorAddQuestionModal/ErrorAddQuestionModal";
+import { Rating } from "@material-ui/lab";
 
 const SimpleProduct = observer(() => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -54,7 +54,6 @@ const SimpleProduct = observer(() => {
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
   }, []);
-  console.log(product);
 
   const isProductInBasket = () => {
     const findProduct = basket.Basket.findIndex(
@@ -90,26 +89,9 @@ const SimpleProduct = observer(() => {
 
   //////////
 
-  const [resRate, setResRate] = useState("");
-  const [isAccessRating, setSsAccessRating] = useState(false);
-
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
-    if (user.isAuth) {
-      checkRating({ productId: id }).then((res) =>
-        setSsAccessRating(res.allow)
-      );
-    }
-  }, [id, resRate]);
-
-  const ratingChanged = (rate) => {
-    addRating({
-      rate,
-      productId: id,
-    }).then((res) => {
-      setResRate(res);
-    });
-  };
+  }, [id]);
 
   ////
 
@@ -457,20 +439,20 @@ const SimpleProduct = observer(() => {
               {<p>{product.description}</p>}
             </Tab>
             <Tab eventKey="characteristics" title="Характеристики">
-              {
-                product.info.length == 0 ?
+              {product.info.length == 0 ? (
                 <p>На данный товар еще не было отзывов...</p>
-                :
-                product.info.map(item => (
-                  <p><b>{item.title}</b> : {item.description}</p>
+              ) : (
+                product.info.map((item) => (
+                  <p>
+                    <b>{item.title}</b> : {item.description}
+                  </p>
                 ))
-              }
+              )}
             </Tab>
             <Tab eventKey="reviews" title="Отзывы">
-              {
-                reviews?.length == 0 ? 
+              {reviews?.length == 0 ? (
                 <p>На данный товар еще не было отзывов...</p>
-                :
+              ) : (
                 reviews?.map((rew) => {
                   return (
                     <ReviewUI
@@ -482,11 +464,13 @@ const SimpleProduct = observer(() => {
                       description_true={rew.description_true}
                       size_true={rew.size_true}
                       delivery_true={rew.delivery_true}
+                      isVk={rew.review.user.isVK}
+                      rate={rew.rate}
+                      isGoogle={rew.review.user.isGoogle}
                     />
                   );
                 })
-              }
-              
+              )}
             </Tab>
             <Tab
               eventKey="question"
@@ -503,10 +487,9 @@ const SimpleProduct = observer(() => {
             >
               <Row>
                 <Col xs={12} md={12} xl={7}>
-                  {
-                    QA?.length == 0 ?
+                  {QA?.length == 0 ? (
                     <p>По данному товару пока что не было вопросов...</p>
-                    :
+                  ) : (
                     QA?.map((question) => {
                       return (
                         <>
@@ -518,18 +501,33 @@ const SimpleProduct = observer(() => {
                                     <Col xs={12} md={12}>
                                       <Card className="card_question">
                                         <Card.Header>
-                                          <Image
-                                            src={
-                                              process.env.REACT_APP_API_URL +
-                                              question.question.user.img_user
-                                            }
-                                            width={35}
-                                            style={{
-                                              borderRadius: "50%",
-                                              padding: 0,
-                                              margin: 0,
-                                            }}
-                                          ></Image>{" "}
+                                          {question.question.user.isVk ||
+                                          question.question.user.isGoogle ? (
+                                            <Image
+                                              src={
+                                                question.question.user.img_user
+                                              }
+                                              width={35}
+                                              style={{
+                                                borderRadius: "50%",
+                                                padding: 0,
+                                                margin: 0,
+                                              }}
+                                            ></Image>
+                                          ) : (
+                                            <Image
+                                              src={
+                                                process.env.REACT_APP_API_URL +
+                                                question.question.user.img_user
+                                              }
+                                              width={35}
+                                              style={{
+                                                borderRadius: "50%",
+                                                padding: 0,
+                                                margin: 0,
+                                              }}
+                                            ></Image>
+                                          )}{" "}
                                           {question.question.user.name}{" "}
                                           {question.question.user.family}
                                         </Card.Header>
@@ -543,19 +541,34 @@ const SimpleProduct = observer(() => {
                                     <Col xs={12} md={12}>
                                       <Card className="card_answer">
                                         <Card.Header>
-                                          <Image
-                                            src={
-                                              process.env.REACT_APP_API_URL +
-                                              question.answer.user.img_user
-                                            }
-                                            width={35}
-                                            style={{
-                                              borderRadius: "50%",
-                                              padding: 0,
-                                              margin: 0,
-                                            }}
-                                          ></Image>{" "}
-                                          {question.answer.user.name}{" "}
+                                        {question.answer.user.isVk ||
+                                          question.answer.user.isGoogle ? (
+                                            <Image
+                                              src={
+                                                question.answer.user.img_user
+                                              }
+                                              width={35}
+                                              style={{
+                                                borderRadius: "50%",
+                                                padding: 0,
+                                                margin: 0,
+                                              }}
+                                            ></Image>
+                                          ) : (
+                                            <Image
+                                              src={
+                                                process.env.REACT_APP_API_URL +
+                                                question.answer.user.img_user
+                                              }
+                                              width={35}
+                                              style={{
+                                                borderRadius: "50%",
+                                                padding: 0,
+                                                margin: 0,
+                                              }}
+                                            ></Image>
+                                          )}
+                                          {" "}{question.answer.user.name}{" "}
                                           {question.answer.user.family}
                                         </Card.Header>
                                         <Card.Body className="p-1">
@@ -572,8 +585,8 @@ const SimpleProduct = observer(() => {
                           </Container>
                         </>
                       );
-                    })}
-                
+                    })
+                  )}
                 </Col>
                 <Col
                   xs={12}
@@ -603,7 +616,119 @@ const SimpleProduct = observer(() => {
               </Row>
             </Tab>
             <Tab eventKey="rating" title="Рейтинг">
-              dsvsdvdsv
+              <Row>
+                <Col xs={7}>
+                  <p className="title_add">Пользовательский рейтинг</p>
+                  <Rating
+                    name="size-large"
+                    readOnly
+                    defaultValue={5}
+                    size="large"
+                  />
+                  <ProgressBar
+                    className="mt-2"
+                    striped
+                    variant="success"
+                    now={
+                      (reviews?.filter((item) => item.rate == 5).length /
+                        reviews?.length) *
+                      100
+                    }
+                  />
+                  <Rating
+                    name="size-large"
+                    readOnly
+                    defaultValue={4}
+                    size="large"
+                  />
+                  <ProgressBar
+                    className="mt-2"
+                    striped
+                    variant="info"
+                    now={
+                      (reviews?.filter((item) => item.rate == 4).length /
+                        reviews?.length) *
+                      100
+                    }
+                  />
+                  <Rating
+                    name="size-large"
+                    readOnly
+                    defaultValue={3}
+                    size="large"
+                  />
+
+                  <ProgressBar
+                    className="mt-2"
+                    striped
+                    variant="warning"
+                    now={
+                      (reviews?.filter((item) => item.rate == 3).length /
+                        reviews?.length) *
+                      100
+                    }
+                  />
+                  <Rating
+                    name="size-large"
+                    readOnly
+                    defaultValue={2}
+                    size="large"
+                  />
+
+                  <ProgressBar
+                    className="mt-2"
+                    striped
+                    variant="danger"
+                    now={
+                      (reviews?.filter((item) => item.rate == 2).length /
+                        reviews?.length) *
+                      100
+                    }
+                  />
+                  <Rating
+                    name="size-large"
+                    readOnly
+                    defaultValue={1}
+                    size="large"
+                  />
+
+                  <ProgressBar
+                    className="mt-2"
+                    striped
+                    variant="secondary"
+                    now={
+                      (reviews?.filter((item) => item.rate == 1).length /
+                        reviews?.length) *
+                      100
+                    }
+                  />
+                </Col>
+                <Col xs={5}>
+                  <Row className="d-flex flex-row justify-content-center">
+                    <Col className="d-flex flex-row justify-content-center">
+                      <Image
+                        src={
+                          process.env.PUBLIC_URL +
+                          "/img/productcard/video-calling.png"
+                        }
+                        width={250}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    {reviews?.length != 0 ? (
+                      <p className="quest_about_text text-center">
+                        Рейтинг составляет {product.rating} балл(-а) и основан
+                        на {reviews?.length} отывах(-е)...
+                      </p>
+                    ) : (
+                      <p className="quest_about_text text-center">
+                        Еще не один пользователь не оценил данный товар...
+                      </p>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
             </Tab>
           </Tabs>
         </Row>

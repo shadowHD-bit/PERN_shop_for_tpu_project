@@ -1,3 +1,4 @@
+import { Rating } from "@material-ui/lab";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Button,
@@ -22,7 +23,7 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
   const [modalReview, setShowReview] = useState(false);
   const [productInfo, setProductInfo] = useState([]);
 
-  const user = useContext(Context)
+  const user = useContext(Context);
 
   //modal info
   const handleCloseDelete = () => setShowDelete(false);
@@ -34,7 +35,7 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
   const handleCloseReviews = () => setShowReview(false);
   const handleShowReviews = (prodId) => {
     setShowReview(true);
-    setProductId(prodId)
+    setProductId(prodId);
   };
 
   useEffect(() => {
@@ -59,7 +60,8 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
   const [descriptionTrueState, setDescriptionTrueState] = useState(true);
   const [sizeTrueState, setSizeTrueState] = useState(true);
   const [deliveryTrueState, setDeliveryTrueState] = useState(true);
-  const [productId, setProductId] = useState()
+  const [productId, setProductId] = useState();
+  const [rating, setRating] = useState(3);
 
   const [reviewText, setReviewText] = useState();
   const [fileReview, setFileReview] = useState(null);
@@ -67,7 +69,6 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
     setFileReview(e.target.files[0]);
   };
 
-  console.log(user.user.user.id);
 
   const createReviewsInModal = () => {
     const formData = new FormData();
@@ -77,10 +78,11 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
     formData.append("size_true", sizeTrueState);
     formData.append("delivery_true", deliveryTrueState);
     formData.append("product_id", productId);
+    formData.append("rate", rating);
     formData.append("user_id", user.user.user.id);
-    createReviews(formData).then(data => {
-        handleCloseReviews()
-    })
+    createReviews(formData).then((data) => {
+      handleCloseReviews();
+    });
   };
 
   return (
@@ -223,6 +225,16 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
           <br />
           Добавить изображение:
           <Form.Control type="file" onChange={selectFileReview} />
+          <br />
+          <Rating
+            name="size-large"
+            defaultValue={rating || 3}
+            value={rating || 3}
+            onChange={(event, newValue) => {
+              setRating(newValue);
+            }}
+            size="large"
+          />
           <br />
           Соответствует товар описанию?
           <Form.Select

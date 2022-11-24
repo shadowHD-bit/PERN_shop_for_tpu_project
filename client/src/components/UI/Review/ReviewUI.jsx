@@ -1,3 +1,4 @@
+import { Rating } from "@material-ui/lab";
 import React from "react";
 import { Card, Col, Image, Row } from "react-bootstrap";
 import BadReviewTag from "../Tags/BadReviewTag/BadReviewTag";
@@ -13,21 +14,48 @@ const ReviewUI = ({
   description_true,
   size_true,
   delivery_true,
+  rate,
+  isVk,
+  isGoogle,
 }) => {
   return (
     <>
       <Card className="review_card">
         <Card.Header>
-          <Image
-            src={process.env.REACT_APP_API_URL + img_user}
-            width={35}
-            style={{
-              borderRadius: "50%",
-              padding: 0,
-              margin: 0,
-            }}
-          ></Image>{" "}
-          {name_user} {family_user}
+          <Row>
+            <Col>
+              {isVk || isGoogle ? (
+                <Image
+                  src={img_user}
+                  width={35}
+                  style={{
+                    borderRadius: "50%",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                ></Image>
+              ) : (
+                <Image
+                  src={process.env.REACT_APP_API_URL + img_user}
+                  width={35}
+                  style={{
+                    borderRadius: "50%",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                ></Image>
+              )}{" "}
+              {name_user} {family_user}
+            </Col>
+            <Col className="d-flex flex-row justify-content-end">
+              <Rating
+                name="size-large"
+                readOnly
+                defaultValue={rate}
+                size="large"
+              />
+            </Col>
+          </Row>
         </Card.Header>
         <Card.Body>
           <Row>

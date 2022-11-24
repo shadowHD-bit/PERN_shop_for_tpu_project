@@ -19,7 +19,6 @@ class RatingController {
             let middleRating = 0;
             rating.rows.map(item => {return allRating += item.rate});
             middleRating = Number(allRating) / Number(rating.count);
-            console.log(middleRating);
             await Product.update(
                 {rating: Number(middleRating)},
                 {where: {id: productId},

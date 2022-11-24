@@ -28,6 +28,7 @@ const ChangeProduct = ({
   const imgSecond = thisProduct.imgSecond;
   const imgThird = thisProduct.imgThird;
   const info = thisProduct.info;
+  const description = thisProduct.description;
   const BrandId = thisProduct.productBrandId;
   const TypeId = thisProduct.productTypeId;
 
@@ -35,6 +36,7 @@ const ChangeProduct = ({
   const [valuePrice, setValuePrice] = useState(price || "");
   const [valueRating, setValueRating] = useState(rating || "");
   const [valueImgMain, setValueImgMain] = useState(imgMain || "");
+  const [valueDescription, setValueDescription] = useState(description || "");
 
   const [file, setFile] = useState(null);
   const [fileOne, setFileOne] = useState(null);
@@ -70,7 +72,8 @@ const ChangeProduct = ({
     setValueBrand(BrandId);
     setValueType(TypeId);
     setInfoChange(info);
-  }, [name, price, rating, imgMain, BrandId, TypeId]);
+    setValueDescription(description)
+  }, [name, price, rating, imgMain, BrandId, TypeId, description]);
 
   // useState(() => {
   //   setInfoChange(infoChange)
@@ -103,6 +106,7 @@ const ChangeProduct = ({
     formData.append("imgThird", fileThree);
     formData.append("productBrandId", valueBrand);
     formData.append("productTypeId", valueType);
+    formData.append("description", valueDescription);
     formData.append("info", JSON.stringify(infoChange));
     console.log(formData);
     updateProduct(id, formData).then(() => {
@@ -195,9 +199,15 @@ const ChangeProduct = ({
               </Col>
             </Row>
             <Row>
+              <Col>
+              <Form.Label>Описание</Form.Label>
+                <Form.Control as="textarea" aria-label="Description" onChange={(e) => setValueDescription(e.target.value)} value={valueDescription} />
+              </Col>
+            </Row>
+            <Row>
               <Col xs={6} className="border-right">
                 <Row className="d-flex flex-row justify-content-between">
-                <Form.Label>Параметры товара</Form.Label>
+                  <Form.Label>Параметры товара</Form.Label>
                   <Col xs={4}>
                     <Form.Group>
                       <Form.Control
@@ -217,9 +227,7 @@ const ChangeProduct = ({
                     </Form.Group>
                   </Col>
                   <Col xs={4}>
-                    <Button
-                      onClick={() => createInfoItem()}
-                    >
+                    <Button onClick={() => createInfoItem()}>
                       Создать <BsPlus />
                     </Button>
                   </Col>

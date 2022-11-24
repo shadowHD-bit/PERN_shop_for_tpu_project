@@ -160,7 +160,7 @@ class ProductController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { productBrandId, productTypeId, name, price, info } = req.body;
+      const { productBrandId, productTypeId, name, price, description, info } = req.body;
 
       await Product.findOne({ where: { id } }).then(async (data) => {
         if (data) {
@@ -169,6 +169,7 @@ class ProductController {
           productTypeId ? (newVal.productTypeId = productTypeId) : false;
           name ? (newVal.name = name) : false;
           price ? (newVal.price = price) : false;
+          description ? (newVal.description = description) : false;
 
           if (req.files) {
             if (req.files.imgMain) {

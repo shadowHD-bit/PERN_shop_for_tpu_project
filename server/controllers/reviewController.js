@@ -20,6 +20,7 @@ class ReviewController {
         delivery_true,
         product_id,
         user_id,
+        rate,
       } = req.body;
 
       let fileName;
@@ -46,6 +47,26 @@ class ReviewController {
           delivery_true: delivery_true,
           reviewId: id,
           productId: product_id,
+          rate: rate,
+        }).then(async () => {
+          const productRatingUpdate = await ReviewsProduct.findAndCountAll({
+            where: { productId: product_id },
+          }).then(async (data) => {
+            let allRating = 0;
+            let middleRating = 0;
+            data.rows.map((item) => {
+              return (allRating += item.rate);
+            });
+            middleRating = Number(allRating) / Number(data.count);
+            console.log(middleRating);
+            console.log(allRating);
+            console.log(data);
+
+            await Product.update(
+              { rating: Number(middleRating) },
+              { where: { id: product_id } }
+            );
+          });
         });
       });
 
@@ -105,8 +126,8 @@ class ReviewController {
       const { id } = req.params;
       await ReviewsProduct.findOne({ where: { id } }).then(async (data) => {
         if (data) {
-           ReviewsProduct.destroy({ where: { id } }).then(() => {
-            Reviews.destroy({ where: { id:data.reviewId } }).then(() => {
+          ReviewsProduct.destroy({ where: { id } }).then(() => {
+            Reviews.destroy({ where: { id: data.reviewId } }).then(() => {
               return res.json("Отзыв удален удален");
             });
           });

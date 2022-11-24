@@ -124,16 +124,16 @@ export const getAllProductSearch = async (name, page = 1, filter = "All") => {
 }
 
 
-//Rating
-export const addRating = async (body) => {
-    const {data} = await $authHost.post('api/rating', body);
-    return data;
-}
+// //Rating
+// export const addRating = async (body) => {
+//     const {data} = await $authHost.post('api/rating', body);
+//     return data;
+// }
 
-export const checkRating = async (body) => {
-    const {data} = await $authHost.post('api/rating/check-rating', body);
-    return data;
-}
+// export const checkRating = async (body) => {
+//     const {data} = await $authHost.post('api/rating/check-rating', body);
+//     return data;
+// }
 
 // Удалить бренд
 export const deleteInfo = async (id) => {

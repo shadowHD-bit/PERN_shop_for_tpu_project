@@ -46,6 +46,7 @@ const ReviewsProduct = sequelize.define("reviews_products", {
   description_true: { type: DataTypes.BOOLEAN, defaultValue: false },
   size_true: { type: DataTypes.BOOLEAN, defaultValue: false },
   delivery_true: { type: DataTypes.BOOLEAN, defaultValue: false },
+  rate: { type: DataTypes.DOUBLE, allowNull: false },
 });
 
 //Models Likes_product
@@ -89,12 +90,6 @@ const ProductBrand = sequelize.define("product_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   img:  { type: DataTypes.STRING, allowNull: true, defaultValue: 'default_brand.png' },
-});
-
-//Models Rating
-const Rating = sequelize.define("rating", {
-  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  rate: { type: DataTypes.DOUBLE, allowNull: false },
 });
 
 //Models Slider
@@ -182,9 +177,6 @@ ReviewsProduct.belongsTo(Product);
 User.hasOne(Likes);
 Likes.belongsTo(User);
 
-User.hasMany(Rating);
-Rating.belongsTo(User);
-
 Product.hasMany(Question);
 Question.belongsTo(Product);
 
@@ -208,9 +200,6 @@ Product.belongsTo(ProductType);
 
 ProductBrand.hasMany(Product);
 Product.belongsTo(ProductBrand);
-
-Product.hasMany(Rating);
-Rating.belongsTo(Product);
 
 Product.hasMany(BasketProduct);
 BasketProduct.belongsTo(Product);
@@ -249,7 +238,6 @@ module.exports = {
   Product,
   ProductType,
   ProductBrand,
-  Rating,
   ProductTypeBrand,
   ProductInfo,
   Slider,
