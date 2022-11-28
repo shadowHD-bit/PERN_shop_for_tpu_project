@@ -10,6 +10,7 @@ import {
   LOGIN_ROUTE,
   ORDERS_ROUTE,
   PRODUCT_ROUTE,
+  QUESTION_ROUTE,
   RULES_ROUTE,
   SHOP_ROUTE,
 } from "../../../utils/consts";
@@ -108,6 +109,12 @@ const Sidebar = ({ show, handleClose, isAuth, isAdmin, basket, likes }) => {
                 href={RULES_ROUTE}
               >
                 Правила
+              </Dropdown.Item>
+              <Dropdown.Item
+                className="off_navigation_dropdown-item"
+                href={QUESTION_ROUTE}
+              >
+                Вопросы и ответы
               </Dropdown.Item>
               {isAuth && isAdmin == true ? (
                 <Dropdown.Item

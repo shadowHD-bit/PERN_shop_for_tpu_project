@@ -7,6 +7,7 @@ import './index.scss'
 import BasketStoreStore from './store/BasketStore';
 import SliderStore from './store/SliderStore';
 import LikesStoreStore from './store/LikesStore';
+import NotificationStore from './store/NotificationStore';
 
 export const Context = createContext(null)
 
@@ -17,6 +18,7 @@ ReactDOM.render(
         basket: new BasketStoreStore(),
         slider: new SliderStore(),
         likes: new LikesStoreStore(),
+        notifications: new NotificationStore()
     }}>
         <App />
     </Context.Provider>,

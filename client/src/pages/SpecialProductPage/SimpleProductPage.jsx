@@ -19,6 +19,7 @@ import {
   fetchOneProduct,
   addProductToBasket,
   getProductDescription,
+  fetchSizesOneProduct,
 } from "../../http/productAPI";
 import { BASKET_ROUTE } from "../../utils/consts";
 import { BsCheckLg, BsHeart } from "react-icons/bs";
@@ -43,6 +44,7 @@ import QuestionModal from "../../components/UI/Modals/AddQuestionModal/QuestionM
 import ErrorAuthModalQuestion from "../../components/UI/Modals/ErrorAuthModalQuestion/ErrorAuthModalQuestion";
 import ErrorAddQuestionModal from "../../components/UI/Modals/ErrorAddQuestionModal/ErrorAddQuestionModal";
 import { Rating } from "@material-ui/lab";
+import SizeProductModal from "../../components/UI/Modals/SizeProductModal/SizeProductModal";
 
 const SimpleProduct = observer(() => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -50,6 +52,16 @@ const SimpleProduct = observer(() => {
 
   const [product, setProduct] = useState({ info: [] });
   const { id } = useParams();
+
+const [showSizeProductModal, setShowSizeProductModal] = useState(false)
+
+  const handlerShowSizeProduct = () => {
+    setShowSizeProductModal(true)
+  }
+
+  const handlerCloseSizeProduct = () => {
+    setShowSizeProductModal(false)
+  }
 
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
@@ -92,6 +104,14 @@ const SimpleProduct = observer(() => {
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
   }, [id]);
+
+  const [sizes, setSizes] = useState([]);
+
+  useEffect(() => {
+    fetchSizesOneProduct(id).then((data) => setSizes(data));
+  }, []);
+
+  console.log(sizes);
 
   ////
 
@@ -144,6 +164,23 @@ const SimpleProduct = observer(() => {
   useEffect(() => {
     fetchReviewsProduct({ id }).then((data) => setReviews(data));
   }, [product]);
+
+  const sortSize = (arr) => {
+    //Sort
+    let numbers = [];
+    let strings = [];
+
+    arr.forEach((e) => (isNaN(e.size.number_size) ? strings : numbers).push(e));
+
+    numbers = numbers.sort(
+      (a, b) => Number(a.size.number_size) - Number(b.size.number_size)
+    );
+    strings = strings.sort();
+
+    return numbers.concat(strings);
+  };
+
+  console.log(sizes);
 
   return (
     // <section class="product">
@@ -371,22 +408,14 @@ const SimpleProduct = observer(() => {
             <Row>
               <p className="price_product">{product.price} РУБ</p>
             </Row>
-            <Row className="color_product">
-              <p className="color_product_p">Цвет: </p>
-              <Form.Select aria-label="Default select example">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </Form.Select>
-            </Row>
             <Row className="size_product">
               Размер:
               <Form.Select aria-label="Default select example">
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {sortSize(sizes).map((item) => (
+                  <option value={item.size.id}>{item.size.number_size}</option>
+                ))}
               </Form.Select>
-              <p className="size_guide">Подробнее о размере</p>
+              <p onClick={() => handlerShowSizeProduct()} className="size_guide">Подробнее о размере</p>
             </Row>
             <Row className="mt-3">
               <Col xs={12} md={6} className="add_btn_container">
@@ -541,7 +570,7 @@ const SimpleProduct = observer(() => {
                                     <Col xs={12} md={12}>
                                       <Card className="card_answer">
                                         <Card.Header>
-                                        {question.answer.user.isVk ||
+                                          {question.answer.user.isVk ||
                                           question.answer.user.isGoogle ? (
                                             <Image
                                               src={
@@ -567,8 +596,8 @@ const SimpleProduct = observer(() => {
                                                 margin: 0,
                                               }}
                                             ></Image>
-                                          )}
-                                          {" "}{question.answer.user.name}{" "}
+                                          )}{" "}
+                                          {question.answer.user.name}{" "}
                                           {question.answer.user.family}
                                         </Card.Header>
                                         <Card.Body className="p-1">
@@ -748,6 +777,8 @@ const SimpleProduct = observer(() => {
         stateModal={showErrorModal}
         handleCloseModal={handleCloseErrorModal}
       />
+
+      <SizeProductModal handleCloseModal={handlerCloseSizeProduct} stateModal={showSizeProductModal} />
     </>
   );
 });

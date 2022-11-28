@@ -5,6 +5,8 @@ const {
   ProductInfo,
   ProductBrand,
   ProductType,
+  ProductSizes,
+  ProductBadge,
 } = require("../models/models");
 const ApiError = require("../errors/ApiErrors");
 const { Op } = require("sequelize");
@@ -88,25 +90,25 @@ class ProductController {
     let product;
     if (!productBrandId && !productTypeId) {
       product = await Product.findAndCountAll({
-        include: [{ model: ProductBrand }, { model: ProductType }],
+        include: [{ model: ProductBrand }, { model: ProductType }, { model: ProductBadge }],
       });
     }
     if (productBrandId && !productTypeId) {
       product = await Product.findAndCountAll({
         where: { productBrandId },
-        include: [{ model: ProductBrand }, { model: ProductType }],
+        include: [{ model: ProductBrand }, { model: ProductType }, { model: ProductBadge }],
       });
     }
     if (!productBrandId && productTypeId) {
       product = await Product.findAndCountAll({
         where: { productTypeId },
-        include: [{ model: ProductBrand }, { model: ProductType }],
+        include: [{ model: ProductBrand }, { model: ProductType }, { model: ProductBadge }],
       });
     }
     if (productBrandId && productTypeId) {
       product = await Product.findAndCountAll({
         where: { productTypeId, productBrandId },
-        include: [{ model: ProductBrand }, { model: ProductType }],
+        include: [{ model: ProductBrand }, { model: ProductType }, { model: ProductBadge }],
       });
     }
     return res.json(product);
@@ -116,7 +118,12 @@ class ProductController {
     let product;
 
     product = await Product.findAndCountAll({
-      include: [{ model: ProductInfo, as: "info" }],
+      include: [
+        { model: ProductInfo, as: "info" },
+        {
+          model: ProductSizes,
+        },
+      ],
     });
 
     return res.json(product);
@@ -160,7 +167,8 @@ class ProductController {
   async update(req, res) {
     try {
       const { id } = req.params;
-      const { productBrandId, productTypeId, name, price, description, info } = req.body;
+      const { productBrandId, productTypeId, name, price, description, info, productBadgeId } =
+        req.body;
 
       await Product.findOne({ where: { id } }).then(async (data) => {
         if (data) {
@@ -170,6 +178,7 @@ class ProductController {
           name ? (newVal.name = name) : false;
           price ? (newVal.price = price) : false;
           description ? (newVal.description = description) : false;
+          newVal.productBadgeId = productBadgeId
 
           if (req.files) {
             if (req.files.imgMain) {

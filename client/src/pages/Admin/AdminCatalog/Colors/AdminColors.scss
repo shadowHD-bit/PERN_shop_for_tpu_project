@@ -1,0 +1,127 @@
+@import "../../../../index.scss";
+
+.admin_container_colors {
+  .admin_title {
+    margin-bottom: 10px;
+    font-size: 26px;
+  }
+
+  .admin_subtitle {
+    margin-top: 10px;
+    font-size: 21px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    border-radius: 30px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .bg-gray-100 {
+    background-color: $bg-gray-100;
+  }
+
+  .bg-gray-200 {
+    background-color: $bg-gray-200;
+  }
+
+  .bg-gray-300 {
+    background-color: $bg-gray-300;
+  }
+
+  .bg-gray-400 {
+    background-color: $bg-gray-400;
+  }
+
+  .bg-gray-500 {
+    background-color: $bg-gray-500;
+  }
+
+  .bg-gray-600 {
+    background-color: $bg-gray-600;
+  }
+
+  .bg-gray-700 {
+    background-color: $bg-gray-700;
+  }
+
+  .bg-gray-800 {
+    background-color: $bg-gray-800;
+  }
+
+  .bg-gray-900 {
+    background-color: $bg-gray-900;
+  }
+
+  .bg-red {
+    background-color: $red;
+  }
+
+  .bg-white-red {
+    background-color: $white_red;
+  }
+
+  .bg-black {
+    background-color: $black;
+  }
+
+  .bg-white {
+    background-color: $white;
+  }
+
+  .bg-pink-red {
+    background-color: $pink-red;
+  }
+
+  .bg-pink {
+    background-color: $pink;
+  }
+
+  .bg-green {
+    background-color: $green;
+  }
+
+  .bg-white-green {
+    background-color: $white-green;
+  }
+
+  .bg-grey {
+    background-color: $grey;
+  }
+
+  .text-red {
+    color: $red;
+  }
+
+  .text-white-red {
+    color: $white_red;
+  }
+
+  .text-black {
+    color: $black;
+  }
+
+  .text-white {
+    color: $white;
+  }
+
+  .text-pink-red {
+    color: $pink-red;
+  }
+
+  .text-pink {
+    color: $pink;
+  }
+
+  .text-green {
+    color: $green;
+  }
+
+  .text-white-green {
+    color: $white-green;
+  }
+
+  .text-grey {
+    color: $grey;
+  }
+}

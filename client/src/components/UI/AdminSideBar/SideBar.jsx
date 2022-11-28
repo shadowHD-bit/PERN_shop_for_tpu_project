@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Col, Container, Nav, Row, Offcanvas } from "react-bootstrap";
 import {
+  MdBadge,
   MdColorLens,
   MdDocumentScanner,
   MdImage,
@@ -9,7 +10,9 @@ import {
   MdQuestionAnswer,
   MdQuiz,
   MdReviews,
+  MdSell,
   MdSmartButton,
+  MdSubject,
   MdSupport,
   MdTabletMac,
   MdTextSnippet,
@@ -17,13 +20,19 @@ import {
 } from "react-icons/md";
 import { Link } from "react-router-dom";
 import {
+  ADMIN_BADGE_ROUTE,
   ADMIN_BRANDANDTYPE_ROUTE,
+  ADMIN_BUTTONS_ROUTE,
+  ADMIN_COLORS_ROUTE,
   ADMIN_EXCEL_ROUTE,
+  ADMIN_IMG_ROUTE,
   ADMIN_ORDER_ROUTE,
   ADMIN_PRODUCT_ROUTE,
   ADMIN_QUESTION_ROUTE,
   ADMIN_REVIEW_ROUTE,
   ADMIN_ROUTE,
+  ADMIN_RULES_ROUTE,
+  ADMIN_SIZE_ROUTE,
   ADMIN_SLIDER_ROUTE,
 } from "../../../utils/consts";
 import "./SideBar.scss";
@@ -95,6 +104,36 @@ const SideBar = ({ show, handleClose }) => {
                     </Col>
                     <Col xs={6} className="sidebar_row_text">
                       Товары
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
+            </Row>
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_SIZE_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdSell size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Размеры
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
+            </Row>
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_BADGE_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdBadge size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Баджи
                     </Col>
                   </Row>
                 </Col>
@@ -177,16 +216,18 @@ const SideBar = ({ show, handleClose }) => {
             </Row>
 
             <Row className="sidebar_row">
-              <Col xs={12} className="sidebar_col">
-                <Row>
-                  <Col xs={6} className="sidebar_row_icons">
-                    <MdQuiz size={"30px"} />
-                  </Col>
-                  <Col xs={6} className="sidebar_row_text">
-                    Основные вопросы
-                  </Col>
-                </Row>
-              </Col>
+              <Link to={ADMIN_RULES_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdQuiz size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Основные вопросы
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row_dop">
@@ -196,19 +237,21 @@ const SideBar = ({ show, handleClose }) => {
             </Row>
 
             <Row className="sidebar_row">
-              <Col xs={12} className="sidebar_col">
-                <Row>
-                  <Col xs={6} className="sidebar_row_icons">
-                    <MdColorLens size={"30px"} />
-                  </Col>
-                  <Col xs={6} className="sidebar_row_text">
-                    Цвета
-                  </Col>
-                </Row>
-              </Col>
+              <Link to={ADMIN_COLORS_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdColorLens size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Цвета
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
             </Row>
 
-            <Row className="sidebar_row">
+            {/* <Row className="sidebar_row">
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
@@ -219,29 +262,46 @@ const SideBar = ({ show, handleClose }) => {
                   </Col>
                 </Row>
               </Col>
+            </Row> */}
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_BUTTONS_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdSmartButton size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Кнопки
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
+            </Row>
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_IMG_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdImage size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Изображения
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">
               <Col xs={12} className="sidebar_col">
                 <Row>
                   <Col xs={6} className="sidebar_row_icons">
-                    <MdSmartButton size={"30px"} />
+                    <MdSubject size={"30px"} />
                   </Col>
                   <Col xs={6} className="sidebar_row_text">
-                    Кнопки
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-
-            <Row className="sidebar_row">
-              <Col xs={12} className="sidebar_col">
-                <Row>
-                  <Col xs={6} className="sidebar_row_icons">
-                    <MdImage size={"30px"} />
-                  </Col>
-                  <Col xs={6} className="sidebar_row_text">
-                    Изображения
+                    API
                   </Col>
                 </Row>
               </Col>

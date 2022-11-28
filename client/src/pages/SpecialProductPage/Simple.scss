@@ -22,6 +22,19 @@
       margin: 0;
     }
 
+    .size_guide {
+      font-size: 15px;
+      color: $grey;
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+      margin-top: 10px;
+
+      &:hover{
+        color: $red;
+      }
+    }
+
     .price_product {
       font-size: 30px;
       font-weight: 500;

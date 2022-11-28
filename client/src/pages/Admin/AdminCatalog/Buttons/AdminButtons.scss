@@ -1,0 +1,60 @@
+@import "../../../../index.scss";
+
+.admin_container_btn {
+  .admin_title {
+    margin-bottom: 10px;
+    font-size: 26px;
+  }
+
+  .admin_subtitle {
+    margin-top: 10px;
+    font-size: 21px;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    border-radius: 30px;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  .btn-special {
+    border-radius: 30px;
+    border: none;
+  }
+
+  .bg-red {
+    background-color: $red;
+  }
+
+  .bg-white-red {
+    background-color: $white_red;
+  }
+
+  .bg-black {
+    background-color: $black;
+  }
+
+  .bg-white {
+    background-color: $white;
+  }
+
+  .bg-pink-red {
+    background-color: $pink-red;
+  }
+
+  .bg-pink {
+    background-color: $pink;
+  }
+
+  .bg-green {
+    background-color: $green;
+  }
+
+  .bg-white-green {
+    background-color: $white-green;
+  }
+
+  .bg-grey {
+    background-color: $grey;
+  }
+}

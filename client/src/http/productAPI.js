@@ -123,7 +123,6 @@ export const getAllProductSearch = async (name, page = 1, filter = "All") => {
     return data;
 }
 
-
 // //Rating
 // export const addRating = async (body) => {
 //     const {data} = await $authHost.post('api/rating', body);
@@ -135,8 +134,56 @@ export const getAllProductSearch = async (name, page = 1, filter = "All") => {
 //     return data;
 // }
 
-// Удалить бренд
+// Удалить бренд 
 export const deleteInfo = async (id) => {
     const {data} = await $authHost({method:'DELETE', url:'api/info_product/'+id});
+    return data;
+}
+
+
+//Создать размер
+export const createSize = async (size) => {
+    const {data} = await $authHost.post('api/sizes', size)
+    return data
+}
+
+export const fetchSizes = async () => {
+    const {data} = await $host.get('api/sizes')
+    return data
+}
+
+export const fetchSizesOneProduct = async (id) => {
+    const {data} = await $host.get('api/sizes/'+id)
+    return data
+}
+
+export const deleteSizeApi = async (id) => {
+    const {data} = await $authHost({method:'DELETE', url:'api/sizes/'+id});
+    return data;
+}
+
+export const createProductSize = async (size) => {
+    const {data} = await $authHost.post('api/product_sizes', size)
+    return data
+}
+
+export const deleteProductSizeApi = async (size) => {
+    const {data} = await $authHost({method:'DELETE', url:'api/product_sizes/', data: size});
+    return data;
+}
+
+
+export const createBadge = async (size) => {
+    const {data} = await $authHost.post('api/badges', size)
+    return data
+}
+
+export const fetchBadge = async () => {
+    const {data} = await $host.get('api/badges')
+    return data
+}
+
+export const deleteBadge = async (id) => {
+    const {data} = await $authHost({method:'DELETE', url:'api/badges/'+id});
     return data;
 }

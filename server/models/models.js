@@ -82,14 +82,22 @@ const Product = sequelize.define("product", {
 const ProductType = sequelize.define("product_type", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
-  img:  { type: DataTypes.STRING, allowNull: true, defaultValue: 'default_type.png'},
+  img: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "default_type.png",
+  },
 });
 
 //Models Brand Product
 const ProductBrand = sequelize.define("product_brand", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
-  img:  { type: DataTypes.STRING, allowNull: true, defaultValue: 'default_brand.png' },
+  img: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: "default_brand.png",
+  },
 });
 
 //Models Slider
@@ -152,6 +160,31 @@ const GoogleUsers = sequelize.define("google_users_data", {
   id_social: { type: DataTypes.STRING, allowNull: false },
 });
 
+const ProductSizes = sequelize.define("product_sizes", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+const Sizes = sequelize.define("sizes", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  number_size: { type: DataTypes.STRING, allowNull: false },
+});
+
+const ProductBadge = sequelize.define("product_badge", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name_badge: { type: DataTypes.STRING, allowNull: false },
+});
+
+const Rules = sequelize.define("rules", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name_rules: { type: DataTypes.STRING, allowNull: false },
+  information_rules: { type: DataTypes.STRING, allowNull: false },
+});
+
+const Notification = sequelize.define("notification", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  notification_message: { type: DataTypes.STRING, allowNull: false },
+});
+
 //Description dependencies models db
 User.hasOne(Basket);
 Basket.belongsTo(User);
@@ -180,8 +213,17 @@ Likes.belongsTo(User);
 Product.hasMany(Question);
 Question.belongsTo(Product);
 
+Product.hasMany(ProductSizes);
+ProductSizes.belongsTo(Product);
+
+Sizes.hasMany(ProductSizes);
+ProductSizes.belongsTo(Sizes);
+
 User.hasMany(Question);
 Question.belongsTo(User);
+
+User.hasMany(Notification);
+Notification.belongsTo(User);
 
 Question.hasOne(Answer);
 Answer.belongsTo(Question);
@@ -197,6 +239,9 @@ LikesProduct.belongsTo(Likes);
 
 ProductType.hasMany(Product);
 Product.belongsTo(ProductType);
+
+ProductBadge.hasMany(Product);
+Product.belongsTo(ProductBadge);
 
 ProductBrand.hasMany(Product);
 Product.belongsTo(ProductBrand);
@@ -251,4 +296,9 @@ module.exports = {
   ReviewsProduct,
   VkUsers,
   GoogleUsers,
+  Sizes,
+  ProductSizes,
+  ProductBadge,
+  Rules,
+  Notification,
 };

@@ -4,6 +4,7 @@ const {
   Product,
   ProductBrand,
   ProductType,
+  Notification,
 } = require("./../models/models");
 const ApiError = require("../errors/ApiErrors");
 const jwt = require("jsonwebtoken");
@@ -39,6 +40,11 @@ class OrdersController {
               orderId: id,
               productId,
               count: basket[i].count,
+            }).then(async (data) => {
+              const notification = await Notification.create({
+                notification_message: `Ваш заказ №${id} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
+                userId: row.userId,
+              });
             });
           });
         });
@@ -72,9 +78,20 @@ class OrdersController {
 
       await Orders.findOne({ where: { id } }).then(async (data) => {
         if (data) {
-          await Orders.update({ complete }, { where: { id } }).then(() => {
-            return res.json("Order updated");
-          });
+          await Orders.update({ complete }, { where: { id } }).then(
+            (data_prod) => {
+              if (complete) {
+                const notification = Notification.create({
+                  notification_message: `Ваш заказ №${id} успешно прибыл в пунк назначения! Ждем ваш отзыв по данному товару.`,
+                  userId: data.userId,
+                }).then((data) => {
+                  return res.json("Order updated");
+                });
+              } else {
+                return res.json("Order updated");
+              }
+            }
+          );
         } else {
           return res.json("This order doesn't exist in DB");
         }

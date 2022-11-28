@@ -33,6 +33,7 @@ import {
   LIKES_ROUTER,
   LOCATIONPLACES_ROUTE,
   LOGIN_ROUTE,
+  NOTIFICATION_ROUTE,
   ORDERS_ROUTE,
   SHOP_ROUTE,
   USERPROFILE_ROUTE,
@@ -42,9 +43,10 @@ import { getData } from "../../http/userAPI";
 import SocialHeader from "../UI/Social/Header/SocialHeader";
 import { AiOutlineMenu } from "react-icons/ai";
 import Sidebar from "../UI/SideBar/Sidebar";
+import { fetchNotificationOneUser } from "../../http/notificationAPI";
 
 const Header = observer(() => {
-  const { user, basket, likes } = useContext(Context);
+  const { user, basket, likes, notifications } = useContext(Context);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -55,6 +57,15 @@ const Header = observer(() => {
       user.setUserProf(data);
     });
   }, [load]);
+
+  const [notificationCount, setNotificationCount] = useState([])
+
+  // useEffect(() => {
+  //   fetchNotificationOneUser(user.user.id).then(data => {
+  //     setNotificationCount(data.count)
+  //   })
+  // }, [])
+
 
   if (user.isAuth) {
     return (
@@ -151,8 +162,13 @@ const Header = observer(() => {
                         <Tooltip id="button-tooltip">Уведомления</Tooltip>
                       }
                     >
-                      <Link to={BASKET_ROUTE}>
+                      <Link to={NOTIFICATION_ROUTE}>
                         <BsBell className="user_icon" size={25} />
+                        {notifications.count != 0 ? (
+                        <Badge pill={true}>{notifications.count}</Badge>
+                      ) : (
+                        ""
+                      )}
                       </Link>
                     </OverlayTrigger>
                     <OverlayTrigger

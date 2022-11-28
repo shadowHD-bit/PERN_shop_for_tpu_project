@@ -2,8 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { Form, Button, Image, Row, Col } from "react-bootstrap";
 import {
+  createProductSize,
   deleteInfo,
+  deleteProductSizeApi,
+  fetchBadge,
   fetchBrands,
+  fetchSizes,
   fetchTypes,
   getInfoOneProduct,
   updateProduct,
@@ -31,12 +35,15 @@ const ChangeProduct = ({
   const description = thisProduct.description;
   const BrandId = thisProduct.productBrandId;
   const TypeId = thisProduct.productTypeId;
+  const sizesArray = thisProduct.product_sizes;
+  const BadgeId = thisProduct.productBadgeId;
 
   const [valueName, setValueName] = useState(name || "");
   const [valuePrice, setValuePrice] = useState(price || "");
   const [valueRating, setValueRating] = useState(rating || "");
   const [valueImgMain, setValueImgMain] = useState(imgMain || "");
   const [valueDescription, setValueDescription] = useState(description || "");
+  const [valueSize, setValueSize] = useState(sizesArray || []);
 
   const [file, setFile] = useState(null);
   const [fileOne, setFileOne] = useState(null);
@@ -45,9 +52,11 @@ const ChangeProduct = ({
 
   const [valueBrand, setValueBrand] = useState(BrandId || "");
   const [valueType, setValueType] = useState(TypeId || "");
+  const [valueBadge, setValueBadge] = useState(BadgeId || "");
 
   const [productAllBrands, setProductAllBrands] = useState([]);
   const [productAllTypes, setProductAllTypes] = useState([]);
+  const [productAllBadges, setProductAllBadges] = useState([]);
   const [infoChange, setInfoChange] = useState(info || []);
 
   const selectFile = (e) => {
@@ -64,6 +73,16 @@ const ChangeProduct = ({
     setFileThree(e.target.files[0]);
   };
 
+  const [sizes, setSizes] = useState([]);
+
+  useEffect(() => {
+    fetchSizes().then((data) => {
+      if (data) {
+        setSizes(data.rows);
+      }
+    });
+  }, []);
+
   React.useEffect(() => {
     setValueName(name);
     setValuePrice(price);
@@ -71,8 +90,10 @@ const ChangeProduct = ({
     setValueImgMain(imgMain);
     setValueBrand(BrandId);
     setValueType(TypeId);
+    setValueBadge(BadgeId);
     setInfoChange(info);
-    setValueDescription(description)
+    setValueDescription(description);
+    setValueSize(sizesArray);
   }, [name, price, rating, imgMain, BrandId, TypeId, description]);
 
   // useState(() => {
@@ -84,6 +105,9 @@ const ChangeProduct = ({
   }, []);
   useEffect(() => {
     fetchTypes().then((data) => setProductAllTypes(data.rows));
+  }, []);
+  useEffect(() => {
+    fetchBadge().then((data) => setProductAllBadges(data.rows));
   }, []);
 
   const deleteInfoWithoutArrayInfo = (ind) => {
@@ -107,6 +131,7 @@ const ChangeProduct = ({
     formData.append("productBrandId", valueBrand);
     formData.append("productTypeId", valueType);
     formData.append("description", valueDescription);
+    formData.append("productBadgeId", valueBadge);
     formData.append("info", JSON.stringify(infoChange));
     console.log(formData);
     updateProduct(id, formData).then(() => {
@@ -132,6 +157,45 @@ const ChangeProduct = ({
     }
   };
 
+  const changeStatusSize = (id_size, status) => {
+    if (status) {
+      //delete
+      const formData = new FormData();
+      formData.append("productId", id);
+      formData.append("sizeId", id_size);
+      deleteProductSizeApi(formData).then((data) => {
+        setValueSize(valueSize.filter((item) => item.sizeId !== id_size));
+      });
+    } else {
+      //add
+      const formData = new FormData();
+      formData.append("productId", id);
+      formData.append("sizeId", id_size);
+      createProductSize(formData).then((data) => {
+        valueSize.unshift({
+          sizeId: id_size,
+          productId: id,
+        });
+        setValueSize(valueSize.filter((item) => item));
+      });
+    }
+  };
+
+  const sortSize = (arr) => {
+    //Sort
+    let numbers = [];
+    let strings = [];
+
+    arr.forEach((e) => (isNaN(e.number_size) ? strings : numbers).push(e));
+
+    numbers = numbers.sort(
+      (a, b) => Number(a.number_size) - Number(b.number_size)
+    );
+    strings = strings.sort();
+
+    return numbers.concat(strings);
+  };
+
   return (
     <Modal show={show} onHide={onHide} size={"xl"} fullscreen={true} centered>
       <Modal.Header closeButton>
@@ -145,7 +209,9 @@ const ChangeProduct = ({
             <Row>
               <Col>
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Название товара</Form.Label>
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Название товара
+                  </Form.Label>
                   <Form.Control
                     className="mb-1"
                     value={valueName || ""}
@@ -158,7 +224,9 @@ const ChangeProduct = ({
               </Col>
               <Col>
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Цена товара</Form.Label>
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Цена товара
+                  </Form.Label>
                   <Form.Control
                     className="mb-1"
                     value={valuePrice || ""}
@@ -171,7 +239,9 @@ const ChangeProduct = ({
             <Row>
               <Col>
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Бренд</Form.Label>
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Бренд
+                  </Form.Label>
                   <Form.Select
                     aria-label="select"
                     value={valueBrand}
@@ -185,7 +255,9 @@ const ChangeProduct = ({
               </Col>
               <Col>
                 <Form.Group controlId="formFile" className="mb-3">
-                  <Form.Label>Тип</Form.Label>
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Тип
+                  </Form.Label>
                   <Form.Select
                     aria-label="select"
                     value={valueType}
@@ -197,17 +269,44 @@ const ChangeProduct = ({
                   </Form.Select>
                 </Form.Group>
               </Col>
-            </Row>
-            <Row>
               <Col>
-              <Form.Label>Описание</Form.Label>
-                <Form.Control as="textarea" aria-label="Description" onChange={(e) => setValueDescription(e.target.value)} value={valueDescription} />
+                <Form.Group controlId="formFile" className="mb-3">
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Бадж
+                  </Form.Label>
+                  <Form.Select
+                    aria-label="select"
+                    value={valueBadge}
+                    onChange={(e) => setValueBadge(e.target.value)}
+                  >
+                    <option value={null}>Не указано</option>
+
+                    {productAllBadges?.map((item) => (
+                      <option value={item.id}>{item.name_badge}</option>
+                    ))}
+                  </Form.Select>
+                </Form.Group>
               </Col>
             </Row>
             <Row>
-              <Col xs={6} className="border-right">
-                <Row className="d-flex flex-row justify-content-between">
-                  <Form.Label>Параметры товара</Form.Label>
+              <Col>
+                <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                  Описание
+                </Form.Label>
+                <Form.Control
+                  as="textarea"
+                  aria-label="Description"
+                  onChange={(e) => setValueDescription(e.target.value)}
+                  value={valueDescription}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} className="border-right pt-3">
+                <Row className="d-flex flex-row justify-content-between pb-3">
+                  <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                    Параметры товара
+                  </Form.Label>
                   <Col xs={4}>
                     <Form.Group>
                       <Form.Control
@@ -256,6 +355,34 @@ const ChangeProduct = ({
                 ) : (
                   <p>Нет параметров...</p>
                 )}
+              </Col>
+              <Col xs={6} className="pt-3">
+                <Form.Label style={{ color: "#BB2A31", fontWeight: "bold" }}>
+                  Доступные размеры
+                </Form.Label>
+                <Row>
+                  {sortSize(sizes)?.map((item) => (
+                    <Col xs={1} className="mb-2">
+                      <Button
+                        onClick={
+                          valueSize?.find((x) => x.sizeId === item.id) !=
+                          undefined
+                            ? () => changeStatusSize(item.id, true)
+                            : () => changeStatusSize(item.id, false)
+                        }
+                        variant={
+                          valueSize?.find((x) => x.sizeId === item.id) !=
+                          undefined
+                            ? "success"
+                            : "danger"
+                        }
+                        className="p-1"
+                      >
+                        {item.number_size}
+                      </Button>
+                    </Col>
+                  ))}
+                </Row>
               </Col>
             </Row>
           </Col>

@@ -10,7 +10,7 @@ import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
 import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_BRANDANDTYPE_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_REVIEW_ROUTE, ADMIN_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
+import { ADMIN_BADGE_ROUTE, ADMIN_BRANDANDTYPE_ROUTE, ADMIN_BUTTONS_ROUTE, ADMIN_COLORS_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_IMG_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_REVIEW_ROUTE, ADMIN_ROUTE, ADMIN_RULES_ROUTE, ADMIN_SIZE_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, NOTIFICATION_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, QUESTION_ROUTE, REGISTRATION_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
 import UserProfile from './pages/UserProfile/UserProfile'
@@ -25,6 +25,14 @@ import AdminOrder from './pages/Admin/AdminCatalog/Order/AdminOrder'
 import AdminSlider from './pages/Admin/AdminCatalog/Slider/AdminSlider'
 import AdminQuestion from './pages/Admin/AdminCatalog/Question/AdminQuestion'
 import ReviewAdmin from './pages/Admin/AdminCatalog/Review/ReviewAdmin'
+import SizeAdmin from './pages/Admin/AdminCatalog/SizeAdmin/SizeAdmin'
+import BadgeAdmin from './pages/Admin/AdminCatalog/Badge/Badgeadmin'
+import AdminColors from './pages/Admin/AdminCatalog/Colors/AdminColors'
+import AdminButtons from './pages/Admin/AdminCatalog/Buttons/AdminButtons'
+import AdminImage from './pages/Admin/AdminCatalog/AdminImage/AdminImage'
+import AdminRules from './pages/Admin/AdminCatalog/Rules/AdminRules'
+import QuestionPage from './pages/QuestionPage/QuestionPage'
+import NotificationPage from './pages/NotificationPage/NotificationPage'
 
 export const authRoutes = [
     {
@@ -50,7 +58,11 @@ export const authRoutes = [
     {
         path: LIKES_ROUTER,
         element: <LikesPage />
-    }
+    },
+    {
+        path: NOTIFICATION_ROUTE,
+        element: <NotificationPage />
+    },
 ]
 
 export const adminRoutes = [
@@ -85,6 +97,30 @@ export const adminRoutes = [
     {
         path: ADMIN_EXCEL_ROUTE,
         element: <AdminDocument />
+    },
+    {
+        path: ADMIN_SIZE_ROUTE,
+        element: <SizeAdmin />
+    },
+    {
+        path: ADMIN_BADGE_ROUTE,
+        element: <BadgeAdmin />
+    },
+    {
+        path: ADMIN_COLORS_ROUTE,
+        element: <AdminColors />
+    },
+    {
+        path: ADMIN_BUTTONS_ROUTE,
+        element: <AdminButtons />
+    },
+    {
+        path: ADMIN_IMG_ROUTE,
+        element: <AdminImage />
+    },
+    {
+        path: ADMIN_RULES_ROUTE,
+        element: <AdminRules />
     },
 ]
 
@@ -121,5 +157,9 @@ export const publicRoutes = [
     {
         path: RULES_ROUTE,
         element: <RulesPage />
+    },
+    {
+        path: QUESTION_ROUTE,
+        element: <QuestionPage />
     },
 ]

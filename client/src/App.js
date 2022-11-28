@@ -10,10 +10,11 @@ import { checkAuth, getData } from './http/userAPI';
 import { getProductFromBasket } from './http/productAPI';
 import { fetchSlider } from './http/sliderAPI';
 import { getProductFromLikes } from './http/likesAPI';
+import { fetchNotificationOneUser } from './http/notificationAPI';
 
 
 const App = observer(() => {
-  const {user, basket, slider, likes} = useContext(Context)
+  const {user, basket, slider, likes, notifications} = useContext(Context)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -28,6 +29,13 @@ const App = observer(() => {
 useEffect(() => {
   fetchSlider().then((data) => {
     slider.setSlider(data);
+  })
+}, [loading, user.isAuth])
+
+useEffect(() => {
+  fetchNotificationOneUser(user.user.id).then((data) => {
+    notifications.setNotification(data.rows)
+    notifications.setCount(data.count)
   })
 }, [loading, user.isAuth])
 
