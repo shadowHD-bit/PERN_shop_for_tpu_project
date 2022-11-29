@@ -22,7 +22,6 @@ const Checkouting = () => {
         }
 
         sendOrder(order).then(data => {
-            console.log(data);
             basket.Basket.map(item => {
                 basket.setDeleteItemBasket(item, true)
             })

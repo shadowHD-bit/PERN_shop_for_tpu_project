@@ -53,15 +53,16 @@ const SimpleProduct = observer(() => {
   const [product, setProduct] = useState({ info: [] });
   const { id } = useParams();
 
-const [showSizeProductModal, setShowSizeProductModal] = useState(false)
+  const [showSizeProductModal, setShowSizeProductModal] = useState(false);
+  const [changedSize, setChangedSize] = useState("");
 
   const handlerShowSizeProduct = () => {
-    setShowSizeProductModal(true)
-  }
+    setShowSizeProductModal(true);
+  };
 
   const handlerCloseSizeProduct = () => {
-    setShowSizeProductModal(false)
-  }
+    setShowSizeProductModal(false);
+  };
 
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
@@ -83,7 +84,10 @@ const [showSizeProductModal, setShowSizeProductModal] = useState(false)
 
   const addProductInBasket = (product) => {
     if (user.isAuth) {
-      addProductToBasket(product).then(() => basket.setBasket(product, true));
+      const formData = new FormData();
+      formData.append("id", product.id);
+      formData.append("size_product", changedSize);
+      addProductToBasket(formData).then(() => basket.setBasket(product, true));
     } else {
       basket.setBasket(product);
     }
@@ -110,8 +114,6 @@ const [showSizeProductModal, setShowSizeProductModal] = useState(false)
   useEffect(() => {
     fetchSizesOneProduct(id).then((data) => setSizes(data));
   }, []);
-
-  console.log(sizes);
 
   ////
 
@@ -410,12 +412,20 @@ const [showSizeProductModal, setShowSizeProductModal] = useState(false)
             </Row>
             <Row className="size_product">
               Размер:
-              <Form.Select aria-label="Default select example">
+              <Form.Select
+                onChange={(e) => setChangedSize(e.target.value)}
+                aria-label="Default select example"
+              >
                 {sortSize(sizes).map((item) => (
                   <option value={item.size.id}>{item.size.number_size}</option>
                 ))}
               </Form.Select>
-              <p onClick={() => handlerShowSizeProduct()} className="size_guide">Подробнее о размере</p>
+              <p
+                onClick={() => handlerShowSizeProduct()}
+                className="size_guide"
+              >
+                Подробнее о размере
+              </p>
             </Row>
             <Row className="mt-3">
               <Col xs={12} md={6} className="add_btn_container">
@@ -778,7 +788,10 @@ const [showSizeProductModal, setShowSizeProductModal] = useState(false)
         handleCloseModal={handleCloseErrorModal}
       />
 
-      <SizeProductModal handleCloseModal={handlerCloseSizeProduct} stateModal={showSizeProductModal} />
+      <SizeProductModal
+        handleCloseModal={handlerCloseSizeProduct}
+        stateModal={showSizeProductModal}
+      />
     </>
   );
 });

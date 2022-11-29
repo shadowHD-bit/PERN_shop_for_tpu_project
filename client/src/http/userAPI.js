@@ -75,6 +75,21 @@ export const getData = async (userID) => {
   return data;
 };
 
+export const getUserRoleAdminApi = async () => {
+  const { data } = await $authHost.get(`api/user/admin_user`);
+  return data;
+};
+
+export const getNewUserApi = async () => {
+  const { data } = await $authHost.get(`api/user/new_user`);
+  return data;
+};
+
+export const getMoneyUserApi = async () => {
+  const { data } = await $authHost.get(`api/user/money_user`);
+  return data;
+};
+
 export const updateUserData = async (id, body) => {
   const {data} = await $authHost({method:'PUT', url:`api/user/${id}`, data: body});
   return data;

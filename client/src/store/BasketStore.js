@@ -30,8 +30,6 @@ export default class BasketStoreStore {
             this._basket.forEach(product => totalPrice += Number(product.price * product.count));
             this._totalPrice = totalPrice;
         }
-        console.log(item.count);
-
         if(!isAuth) {
             localStorage.setItem("basket", JSON.stringify(this._basket));
         }

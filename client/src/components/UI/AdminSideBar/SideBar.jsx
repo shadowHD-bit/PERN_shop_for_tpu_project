@@ -34,6 +34,7 @@ import {
   ADMIN_RULES_ROUTE,
   ADMIN_SIZE_ROUTE,
   ADMIN_SLIDER_ROUTE,
+  ADMIN_STATISTIC_ROUTE,
 } from "../../../utils/consts";
 import "./SideBar.scss";
 
@@ -68,16 +69,18 @@ const SideBar = ({ show, handleClose }) => {
             </Row>
 
             <Row className="sidebar_row">
-              <Col xs={12} className="sidebar_col">
-                <Row>
-                  <Col xs={6} className="sidebar_row_icons">
-                    <MdSupport size={"30px"} />
-                  </Col>
-                  <Col xs={6} className="sidebar_row_text">
-                    Статистика
-                  </Col>
-                </Row>
-              </Col>
+              <Link to={ADMIN_STATISTIC_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdSupport size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Статистика
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
             </Row>
 
             <Row className="sidebar_row">

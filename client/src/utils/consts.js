@@ -13,6 +13,7 @@ export const ADMIN_COLORS_ROUTE = '/admin_colors'
 export const ADMIN_BUTTONS_ROUTE = '/admin_buttons'
 export const ADMIN_IMG_ROUTE = '/admin_image'
 export const ADMIN_RULES_ROUTE = '/admin_rules'
+export const ADMIN_STATISTIC_ROUTE = '/admin_statistic'
 
 export const LOGIN_ROUTE = '/login'
 export const REGISTRATION_ROUTE = '/registration'

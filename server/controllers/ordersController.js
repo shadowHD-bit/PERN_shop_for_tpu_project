@@ -5,9 +5,11 @@ const {
   ProductBrand,
   ProductType,
   Notification,
+  Sizes,
 } = require("./../models/models");
 const ApiError = require("../errors/ApiErrors");
 const jwt = require("jsonwebtoken");
+const sequelize = require("sequelize");
 
 class OrdersController {
   async create(req, res) {
@@ -16,8 +18,14 @@ class OrdersController {
 
     try {
       let parseProducts = [];
+      let parseProductsData = [];
       for (let key of basket) {
         parseProducts.push(key.id);
+        parseProductsData.push({
+          productId: key.id,
+          sizeId: key.sizeId,
+          price: key.price,
+        });
       }
 
       const isProductInDB = await Product.findAndCountAll({
@@ -35,17 +43,23 @@ class OrdersController {
 
         await Orders.create(row).then((order) => {
           const { id } = order.get();
-          parseProducts.forEach(async (productId, i) => {
-            await OrderProduct.create({
-              orderId: id,
-              productId,
-              count: basket[i].count,
-            }).then(async (data) => {
-              const notification = await Notification.create({
-                notification_message: `Ваш заказ №${id} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
-                userId: row.userId,
-              });
-            });
+          parseProductsData.forEach(async (product, i) => {
+            await Sizes.findOne({ where: { id: product.sizeId } }).then(
+              async (data) => {
+                await OrderProduct.create({
+                  orderId: id,
+                  productId: product.productId,
+                  count: basket[i].count,
+                  price: product.price,
+                  size_product: data.dataValues.number_size,
+                }).then(async (data) => {
+                  const notification = await Notification.create({
+                    notification_message: `Ваш заказ №${id} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
+                    userId: row.userId,
+                  });
+                });
+              }
+            );
           });
         });
       } else {
@@ -170,6 +184,23 @@ class OrdersController {
     }
 
     return res.json(products);
+  }
+
+  async getCountOrdersInMonth(req, res) {
+    let orders;
+    orders = await Orders.findAll({
+      attributes: [
+        [
+          sequelize.fn("DATE_TRUNC", "month", sequelize.col("createdAt")),
+          "month",
+        ],
+        [sequelize.fn("COUNT", "id"), "totalCount"],
+      ],
+      group: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))],
+      order: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))]
+    });
+
+    return res.json(orders);
   }
 
   async getOne(req, res) {

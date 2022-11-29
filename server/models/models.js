@@ -54,7 +54,7 @@ const Likes = sequelize.define("likes", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
 });
 
-//Models BasketProducts
+//Models LikesProduct
 const LikesProduct = sequelize.define("likes_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   productId: { type: DataTypes.INTEGER },
@@ -148,6 +148,8 @@ const Answer = sequelize.define("answer_to_question", {
 const OrderProduct = sequelize.define("order_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   count: { type: DataTypes.INTEGER, allowNull: false },
+  price: {type: DataTypes.INTEGER, allowNull: false, defaultValue: 1},
+  size_product: { type: DataTypes.INTEGER, allowNull: false, defaultValue: '46' }
 });
 
 const VkUsers = sequelize.define("vk_user_data", {
@@ -200,6 +202,9 @@ Basket.belongsTo(User);
 
 User.hasMany(Reviews);
 Reviews.belongsTo(User);
+
+Sizes.hasMany(BasketProduct);
+BasketProduct.belongsTo(Sizes);
 
 Reviews.hasMany(ReviewsProduct);
 ReviewsProduct.belongsTo(Reviews);

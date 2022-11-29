@@ -43,6 +43,7 @@ const BasketCard = observer(() => {
 									<tr>
 										<th class="product-thumbnail">Изображение</th>
 										<th class="product-name">Наименование</th>
+										<th class="product-price">Размер</th>
 										<th class="product-price">Цена</th>
 										<th class="product-quantity">Количество</th>
 										<th class="product-subtotal">Итоговая стоимость</th>
