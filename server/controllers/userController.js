@@ -106,6 +106,24 @@ class UserController {
     return res.json(user);
   }
 
+  async getCountUserInMonth(req, res) {
+    let user;
+    user = await User.findAll({
+      attributes: [
+        [
+          sequelize.fn("DATE_TRUNC", "month", sequelize.col("createdAt")),
+          "month",
+        ],
+        [sequelize.fn("COUNT", "id"), "totalCount"],
+      ],
+      group: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))],
+      order: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))]
+    });
+
+    return res.json(user);
+  }
+
+
   async getMoneyUser(req, res, next) {
     const user = await Orders.findAll({
       attributes: [],

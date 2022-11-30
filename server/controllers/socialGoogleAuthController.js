@@ -1,7 +1,13 @@
 const ApiError = require("../errors/ApiErrors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, Basket, Likes, VkUsers } = require("../models/models");
+const {
+  User,
+  Basket,
+  Likes,
+  VkUsers,
+  GoogleUsers,
+} = require("../models/models");
 
 const generateJwt = (id, email, role) => {
   return jwt.sign({ id, email, role }, process.env.SECRET_KEY, {
@@ -9,33 +15,33 @@ const generateJwt = (id, email, role) => {
   });
 };
 
-class SocialVkAuthController {
-  async authAndRegistrationSocialVk(req, res, next) {
+class SocialGoogleAuthController {
+  async authAndRegistrationSocialGoogle(req, res, next) {
     const {
       email,
       password,
       name,
       family,
-      date_birthday,
-      numberPhone,
-      gender,
       allowSpam,
       id_social,
       role,
       img_user,
     } = req.body;
 
-    const candidate = await VkUsers.findOne({
+    const candidate = await GoogleUsers.findOne({
       where: { id_social: id_social },
+    });
+
+    const simple_candidate = await User.findOne({
+      where: { email: email },
     });
 
     if (candidate) {
       let token;
-      await VkUsers.findOne({
+      await GoogleUsers.findOne({
         where: { id_social: id_social },
       }).then((data) => {
         User.findOne({ where: { id: data.userId } }).then((user) => {
-          console.log(user);
           token = generateJwt(
             user.dataValues.id,
             user.dataValues.email,
@@ -44,23 +50,32 @@ class SocialVkAuthController {
           return res.json({ token });
         });
       });
+    } else if (simple_candidate) {
+      let token;
+      await User.findOne({
+        where: { email: email },
+      }).then((user) => {
+        token = generateJwt(
+          user.dataValues.id,
+          user.dataValues.email,
+          user.dataValues.role
+        );
+        return res.json({ token });
+      });
     } else {
       const hashPassword = await bcrypt.hash(password, 5);
       const user = await User.create({
         name,
         family,
-        date_birthday,
-        numberPhone,
         email,
         role,
-        gender,
         allowSpam,
         img_user,
         password: hashPassword,
-        isVK: true,
-        isGoogle: false,
+        isVK: false,
+        isGoogle: true,
       });
-      const vk_user = await VkUsers.create({
+      const google_user = await GoogleUsers.create({
         userId: user.id,
         id_social: id_social,
       });
@@ -72,4 +87,4 @@ class SocialVkAuthController {
   }
 }
 
-module.exports = new SocialVkAuthController();
+module.exports = new SocialGoogleAuthController();

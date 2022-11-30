@@ -56,6 +56,29 @@ export const social_VK_auth = async (
     return jwt_decode(data.token);
   };
 
+  export const social_Google_auth = async (
+    email,
+    password,
+    name,
+    family,
+    allowSpam,
+    id_social,
+    img_user,
+  ) => {
+    const { data } = await $host.post("api/social_google/social_auth", {
+      email,
+      password,
+      name,
+      family,
+      allowSpam,
+      id_social,
+      img_user,
+      role: "USER",
+    }); //email, password, name, family, date_birthday, numberPhone, role
+    localStorage.setItem("token", data.token);
+    return jwt_decode(data.token);
+  };
+
 export const login = async (email, password) => {
   const { data } = await $host.post("api/user/login", { email, password });
   localStorage.setItem("token", data.token);
@@ -94,3 +117,7 @@ export const updateUserData = async (id, body) => {
   const {data} = await $authHost({method:'PUT', url:`api/user/${id}`, data: body});
   return data;
 }
+export const fetchUserFromStatistic = async () => {
+  const { data } = await $authHost.get(`api/statistic/statistic_user/count_in_months`);
+  return data;
+};

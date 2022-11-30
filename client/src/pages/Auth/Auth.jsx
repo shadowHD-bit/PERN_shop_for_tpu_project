@@ -7,7 +7,7 @@ import { REGISTRATION_ROUTE, SHOP_ROUTE } from "../../utils/consts";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 import { Link } from "react-router-dom";
-import { login, social_VK_auth } from "../../http/userAPI";
+import { login, social_Google_auth, social_VK_auth } from "../../http/userAPI";
 import { observer } from "mobx-react-lite";
 import {
   Card,
@@ -26,8 +26,58 @@ const Auth = observer(() => {
   const [showToast, setShowToast] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  window.gapi.load("auth2", function () {
+    window.gapi.auth2.init({
+      client_id:
+        "959674891521-9lrj5b087uh2lb0jr1umc5s17juas9d2.apps.googleusercontent.com",
+      plugin_name: "shop.ru",
+    });
+  });
+
+  const GoogleAuthClick = () => {
+    const auth2 = window.gapi.auth2.getAuthInstance();
+    auth2.signIn({ prompt: "consent" }).then((googleUser) => {
+      const profile = googleUser.getBasicProfile();
+      // console.log(profile);
+      console.log("ID: " + profile.getId());
+      // console.log("Full Name: " + profile.getName());
+      // console.log("Given Name: " + profile.getGivenName());
+      // console.log("Family Name: " + profile.getFamilyName());
+      // console.log("Image URL: " + profile.getImageUrl());
+      // console.log("Email: " + profile.getEmail());
+      // const id_token = googleUser.getAuthResponse().id_token;
+      // console.log("ID Token: " + id_token);
+
+      try {
+        let email = profile.getEmail();
+        let password = profile.getId() + "google";
+        let name = profile.getGivenName();
+        let family = profile.getFamilyName();
+        let allowSpam = false;
+        let id_social = profile.getId() + "";
+        let img_user = profile.getImageUrl();
+
+        let data = social_Google_auth(
+          email,
+          password,
+          name,
+          family,
+          allowSpam,
+          id_social,
+          img_user
+        ).then((data) => {
+          user.setUser(user);
+          user.setIsAuth(true);
+          window.location.href = SHOP_ROUTE;
+        });
+      } catch (e) {
+        setErrorMessage(e.response.data.message);
+        setShowToast(true);
+      }
+    });
+  };
+
   const VKAuthClick = () => {
-    
     window.VK.Auth.login(function (data) {
       if (data.session) {
         window.VK.Api.call(
@@ -68,17 +118,15 @@ const Auth = observer(() => {
                 allowSpam,
                 id_social,
                 img_user
-              ).then(data => {
+              ).then((data) => {
                 user.setUser(user);
                 user.setIsAuth(true);
                 window.location.href = SHOP_ROUTE;
-              })
-              
+              });
             } catch (e) {
               setErrorMessage(e.response.data.message);
               setShowToast(true);
             }
-            console.log(user_data);
           }
         );
       }
@@ -234,7 +282,10 @@ const Auth = observer(() => {
                   </Row>
                   <Row className="d-flex flex-row justify-center w-100">
                     <Col xs={12} md={12}>
-                      <Button className="auth_google_btn">
+                      <Button
+                        className="auth_google_btn"
+                        onClick={() => GoogleAuthClick()}
+                      >
                         <AiFillGoogleCircle /> Google
                       </Button>
                     </Col>

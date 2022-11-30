@@ -9,6 +9,7 @@ import SideBar from "../../../../components/UI/AdminSideBar/SideBar";
 import "./AdminStatistic.scss";
 import RatingChart from "../../../../components/Charts/RatingChart";
 import ProductBuyCount from "../../../../components/Charts/ProductBuyCount";
+import UserRegistration from "../../../../components/Charts/UserRegistration";
 const AdminStatistic = () => {
   const [showAlert, setShowAlert] = useState(true);
 
@@ -16,6 +17,7 @@ const AdminStatistic = () => {
 
   const [stateAccordion, setStateAccordion] = useState(false);
   const [stateAccordionTwo, setStateAccordionTwo] = useState(false);
+  const [stateAccordionThree, setStateAccordionThree] = useState(false);
 
   const handleShowSidebar = () => {
     setShowSidebar(true);
@@ -95,6 +97,24 @@ const AdminStatistic = () => {
               <AccordionBody>
                 <Row className="donut_chart_container">
                     <RatingChart stateAccordion={stateAccordionTwo}/>
+                </Row>
+              </AccordionBody>
+            </Accordion.Item>
+          </Accordion>
+        </Row>
+        <Row>
+          <Accordion className="accordion">
+            <Accordion.Item
+              eventKey=""
+              className="mt-1 mb-1"
+              onClick={() => setStateAccordionThree(true)}
+            >
+              <AccordionHeader>
+                График регистраций пользователей
+              </AccordionHeader>
+              <AccordionBody>
+                <Row className="donut_chart_container">
+                    <UserRegistration stateAccordion={stateAccordionThree}/>
                 </Row>
               </AccordionBody>
             </Accordion.Item>
