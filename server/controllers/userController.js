@@ -8,6 +8,7 @@ const {
   OrderProduct,
   Orders,
   Product,
+  ResetPasswordTokens,
 } = require("../models/models");
 const uuid = require("uuid");
 const path = require("path");
@@ -75,6 +76,11 @@ class UserController {
       return next(ApiError.internal("Указан неверный пароль"));
     }
     const token = generateJwt(user.id, user.email, user.role);
+    ResetPasswordTokens.findOne({ where: { userId: user.id } }).then((data) => {
+      if(data){
+        ResetPasswordTokens.destroy({ where: { userId: user.id } })
+      }
+    })
     return res.json({ token });
   }
 

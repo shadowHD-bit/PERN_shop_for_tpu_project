@@ -148,8 +148,12 @@ const Answer = sequelize.define("answer_to_question", {
 const OrderProduct = sequelize.define("order_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   count: { type: DataTypes.INTEGER, allowNull: false },
-  price: {type: DataTypes.INTEGER, allowNull: false, defaultValue: 1},
-  size_product: { type: DataTypes.INTEGER, allowNull: false, defaultValue: '46' }
+  price: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
+  size_product: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    defaultValue: "46",
+  },
 });
 
 const VkUsers = sequelize.define("vk_user_data", {
@@ -187,9 +191,17 @@ const Notification = sequelize.define("notification", {
   notification_message: { type: DataTypes.STRING, allowNull: false },
 });
 
+const ResetPasswordTokens = sequelize.define("reset_password_tokens", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  token: { type: DataTypes.STRING, allowNull: false },
+});
+
 //Description dependencies models db
 User.hasOne(Basket);
 Basket.belongsTo(User);
+
+User.hasMany(ResetPasswordTokens);
+ResetPasswordTokens.belongsTo(User);
 
 User.hasOne(VkUsers);
 VkUsers.belongsTo(User);
@@ -306,4 +318,5 @@ module.exports = {
   ProductBadge,
   Rules,
   Notification,
+  ResetPasswordTokens,
 };
