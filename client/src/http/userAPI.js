@@ -121,3 +121,18 @@ export const fetchUserFromStatistic = async () => {
   const { data } = await $authHost.get(`api/statistic/statistic_user/count_in_months`);
   return data;
 };
+
+export const createForgotPasswordLink = async (user_data) => {
+  const {data} = await $authHost.post('api/forgot_password', user_data)
+  return data
+}
+
+export const changePassword = async (user_data) => {
+  const {data} = await $authHost.post('api/forgot_password/reset_password', user_data)
+  return data
+}
+
+export const checkResetPasswordToken = async (user_data) => {
+  const {data} = await $authHost.post('api/forgot_password/check_token', user_data)
+  return data
+}

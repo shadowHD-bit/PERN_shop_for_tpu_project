@@ -3,13 +3,18 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { BsBootstrapFill, BsFacebook } from "react-icons/bs";
-import { REGISTRATION_ROUTE, SHOP_ROUTE } from "../../utils/consts";
+import {
+  FORGOT_PASSWORD_ROUTE,
+  REGISTRATION_ROUTE,
+  SHOP_ROUTE,
+} from "../../utils/consts";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../..";
 import { Link } from "react-router-dom";
 import { login, social_Google_auth, social_VK_auth } from "../../http/userAPI";
 import { observer } from "mobx-react-lite";
 import {
+  Alert,
   Card,
   Col,
   Container,
@@ -18,6 +23,7 @@ import {
   Toast,
 } from "react-bootstrap";
 import { AiFillGoogleCircle } from "react-icons/ai";
+import { useForm } from "react-hook-form";
 
 const Auth = observer(() => {
   const { user } = useContext(Context);
@@ -133,46 +139,52 @@ const Auth = observer(() => {
     }, 4194308);
   };
 
-  const emailHandler = (e) => {
-    setEmail(e.target.value);
-    const re =
-      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    if (!re.test(String(e.target.value).toLowerCase())) {
-      setErrorMessage("Некоректный адрес электронной почты");
-    } else {
-      setErrorMessage("");
-    }
-  };
+  // const emailHandler = (e) => {
+  //   setEmail(e.target.value);
+  //   const re =
+  //     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  //   if (!re.test(String(e.target.value).toLowerCase())) {
+  //     setErrorMessage("Некоректный адрес электронной почты");
+  //   } else {
+  //     setErrorMessage("");
+  //   }
+  // };
 
-  const passwordHandler = (e) => {
-    setPassword(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 15) {
-      setErrorMessage(
-        "Пароль не может быть менее 3-х и больше 15-nи символов..."
-      );
+  // const passwordHandler = (e) => {
+  //   setPassword(e.target.value);
+  //   if (e.target.value.length < 3 || e.target.value.length > 15) {
+  //     setErrorMessage(
+  //       "Пароль не может быть менее 3-х и больше 15-nи символов..."
+  //     );
 
-      if (!e.target.value) {
-        setErrorMessage("Пароль не может быть пустым...");
-      }
-    } else {
-      setErrorMessage("");
-    }
-  };
+  //     if (!e.target.value) {
+  //       setErrorMessage("Пароль не может быть пустым...");
+  //     }
+  //   } else {
+  //     setErrorMessage("");
+  //   }
+  // };
 
-  const click = async () => {
-    if (errorMessage != "") {
-      setShowToast(true);
-    } else {
-      try {
-        let data;
-        data = await login(email, password);
-        user.setUser(user);
-        user.setIsAuth(true);
-        window.location.href = SHOP_ROUTE;
-      } catch (e) {
-        setErrorMessage(e.response.data.message);
-        setShowToast(true);
-      }
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const [userLoginError, setUserLoginError] = useState(false);
+  const [userLoginErrorTest, setUserLoginErrorText] = useState("");
+
+  const onSubmit = async (data_form) => {
+    try {
+      let data;
+      data = await login(data_form.email, data_form.password);
+      user.setUser(user);
+      user.setIsAuth(true);
+      window.location.href = SHOP_ROUTE;
+    } catch (e) {
+      setUserLoginError(true);
+      setUserLoginErrorText(e.response.data.message);
     }
   };
 
@@ -195,109 +207,150 @@ const Auth = observer(() => {
                   xxl={6}
                   className="auth_card_left"
                 >
-                  <Row className="d-flex justify-center w-100">
-                    <p className="title_auth">
-                      Добро пожаловать в{" "}
-                      <span className="name_shop">
-                        SHOP
-                        <span className="dot_shop">.</span>
-                        RU
-                      </span>
-                    </p>
-                  </Row>
-                  <Row className="d-flex justify-center w-100">
-                    <p className="sub_text">
-                      Введите адрес электронной почты и пароль, чтобы войти в
-                      свой аккаунт :)
-                    </p>
-                  </Row>
-                  <Row className="auth_form_row">
-                    <Col xs={12} className="w-100">
-                      <FloatingLabel
-                        controlId="floatingInput"
-                        label="Электронная почта"
-                      >
-                        <Form.Control
-                          type="email"
-                          placeholder="name@example.com"
-                          className="auth_card_input"
-                          value={email}
-                          onChange={(e) => emailHandler(e)}
-                        />
-                      </FloatingLabel>
-
-                      <FloatingLabel
-                        controlId="floatingPassword"
-                        label="Пароль"
-                      >
-                        <Form.Control
-                          className="auth_card_input"
-                          type="password"
-                          placeholder="*******"
-                          value={password}
-                          onChange={(e) => passwordHandler(e)}
-                        />
-                      </FloatingLabel>
+                  <Row className="d-flex flex-row justify-content-center align-items-center w-100">
+                    <Col xs={8}>
+                      {userLoginError ? (
+                        <Alert variant="danger" className="alert_login_error">
+                          {userLoginErrorTest}
+                        </Alert>
+                      ) : (
+                        ""
+                      )}
                     </Col>
                   </Row>
-                  <Row className="d-flex justify-center w-100 pt-3">
-                    <Col className="d-flex justify-content-center">
-                      <Form.Check
-                        type="switch"
-                        id="custom-switch"
-                        label="Запомнить"
-                      />
-                    </Col>
-                    <Col className="d-flex justify-content-center">
-                      <a href="http://">Забыли пароль?</a>
-                    </Col>
-                  </Row>
-                  <Row className="d-flex flex-column justify-center w-100">
-                    <Col
-                      xs={12}
-                      md={12}
-                      className="d-flex justify-content-center pt-3"
-                    >
-                      <Button className="login_btn" onClick={click}>
-                        Войти
-                      </Button>
-                    </Col>
-                    <Col xs={12} md={12} className="d-lg-none d-md-flex pt-3">
-                      <Button className="register_btn">
-                        Зарегистрироваться
-                      </Button>
-                    </Col>
-                  </Row>
-                  <Row className="d-flex flex-column justify-center w-100">
-                    <Col>
-                      <hr />
-                    </Col>
-                  </Row>
-                  <Row className="d-flex flex-column justify-center w-100">
-                    <Col>
-                      <p className="sub_text">
-                        Или авторизуйтесь с помощью социальных сетей...
+                  <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Row className="d-flex justify-center w-100">
+                      <p className="title_auth">
+                        Добро пожаловать в{" "}
+                        <span className="name_shop">
+                          SHOP
+                          <span className="dot_shop">.</span>
+                          RU
+                        </span>
                       </p>
-                    </Col>
-                  </Row>
-                  <Row className="d-flex flex-row justify-center w-100">
-                    <Col xs={12} md={12}>
-                      <Button
-                        className="auth_google_btn"
-                        onClick={() => GoogleAuthClick()}
+                    </Row>
+                    <Row className="d-flex justify-center w-100">
+                      <p className="sub_text">
+                        Введите адрес электронной почты и пароль, чтобы войти в
+                        свой аккаунт :)
+                      </p>
+                    </Row>
+                    <Row className="auth_form_row">
+                      <Col xs={12} className="w-100">
+                        <Row className="mb-3">
+                          <FloatingLabel
+                            controlId="floatingInput"
+                            className="label_form"
+                            label="Электронная почта"
+                          >
+                            <Form.Control
+                              type="email"
+                              placeholder="name@example.com"
+                              className="auth_card_input"
+                              aria-invalid={errors.email ? "true" : "false"}
+                              // value={email}
+                              // onChange={(e) => emailHandler(e)}
+                              {...register("email", {
+                                required: true,
+                                pattern:
+                                  /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i,
+                              })}
+                            />
+                          </FloatingLabel>
+                          {errors.email?.type === "required" && (
+                            <div className="alert_error_container">
+                              <p className="error_alert" role="error_alert">
+                                Укажите адрес эл. почты!
+                              </p>
+                            </div>
+                          )}
+                          {errors.email?.type === "pattern" && (
+                            <div className="alert_error_container">
+                              <p className="error_alert" role="error_alert">
+                                Укажите корректный адрес эл. почты!
+                              </p>
+                            </div>
+                          )}
+                        </Row>
+                        <Row className="mb-3">
+                          <FloatingLabel
+                            controlId="floatingPassword"
+                            className="label_form"
+                            label="Пароль"
+                          >
+                            <Form.Control
+                              className="auth_card_input"
+                              type="password"
+                              placeholder="*******"
+                              // value={password}
+                              // onChange={(e) => passwordHandler(e)}
+                              {...register("password", { required: true })}
+                            />
+                          </FloatingLabel>
+                          {errors.password?.type === "required" && (
+                            <div className="alert_error_container">
+                              <p className="error_alert" role="error_alert">
+                                Укажите пароль!
+                              </p>
+                            </div>
+                          )}
+                        </Row>
+                      </Col>
+                    </Row>
+                    <Row className="d-flex flex-column justify-center w-100">
+                      <Col
+                        xs={12}
+                        md={12}
+                        className="d-flex justify-content-center pt-3"
                       >
-                        <AiFillGoogleCircle /> Google
-                      </Button>
-                    </Col>
-                    <Col>
-                      <Button
-                        className="auth_vk_btn"
-                        onClick={() => VKAuthClick()}
-                      >
-                        <BsBootstrapFill /> VKontakte
-                      </Button>
-                    </Col>
-                  </Row>
+                        <Button className="login_btn" type="submit">
+                          Войти
+                        </Button>
+                      </Col>
+                      <Col xs={12} md={12} className="d-lg-none d-md-flex pt-3">
+                        <Button className="register_btn">
+                          Зарегистрироваться
+                        </Button>
+                      </Col>
+                    </Row>
+                    <Row className="d-flex flex-column justify-center w-100">
+                      <Col>
+                        <hr />
+                      </Col>
+                    </Row>
+                    <Row className="d-flex flex-column justify-center w-100">
+                      <Col>
+                        <p className="sub_text">
+                          Или авторизуйтесь с помощью социальных сетей...
+                        </p>
+                      </Col>
+                    </Row>
+                    <Row className="d-flex flex-row justify-center w-100">
+                      <Col xs={12} md={12}>
+                        <Button
+                          className="auth_google_btn"
+                          onClick={() => GoogleAuthClick()}
+                        >
+                          <AiFillGoogleCircle /> Google
+                        </Button>
+                      </Col>
+                      <Col>
+                        <Button
+                          className="auth_vk_btn"
+                          onClick={() => VKAuthClick()}
+                        >
+                          <BsBootstrapFill /> VKontakte
+                        </Button>
+                      </Col>
+                    </Row>
+                    <Row className="d-flex justify-center w-100 pt-3">
+                      <Col className="d-flex justify-content-center mt-3">
+                        <Link to={FORGOT_PASSWORD_ROUTE}>
+                          <p>Забыли пароль?</p>
+                        </Link>
+                      </Col>
+                    </Row>
+                  </Form>
                 </Col>
                 <Col
                   lg={6}
@@ -325,7 +378,7 @@ const Auth = observer(() => {
         </Row>
       </Container>
 
-      <Toast
+      {/* <Toast
         className="errorToast"
         onClose={() => setShowToast(false)}
         show={showToast}
@@ -338,7 +391,7 @@ const Auth = observer(() => {
           <small>Ошибка авторизации!</small>
         </Toast.Header>
         <Toast.Body>{errorMessage}</Toast.Body>
-      </Toast>
+      </Toast> */}
     </>
   );
 });

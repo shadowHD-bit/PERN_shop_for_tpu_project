@@ -41,6 +41,41 @@
   min-height: 600px;
   font-family: "Montserrat", sans-serif;
 
+  .errorToast {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 4;
+    margin: 10px;
+  }
+
+  .alert_login_error{
+    position: absolute;
+    padding: 5px;
+    width: 100%;
+    top: -60px;
+    text-align: center;
+  }
+
+  .alert_error_container {
+    position: relative;
+    height: 0px;
+  }
+
+  .error_alert {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    color: #fff;
+    background-color: $red;
+    border-radius: 5px;
+    padding: 3px;
+  }
+
   .auth_card {
     padding: 0 !important;
     border-top-left-radius: 30px;
@@ -55,6 +90,7 @@
       justify-content: center;
       align-items: center;
       padding: 100px 20px;
+      padding-bottom: 60px;
 
       .title_auth {
         font-weight: 600;
@@ -143,9 +179,14 @@
         width: 100%;
       }
 
+      .label_form {
+        padding: 0px;
+      }
+
       .auth_card_input {
-        border-radius: 20px;
+        border-radius: 10px;
         margin: 5px 0px;
+        padding-left: 15px;
       }
     }
 
@@ -204,12 +245,4 @@
       }
     }
   }
-}
-
-.errorToast {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  z-index: 4;
-  margin: 10px;
 }
