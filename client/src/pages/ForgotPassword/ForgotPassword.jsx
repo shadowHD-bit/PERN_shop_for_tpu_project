@@ -84,7 +84,7 @@ const ForgotPassword = () => {
                   >
                     <Form.Control
                       className="auth_card_input"
-                      type="email"
+                      type="text"
                       name="email"
                       placeholder="example@example.com"
                       {...register("email", {

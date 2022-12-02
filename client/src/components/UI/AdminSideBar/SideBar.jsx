@@ -5,6 +5,7 @@ import {
   MdColorLens,
   MdDocumentScanner,
   MdImage,
+  MdMap,
   MdOutlineDomainVerification,
   MdPattern,
   MdQuestionAnswer,
@@ -26,6 +27,7 @@ import {
   ADMIN_COLORS_ROUTE,
   ADMIN_EXCEL_ROUTE,
   ADMIN_IMG_ROUTE,
+  ADMIN_LOCATION_ROUTE,
   ADMIN_ORDER_ROUTE,
   ADMIN_PRODUCT_ROUTE,
   ADMIN_QUESTION_ROUTE,
@@ -227,6 +229,21 @@ const SideBar = ({ show, handleClose }) => {
                     </Col>
                     <Col xs={6} className="sidebar_row_text">
                       Основные вопросы
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
+            </Row>
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_LOCATION_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdMap size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Основные места
                     </Col>
                   </Row>
                 </Col>

@@ -1,0 +1,27 @@
+@import '../../../../index.scss';
+
+.modal_create_location{
+
+    .alert_error_container {
+        position: relative;
+        height: 0px;
+      }
+    
+      .alert_error {
+        margin: 0;
+        padding: 0;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
+        position: absolute;
+        z-index: 99;
+        right: 0;
+        color: #fff;
+        background-color: $red;
+        border-radius: 5px;
+        padding: 3px;
+      }
+
+      input, textarea{
+        margin-top: 20px;
+      }
+}

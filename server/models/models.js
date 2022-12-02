@@ -196,6 +196,15 @@ const ResetPasswordTokens = sequelize.define("reset_password_tokens", {
   token: { type: DataTypes.STRING, allowNull: false },
 });
 
+const LocationPlace = sequelize.define("location_place", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  title: { type: DataTypes.STRING, allowNull: false },
+  description: { type: DataTypes.STRING, allowNull: false },
+  text_address: { type: DataTypes.STRING, allowNull: false },
+  x_coordination: { type: DataTypes.FLOAT, allowNull: false },
+  y_coordination: { type: DataTypes.FLOAT, allowNull: false },
+});
+
 //Description dependencies models db
 User.hasOne(Basket);
 Basket.belongsTo(User);
@@ -319,4 +328,5 @@ module.exports = {
   Rules,
   Notification,
   ResetPasswordTokens,
+  LocationPlace,
 };

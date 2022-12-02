@@ -31,6 +31,7 @@ const rulesRouter = require('./rulesRouter')
 const notificationRouter = require('./notificationRouter')
 const statisticRouter = require('./statisticRouter')
 const forgotPasswordRouter = require('./forgotPasswordRouter')
+const locationRouter = require('./locationRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -62,5 +63,6 @@ router.use('/badges', badgeRouter)
 router.use('/rules', rulesRouter)
 router.use('/notification', notificationRouter)
 router.use('/forgot_password', forgotPasswordRouter)
+router.use('/location', locationRouter)
 
 module.exports = router
