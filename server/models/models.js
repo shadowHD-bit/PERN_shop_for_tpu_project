@@ -1,4 +1,4 @@
-const sequelize = require("../dataBase");
+const sequelize = require("../utils/dataBase");
 const { DataTypes } = require("sequelize");
 
 //Models User
@@ -196,6 +196,10 @@ const ResetPasswordTokens = sequelize.define("reset_password_tokens", {
   token: { type: DataTypes.STRING, allowNull: false },
 });
 
+const HistoryViewProduct = sequelize.define("history_view_product", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
 const LocationPlace = sequelize.define("location_place", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   title: { type: DataTypes.STRING, allowNull: false },
@@ -214,6 +218,12 @@ ResetPasswordTokens.belongsTo(User);
 
 User.hasOne(VkUsers);
 VkUsers.belongsTo(User);
+
+User.hasMany(HistoryViewProduct);
+HistoryViewProduct.belongsTo(User);
+
+Product.hasMany(HistoryViewProduct);
+HistoryViewProduct.belongsTo(Product);
 
 User.hasOne(GoogleUsers);
 GoogleUsers.belongsTo(User);
@@ -329,4 +339,5 @@ module.exports = {
   Notification,
   ResetPasswordTokens,
   LocationPlace,
+  HistoryViewProduct,
 };

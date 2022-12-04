@@ -1,10 +1,27 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
-import { Button, Container, Form, Modal, Row } from "react-bootstrap";
+import {
+  Button,
+  Card,
+  Col,
+  Container,
+  Form,
+  Modal,
+  Row,
+} from "react-bootstrap";
 import { Context } from "../..";
-import { fetchOrdersUser, getAllProductsOneUserOrders, getOneOrderProducts } from "../../http/orderAPI";
+import {
+  fetchOrdersUser,
+  getAllProductsOneUserOrders,
+  getOneOrderProducts,
+} from "../../http/orderAPI";
 import { getData, updateUserData } from "../../http/userAPI";
 import "./UserProfile.scss";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { FreeMode, Pagination } from "swiper";
+import { getHistoryView } from "../../http/historyAPI";
+import { Link } from "react-router-dom";
+import { PRODUCT_ROUTE } from "../../utils/consts";
 
 const UserProfile = observer(() => {
   const [changeData, setChangeData] = useState(false);
@@ -19,8 +36,7 @@ const UserProfile = observer(() => {
   const [showModalPhoto, setShowModalPhoto] = useState(false);
 
   const [file, setFile] = useState(null);
-  const [orders, setOrders] = useState([]);
-  const [ordersProduct, setOrdersProduct] = useState([]);
+  const [history, setHistory] = useState([]);
 
   const handlerModalPhotoShow = () => setShowModalPhoto(true);
   const handlerModalPhotoSClose = () => setShowModalPhoto(false);
@@ -28,7 +44,6 @@ const UserProfile = observer(() => {
   const selectFile = (e) => {
     setFile(e.target.files[0]);
   };
-
 
   useEffect(() => {
     getData(user.user.id).then((data) => {
@@ -39,6 +54,17 @@ const UserProfile = observer(() => {
       setNumberPhone(user.userProf.numberPhone);
     });
   }, []);
+
+  useEffect(() => {
+    if (user.isAuth && user.user.id != undefined) {
+      getHistoryView(user.user.id).then((data) => {
+        setHistory(data);
+      });
+    }
+  }, []);
+
+  console.log(history);
+  console.log(user.user.id);
 
   const [rerender, setRerender] = useState(false);
 
@@ -87,7 +113,10 @@ const UserProfile = observer(() => {
                 {user.userProf.name} {user.userProf.family}
               </span>
               <span className="text-black-50"></span>
-              <Button className="change_photo_btn" onClick={() => handlerModalPhotoShow()}>
+              <Button
+                className="change_photo_btn"
+                onClick={() => handlerModalPhotoShow()}
+              >
                 Изменить аватар
               </Button>
               <span> </span>
@@ -208,6 +237,53 @@ const UserProfile = observer(() => {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="container rounded bg-white mt-5 mb-5 profile">
+        <Row>
+          <Col>
+            <h4 className="text-center mt-3">Вы недавно просматривали</h4>
+          </Col>
+        </Row>
+        <Row>
+          <Swiper
+            breakpoints={{
+              576: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              988: {
+                slidesPerView: 4,
+              },
+            }}
+            spaceBetween={30}
+            freeMode={true}
+            pagination={{
+              clickable: true,
+            }}
+            modules={[FreeMode, Pagination]}
+            className="mySwiperHistory"
+          >
+            {history?.map((item) => (
+              <SwiperSlide key={item.id}>
+                <Card className="card_history">
+                  <Card.Img className="card_img"
+                    variant="top"
+                    src={process.env.REACT_APP_API_URL + item.product.imgMain}
+                  />
+                  <Card.Body className="card_body">
+                    <Card.Title className="card_title">
+                      <Link to={PRODUCT_ROUTE + '/' + item.product.id}>
+                      {item.product.name}
+                      </Link></Card.Title>
+                  </Card.Body>
+                </Card>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Row>
       </div>
 
       <Modal show={showModalPhoto} onHide={handlerModalPhotoSClose} centered>

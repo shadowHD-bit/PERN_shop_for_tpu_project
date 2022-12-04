@@ -13,7 +13,7 @@ const {
 const uuid = require("uuid");
 const path = require("path");
 const sequelize = require("sequelize");
-const { Sequelize } = require("../dataBase");
+const { Sequelize } = require("../utils/dataBase");
 const { group } = require("console");
 const { Op } = require("sequelize");
 
@@ -126,6 +126,11 @@ class UserController {
       order: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))]
     });
 
+    return res.json(user);
+  }
+
+  async getAllUsers(req, res){
+    const user = await User.findAndCountAll()
     return res.json(user);
   }
 

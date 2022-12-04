@@ -45,6 +45,7 @@ import ErrorAuthModalQuestion from "../../components/UI/Modals/ErrorAuthModalQue
 import ErrorAddQuestionModal from "../../components/UI/Modals/ErrorAddQuestionModal/ErrorAddQuestionModal";
 import { Rating } from "@material-ui/lab";
 import SizeProductModal from "../../components/UI/Modals/SizeProductModal/SizeProductModal";
+import { addHistoryView } from "../../http/historyAPI";
 
 const SimpleProduct = observer(() => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
@@ -63,6 +64,15 @@ const SimpleProduct = observer(() => {
   const handlerCloseSizeProduct = () => {
     setShowSizeProductModal(false);
   };
+
+  useEffect(() => {
+    if(user.isAuth && user.user.id != undefined){
+      const formDataHistory = new FormData()
+      formDataHistory.append('productId', id)
+      formDataHistory.append('userId', user.user.id)
+      addHistoryView(formDataHistory)
+    }
+  }, [])
 
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
@@ -185,172 +195,6 @@ const SimpleProduct = observer(() => {
   console.log(sizes);
 
   return (
-    // <section class="product">
-    //   <div class="product__photo">
-    //     <div class="photo-container">
-    //       <div
-    //         class="photo-main"
-    //         style={
-    //           photoProduct
-    //             ? {
-    //                 backgroundImage: `url(${
-    //                   process.env.REACT_APP_API_URL + photoProduct
-    //                 })`,
-    //               }
-    //             : {
-    //                 backgroundImage: `url(${
-    //                   process.env.REACT_APP_API_URL + product.imgMain
-    //                 })`,
-    //               }
-    //         }
-    //       >
-    //         {/* <div class="controls">
-    //                     <i class="material-icons">share</i>
-    //                     <i class="material-icons">favorite_border</i>
-    //                 </div> */}
-    //       </div>
-    //       <div class="photo-album">
-    //         <ul>
-    //           <li>
-    //             <img
-    //               src={process.env.REACT_APP_API_URL + product.imgMain}
-    //               onClick={() => setProductPhoto(product.imgMain)}
-    //             />
-    //           </li>
-    //           <li>
-    //             <img
-    //               src={process.env.REACT_APP_API_URL + product.imgFirst}
-    //               onClick={() => setProductPhoto(product.imgFirst)}
-    //             />
-    //           </li>
-    //           <li>
-    //             <img
-    //               src={process.env.REACT_APP_API_URL + product.imgSecond}
-    //               onClick={() => setProductPhoto(product.imgSecond)}
-    //             />
-    //           </li>
-    //           <li>
-    //             <img
-    //               src={process.env.REACT_APP_API_URL + product.imgThird}
-    //               onClick={() => setProductPhoto(product.imgThird)}
-    //             />
-    //           </li>
-    //         </ul>
-    //       </div>
-    //     </div>
-    //   </div>
-    //   <div class="product__info">
-    //     <div class="title">
-    //       <h1>{product.name}s</h1>
-    //       <span>Код товара: {product.id}</span>
-    //     </div>
-    //     <div class="price">
-    //       <span>{product.price}</span> РУБ
-    //     </div>
-    //     {/* <div class="variant">
-    //             <h3>SELECT A COLOR</h3>
-    //             <ul>
-    //                 <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302064/codepen/delicious-apples/green-apple2.png" alt="green apple"/></li>
-    //                 <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302752/codepen/delicious-apples/yellow-apple.png" alt="yellow apple"/></li>
-    //                 <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302427/codepen/delicious-apples/orange-apple.png" alt="orange apple"/></li>
-    //                 <li><img src="https://res.cloudinary.com/john-mantas/image/upload/v1537302285/codepen/delicious-apples/red-apple.png" alt="red apple"/></li>
-    //             </ul>
-    //         </div> */}
-    //     <div class="description">
-    //       <h3>Рейтинг</h3>
-    //       <RatingStars
-    //         ratingChanged={ratingChanged}
-    //         ratingVal={product?.rating || 0}
-    //         isAuth={user.isAuth}
-    //         isAccessRating={isAccessRating}
-    //       />
-    //     </div>
-    //     <div class="description">
-    //       <h3>Характеристики</h3>
-    //       <ul>
-    //         {product.info.map((info, index) => (
-    //           <li key={index}>
-    //             {info.title}: {info.description}
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //     {isProductInBasket(product) ? (
-    //       <Button
-    //         class="buy--btn"
-    //         variant="outline-danger"
-    //         onClick={() => addProductInBasket(product)}
-    //         disabled={!user.isAuth ? true : false}
-    //       >
-    //         <BsCartPlus /> Добавить в корзину
-    //       </Button>
-    //     ) : (
-    //       <a href={BASKET_ROUTE}>
-    //         <Button class="yes--buy--btn" variant="outline-success">
-    //           <BsCheckLg /> Уже в корзине
-    //         </Button>
-    //       </a>
-    //     )}
-    //   </div>
-    //   <div className="about_product">
-    //     <Tabs
-    //       defaultActiveKey="description"
-    //       id="justify-tab-example"
-    //       className="mb-3"
-    //       justify
-    //     >
-    //       <Tab eventKey="description" title="Описание">
-    //         {<p>{product.description}</p>}
-    //       </Tab>
-    //       <Tab eventKey="characteristics" title="Характеристики">
-    //         sdvsdv
-    //       </Tab>
-    //       <Tab eventKey="reviews" title="Отзывы">
-    //         {reviews?.map((rew) => {
-    //           return (
-    //             <ReviewUI name_user={rew.review.user.name}
-    //             family_user={rew.review.user.family}
-    //             // img_user={}
-    //             text_review={rew.text_reviews}
-    //             img_review={rew.img_reviews}
-    //             description_true={rew.description_true}
-    //             size_true={rew.size_true}
-    //             delivery_true={rew.delivery_true} />
-    //           );
-    //         })}
-    //       </Tab>
-    //       <Tab eventKey="question" title="Вопросы">
-    //         <Button onClick={handleShowQuestionModal}>
-    //           Задать вопрос по товару
-    //         </Button>
-    //         <br />
-    //         <br />
-
-    //         {QA?.map((question) => {
-    //           return (
-    //             <>
-    //               <div className="question">
-    //                 Вопрос: {question.question.question_text} (
-    //                 {question.question.user.name}{" "}
-    //                 {question.question.user.family})
-    //               </div>
-    //               <div className="answer">
-    //                 Ответ: {question.answer.answer_text} (
-    //                 {question.answer.user.name} {question.answer.user.family})
-    //               </div>
-    //               <br />
-    //             </>
-    //           );
-    //         })}
-    //       </Tab>
-    //       <Tab eventKey="comment" title="Комментарии">
-    //         dsvsdvdsv
-    //       </Tab>
-    //       <Tab eventKey="rating" title="Рейтинг">
-    //         dsvsdvdsv
-    //       </Tab>
-    //     </Tabs>
-    //   </div>
     <>
       <Container className="product_container">
         <Row>

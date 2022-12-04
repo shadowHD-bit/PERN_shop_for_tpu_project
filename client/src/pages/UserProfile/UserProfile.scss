@@ -1,78 +1,113 @@
-@import '../../index.scss';
+@import "../../index.scss";
 
 .profile {
-    -webkit-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
-    -moz-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
-    box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
-    border-radius: 30px !important;
+  font-family: "Montserrat", sans-serif;
+  -webkit-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
+  box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
+  border-radius: 30px !important;
+
+  .card_history {
+    padding: 0 !important;
+    box-shadow: none;
+    a {
+      text-decoration: none;
+      color: black;
+
+      &:hover {
+        color: $red;
+      }
+    }
+
+    .card_body {
+      padding: 0 !important;
+      margin: 0 !important;
+      height: 70px;
+      box-shadow: none;
+    }
+
+    .card_title {
+      font-size: 16px;
+      box-shadow: none;
+      padding: 10px;
+    }
+  }
+
+  .mySwiperHistory {
+    height: 520px;
+  }
+
+  .card_img {
+    box-shadow: none;
+  }
 }
 
 .form-control:focus {
-    box-shadow: none;
-    border-color: $red;
+  box-shadow: none;
+  border-color: $red;
 }
 
 .profile-button {
-    background: $red;
-    box-shadow: none;
-    border: none
+  background: $red;
+  box-shadow: none;
+  border: none;
 }
 
 .profile-button:hover {
-    background: $white_red;
+  background: $white_red;
 }
 
 .profile-button:focus {
-    background: $red;
-    box-shadow: none
+  background: $red;
+  box-shadow: none;
 }
 
 .profile-button:active {
-    background: $red;
-    box-shadow: none
+  background: $red;
+  box-shadow: none;
 }
 
 .back:hover {
-    color: $white_red;
-    cursor: pointer
+  color: $white_red;
+  cursor: pointer;
 }
 
 .labels {
-    font-size: 11px
+  font-size: 11px;
 }
 
 .add-experience:hover {
-    background: $white_red;
-    color: #fff;
-    cursor: pointer;
-    border: solid 1px $white_red;
+  background: $white_red;
+  color: #fff;
+  cursor: pointer;
+  border: solid 1px $white_red;
 }
 
-.lastest_product{
-    .lastest_product_item{
-        border: 1px solid $red;
-        border-radius: 10px;
-        padding: 5px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
+.lastest_product {
+  .lastest_product_item {
+    border: 1px solid $red;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 
-.test_avatar{
-    width: 200px;
-    height: 200px;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 50%;
+.test_avatar {
+  width: 200px;
+  height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
 }
 
-.change_photo_btn{
-    background: $red;
-    border:none;
+.change_photo_btn {
+  background: $red;
+  border: none;
 
-    &:hover{
-        background-color: $white_red;
-    }
+  &:hover {
+    background-color: $white_red;
+  }
 }

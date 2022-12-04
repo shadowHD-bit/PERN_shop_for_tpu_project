@@ -32,6 +32,10 @@
     font-weight: bold;
   }
 
+  a{
+    text-decoration: none;
+  }
+
   .card_product_main{
     background-position: center;
     background-size: cover;
@@ -60,7 +64,7 @@
       margin: 0 !important;
       display: flex;
       align-items: flex-end;
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Montserrat', sans-serif;  
     }
   }
 

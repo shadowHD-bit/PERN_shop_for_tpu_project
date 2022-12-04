@@ -21,6 +21,7 @@ import {
 import { fetchQuestion } from "../../http/questionAPI";
 import { fetchSlider } from "../../http/sliderAPI";
 import {
+  getAllUser,
   getMoneyUserApi,
   getNewUserApi,
   getUserRoleAdminApi,
@@ -95,6 +96,9 @@ const Admin = () => {
     getMoneyUserApi().then((data) => {
       setMoneyUser(data);
     });
+    getAllUser().then(data => {
+      setCountUser(data.count)
+    })
   }, []);
 
   const [resultMoneyUser, setResultMoneyUser] = useState([]);

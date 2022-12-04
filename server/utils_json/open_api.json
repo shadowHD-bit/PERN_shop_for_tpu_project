@@ -1,0 +1,132 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API SHOP.RU",
+    "description": "Закрытое API сервиса SHOP.RU",
+    "version": "v. 1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Сервер Backend-части сервиса SHOP.RU"
+    }
+  ],
+  "tags": [
+    {
+      "name": "",
+      "description": ""
+    }
+  ],
+
+  "paths": {
+    "/api/user/registration": {
+      "post": {
+        "summary": "Возвращает JWT токен при успешной регистрации пользователя.",
+        "tags": [],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "required": true,
+            "description": "Электронная почта пользователя",
+            "schema": {
+              "type": "string",
+              "example": "example@example.com"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "required": true,
+            "description": "Пароль пользователя",
+            "schema": {
+              "type": "string",
+              "example": "examplepassword12345"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "description": "Имя пользователя",
+            "schema": {
+              "type": "string",
+              "example": "Евгений"
+            }
+          },
+          {
+            "name": "family",
+            "in": "query",
+            "required": true,
+            "description": "Фамилия пользователя",
+            "schema": {
+              "type": "string",
+              "example": "Волков"
+            }
+          },
+          {
+            "name": "date_birthday",
+            "in": "query",
+            "required": true,
+            "description": "Дата рождения пользователя",
+            "schema": {
+              "type": "string",
+              "example": "02.02.2000"
+            }
+          },
+          {
+            "name": "numberPhone",
+            "in": "query",
+            "required": true,
+            "description": "Номер телефона пользователя",
+            "schema": {
+              "type": "string",
+              "example": "89089554142"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "required": true,
+            "description": "Пол пользователя",
+            "schema": {
+              "type": "bool",
+              "example": true
+            }
+          },
+          {
+            "name": "allowSpam",
+            "in": "query",
+            "required": true,
+            "description": "Доступ к рассылке",
+            "schema": {
+              "type": "bool",
+              "example": true
+            }
+          },
+          {
+            "name": "role",
+            "in": "query",
+            "required": true,
+            "description": "Роль пользователя",
+            "schema": {
+              "type": "string",
+              "example": "USER"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Пользователь зарегистрирован",
+            "schema": {
+              "type": "string",
+              "examples": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImV4YW1wbGVAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiJ9.QEm7CXwf_0Fmm0HwdgRz9uVkUjx5FZH17A6J6rdfYTI"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

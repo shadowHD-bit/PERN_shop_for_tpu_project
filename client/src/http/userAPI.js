@@ -108,6 +108,11 @@ export const getNewUserApi = async () => {
   return data;
 };
 
+export const getAllUser = async () => {
+  const { data } = await $authHost.get(`api/user`);
+  return data;
+};
+
 export const getMoneyUserApi = async () => {
   const { data } = await $authHost.get(`api/user/money_user`);
   return data;

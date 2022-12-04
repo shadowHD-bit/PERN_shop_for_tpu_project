@@ -32,6 +32,7 @@ const notificationRouter = require('./notificationRouter')
 const statisticRouter = require('./statisticRouter')
 const forgotPasswordRouter = require('./forgotPasswordRouter')
 const locationRouter = require('./locationRouter')
+const historyViewProductRouter = require('./historyViewProductRouter')
 
 router.use('/user', userRouter)
 router.use('/productType', productTypeRouter)
@@ -64,5 +65,6 @@ router.use('/rules', rulesRouter)
 router.use('/notification', notificationRouter)
 router.use('/forgot_password', forgotPasswordRouter)
 router.use('/location', locationRouter)
+router.use('/history_view_product', historyViewProductRouter)
 
 module.exports = router

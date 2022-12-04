@@ -9,6 +9,15 @@
     font-weight: bold;
   }
 
+  .placeholder{
+    height: 200px;
+    padding: 0 !important;
+    cursor: pointer;
+    transition: 1s;
+    border-radius: 30px;
+    box-shadow: none;
+  }
+
   .brand_card {
     background-position: center;
     background-size: cover;

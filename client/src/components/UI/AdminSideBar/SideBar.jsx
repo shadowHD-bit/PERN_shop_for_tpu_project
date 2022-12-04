@@ -315,16 +315,18 @@ const SideBar = ({ show, handleClose }) => {
             </Row>
 
             <Row className="sidebar_row">
-              <Col xs={12} className="sidebar_col">
-                <Row>
-                  <Col xs={6} className="sidebar_row_icons">
-                    <MdSubject size={"30px"} />
-                  </Col>
-                  <Col xs={6} className="sidebar_row_text">
-                    API
-                  </Col>
-                </Row>
-              </Col>
+              <a href={process.env.REACT_APP_API_URL + "docs"}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdSubject size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      API
+                    </Col>
+                  </Row>
+                </Col>
+              </a>
             </Row>
           </Container>
         </Offcanvas.Body>
