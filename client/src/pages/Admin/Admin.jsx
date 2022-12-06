@@ -101,12 +101,13 @@ const Admin = () => {
     })
   }, []);
 
+  console.log(moneyUser);
   const [resultMoneyUser, setResultMoneyUser] = useState([]);
 
   useEffect(() => {
     let resultArray = [];
     moneyUser.map((item) => {
-      // if (resultArray.find((obj) => obj.user_id == item.user.id)) {
+
       if (resultArray.find((obj) => obj.user_id == item.user.id) != undefined) {
         resultArray.map((res) => {
           item.order_products.map((res_o) => {
@@ -117,12 +118,14 @@ const Admin = () => {
             }
           });
         });
-      } else {
+      } 
+      
+      else {
         let total;
         if (item.order_products.length == 1) {
           total = item.order_products[0].totalPrice;
         } else {
-          item.order_products.reduce((a, c) => a + c, total);
+          total = item.order_products.reduce((a, c) => a += c.totalPrice, 0);
         }
         resultArray.push({
           user_id: item.user.id,
@@ -138,7 +141,7 @@ const Admin = () => {
     setResultMoneyUser(resultArray);
   }, [moneyUser]);
 
-  console.log(resultMoneyUser, moneyUser);
+  console.log(resultMoneyUser);
 
   return (
     <>

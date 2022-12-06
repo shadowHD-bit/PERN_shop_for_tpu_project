@@ -129,6 +129,11 @@ class OrdersController {
                     sale: 100 - 100 * sale,
                     payment_delivery: payment_delivery,
                     total_price: total_price,
+                  }).then(async () => {
+                    await Notification.create({
+                      notification_message: `Ваш заказ №${id_order} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
+                      userId: userId,
+                    });
                   });
 
                   for (let item of data_basket) {
@@ -143,7 +148,7 @@ class OrdersController {
                             count: item.count,
                             productId: item.productId,
                             orderId: id_order,
-                            price: item.price,
+                            price: data_product.price,
                             size_product: data_size.number_size,
                           });
                         });
@@ -292,9 +297,13 @@ class OrdersController {
         .then(async (data) => {
           order.descr = data;
           prod = await OrderProduct.findAll({
-            attributes: ["productId", "count"],
+            attributes: ["productId", "count", 'size_product'],
             where: { orderId: data.id },
           });
+
+          OrdersDetails.findOne({where: {orderId: id }}).then(data => {
+            order.detail = data
+          })
 
           for (let product of prod) {
             await Product.findOne({
@@ -314,6 +323,7 @@ class OrdersController {
               let newObj = {
                 descr: item,
                 count: product.count,
+                size: product.size_product
               };
               infoProductes.push(newObj);
             });

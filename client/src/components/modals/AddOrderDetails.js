@@ -17,7 +17,7 @@ const AddOrderDetails = ({ show, onHide, sale, payment_delivery, total_price }) 
   } = useForm();
   const onSubmit = (data) => {
     const formData = new FormData()
-    formData.append('userId', 14)
+    formData.append('userId', user.user.id)
     formData.append('sale', sale == 1 ? 0 : sale)
     formData.append('payment_delivery', payment_delivery)
     formData.append('total_price', total_price)
