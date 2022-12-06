@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Col, Container, Nav, Row, Offcanvas } from "react-bootstrap";
 import {
   MdBadge,
+  MdCake,
   MdColorLens,
   MdDocumentScanner,
   MdImage,
@@ -25,6 +26,7 @@ import {
   ADMIN_BRANDANDTYPE_ROUTE,
   ADMIN_BUTTONS_ROUTE,
   ADMIN_COLORS_ROUTE,
+  ADMIN_COUPONS_ROUTE,
   ADMIN_EXCEL_ROUTE,
   ADMIN_IMG_ROUTE,
   ADMIN_LOCATION_ROUTE,
@@ -139,6 +141,21 @@ const SideBar = ({ show, handleClose }) => {
                     </Col>
                     <Col xs={6} className="sidebar_row_text">
                       Баджи
+                    </Col>
+                  </Row>
+                </Col>
+              </Link>
+            </Row>
+
+            <Row className="sidebar_row">
+              <Link to={ADMIN_COUPONS_ROUTE}>
+                <Col xs={12} className="sidebar_col">
+                  <Row>
+                    <Col xs={6} className="sidebar_row_icons">
+                      <MdCake size={"30px"} />
+                    </Col>
+                    <Col xs={6} className="sidebar_row_text">
+                      Купоны
                     </Col>
                   </Row>
                 </Col>

@@ -6,13 +6,9 @@ const { Op } = require("sequelize");
 
 class CouponController {
   async createCoupon(req, res, next) {
-    try {
-      let { code, discount_percentage } = req.body;
-      const coupon = await Coupons.create({ code, discount_percentage });
-      return res.json(coupon);
-    } catch (e) {
-      next(ApiError.badRequest(e.message));
-    }
+    let { code, discount_percentage } = req.body;
+    const coupon = await Coupons.create({ code, discount_percentage });
+    return res.json(coupon);
   }
 
   async getCoupons(req, res) {
@@ -24,9 +20,8 @@ class CouponController {
     const { code } = req.params;
     const coupon = await Coupons.findOne({
       where: { code: code },
-    })
+    });
     return res.json(coupon);
-
   }
 
   async deleteCoupon(req, res) {

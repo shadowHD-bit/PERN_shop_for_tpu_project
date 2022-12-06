@@ -10,7 +10,7 @@ import About from './pages/AboutUs/AboutUs'
 import SimleProduct from './pages/SpecialProductPage/SimpleProductPage'
 import RulesPage from './pages/RulesPage/Rules'
 
-import { ADMIN_BADGE_ROUTE, ADMIN_BRANDANDTYPE_ROUTE, ADMIN_BUTTONS_ROUTE, ADMIN_COLORS_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_IMG_ROUTE, ADMIN_LOCATION_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_REVIEW_ROUTE, ADMIN_ROUTE, ADMIN_RULES_ROUTE, ADMIN_SIZE_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_STATISTIC_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, FORGOT_PASSWORD_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, NOTIFICATION_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, QUESTION_ROUTE, REGISTRATION_ROUTE, RESET_PASSWORD_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
+import { ADMIN_BADGE_ROUTE, ADMIN_BRANDANDTYPE_ROUTE, ADMIN_BUTTONS_ROUTE, ADMIN_COLORS_ROUTE, ADMIN_COUPONS_ROUTE, ADMIN_EXCEL_ROUTE, ADMIN_IMG_ROUTE, ADMIN_LOCATION_ROUTE, ADMIN_ORDER_ROUTE, ADMIN_PRODUCT_ROUTE, ADMIN_QUESTION_ROUTE, ADMIN_REVIEW_ROUTE, ADMIN_ROUTE, ADMIN_RULES_ROUTE, ADMIN_SIZE_ROUTE, ADMIN_SLIDER_ROUTE, ADMIN_STATISTIC_ROUTE, ADMIN_USER_ROUTE, BASKET_ROUTE, CHECKOUTING_ROUTE, CHECKOUT_ROUTE, FORGOT_PASSWORD_ROUTE, LIKES_ROUTER, LOGIN_ROUTE, NOTIFICATION_ROUTE, ORDERS_ROUTE, PRODUCT_ROUTE, QUESTION_ROUTE, REGISTRATION_ROUTE, RESET_PASSWORD_ROUTE, RULES_ROUTE, SHOP_ROUTE, USERPROFILE_ROUTE } from './utils/consts'
 import { LOCATIONPLACES_ROUTE } from './utils/consts'
 import { ABOUT_ROUTE } from './utils/consts'
 import UserProfile from './pages/UserProfile/UserProfile'
@@ -37,6 +37,7 @@ import AdminStatistic from './pages/Admin/AdminCatalog/Statistics/AdminStatistic
 import ForgotPassword from './pages/ForgotPassword/ForgotPassword'
 import ForgotPasswordIndividualPage from './pages/ForgotPassword/ForgotPasswordIndividualPage'
 import LocationAdmin from './pages/Admin/AdminCatalog/Location/LocationAdmin'
+import AdminCoupons from './pages/Admin/AdminCatalog/Coupons/AdminCoupons'
 
 export const authRoutes = [
     {
@@ -133,6 +134,10 @@ export const adminRoutes = [
     {
         path: ADMIN_LOCATION_ROUTE,
         element: <LocationAdmin />
+    },
+    {
+        path: ADMIN_COUPONS_ROUTE,
+        element: <AdminCoupons />
     },
 ]
 
