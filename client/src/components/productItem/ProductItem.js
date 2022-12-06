@@ -16,26 +16,11 @@ import { CgHeart } from "react-icons/cg";
 const ProductItem = observer(({ product }) => {
   const { user, basket, likes } = useContext(Context);
 
-  const isProductInBasket = (prod) => {
-    const findProduct = basket.Basket.findIndex(
-      (item) => Number(item.id) === Number(prod.id)
-    );
-    return findProduct < 0;
-  };
-
   const isProductInLikes = (prod) => {
     const findProduct = likes.Likes.findIndex(
       (item) => Number(item.id) === Number(prod.id)
     );
     return findProduct < 0;
-  };
-
-  const addProductInBasket = (product) => {
-    if (user.isAuth) {
-      addProductToBasket(product).then(() => basket.setBasket(product, true));
-    } else {
-      basket.setBasket(product);
-    }
   };
 
   const addProductInLikes = (product) => {
@@ -53,65 +38,6 @@ const ProductItem = observer(({ product }) => {
   }, []);
 
   return (
-    // <div class="product-card">
-    //   <div class="badge">Hot</div>
-    //   <div class="product-tumb">
-    //     <img src={process.env.REACT_APP_API_URL + product.imgMain} alt="" />
-    //   </div>
-    //   <div class="product-details">
-    //     <div className="d-flex justify-content-between">
-    //       <div className="mb-2">
-    //         <span class="product-catagory">{product.product_type.name}</span>
-    //         <span class="product-catagory">{product.product_brand.name}</span>
-    //       </div>
-    //       <div className="d-flex align-items-center">
-    //         {product.rating.toFixed(1)} <AiOutlineStar className="ml-1" />
-    //       </div>
-    //     </div>
-    //     <h4>
-    //       <a href={PRODUCT_ROUTE + "/" + product.id}>{product.name}</a>
-    //     </h4>
-    //     <div class="product-bottom-details">
-    //       <div class="product-price">{product.price} РУБ</div>
-    //       <div class="product-links">
-    //         {isProductInBasket(productIn) ? (
-    //           <Button
-    //             variant="danger"
-    //             onClick={() => addProductInBasket(productIn)}
-    //             disabled={!user.isAuth ? true : false}
-    //           >
-    //             <BsCartPlus />
-    //           </Button>
-    //         ) : (
-    //           <Button
-    //             variant="success"
-    //             href={BASKET_ROUTE}
-    //             disabled={!user.isAuth ? true : false}
-    //           >
-    //             <BsCheckLg />
-    //           </Button>
-    //         )}
-    //         {isProductInLikes(productIn) ? (
-    //           <Button
-    //             variant="primary"
-    //             onClick={() => addProductInLikes(productIn)}
-    //             disabled={!user.isAuth ? true : false}
-    //           >
-    //             <CgHeart />
-    //           </Button>
-    //         ) : (
-    //           <Button
-    //             variant="info"
-    //             onClick={() => likes.setDeleteItemLikes(productIn, true)}
-    //             disabled={!user.isAuth ? true : false}
-    //           >
-    //             <CgHeart />
-    //           </Button>
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
     <>
       <Col xs={12} md={6} xl={4} className="p-0">
         <Card className="product_card" style={{ boxShadow: "none" }}>
@@ -137,23 +63,6 @@ const ProductItem = observer(({ product }) => {
             <Card.Text className="price_card">{product.price} РУБ</Card.Text>
           </Card.Body>
           <Card.Footer style={{ boxShadow: "none" }}>
-            {isProductInBasket(productIn) ? (
-              <Button
-                className="btn_cart_out"
-                onClick={() => addProductInBasket(productIn)}
-                disabled={!user.isAuth ? true : false}
-              >
-                <BsCartPlus />
-              </Button>
-            ) : (
-              <Button
-                className="btn_cart_in"
-                href={BASKET_ROUTE}
-                disabled={!user.isAuth ? true : false}
-              >
-                <BsCheckLg />
-              </Button>
-            )}
             {isProductInLikes(productIn) ? (
               <Button
                 className="btn_like_out"

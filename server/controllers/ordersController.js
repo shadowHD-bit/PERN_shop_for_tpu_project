@@ -6,6 +6,9 @@ const {
   ProductType,
   Notification,
   Sizes,
+  Basket,
+  BasketProduct,
+  OrdersDetails,
 } = require("./../models/models");
 const ApiError = require("../errors/ApiErrors");
 const jwt = require("jsonwebtoken");
@@ -13,77 +16,153 @@ const sequelize = require("sequelize");
 
 class OrdersController {
   async create(req, res) {
-    const auth = req.headers.authorization || "";
-    const { basket } = req.body;
+    // const auth = req.headers.authorization || "";
+    // const { basket } = req.body;
 
-    try {
-      let parseProducts = [];
-      let parseProductsData = [];
-      for (let key of basket) {
-        parseProducts.push(key.id);
-        parseProductsData.push({
-          productId: key.id,
-          sizeId: key.sizeId,
-          price: key.price,
-        });
-      }
+    // try {
+    //   let parseProducts = [];
+    //   let parseProductsData = [];
+    //   for (let key of basket) {
+    //     parseProducts.push(key.id);
+    //     parseProductsData.push({
+    //       productId: key.id,
+    //       sizeId: key.sizeId,
+    //       price: key.price,
+    //     });
+    //   }
 
-      const isProductInDB = await Product.findAndCountAll({
-        where: { id: parseProducts },
-        attributes: ["id"],
-      });
+    //   const isProductInDB = await Product.findAndCountAll({
+    //     where: { id: parseProducts },
+    //     attributes: ["id"],
+    //   });
 
-      if (isProductInDB.count === parseProducts.length) {
-        const row = {};
-        if (auth) {
-          const token = auth.split(" ")[1];
-          const { id } = jwt.verify(token, process.env.SECRET_KEY);
-          row.userId = id;
-        }
+    //   if (isProductInDB.count === parseProducts.length) {
+    //     const row = {};
+    //     if (auth) {
+    //       const token = auth.split(" ")[1];
+    //       const { id } = jwt.verify(token, process.env.SECRET_KEY);
+    //       row.userId = id;
+    //     }
 
-        await Orders.create(row).then((order) => {
-          const { id } = order.get();
-          parseProductsData.forEach(async (product, i) => {
-            await Sizes.findOne({ where: { id: product.sizeId } }).then(
-              async (data) => {
-                await OrderProduct.create({
-                  orderId: id,
-                  productId: product.productId,
-                  count: basket[i].count,
-                  price: product.price,
-                  size_product: data.dataValues.number_size,
-                }).then(async (data) => {
-                  const notification = await Notification.create({
-                    notification_message: `Ваш заказ №${id} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
-                    userId: row.userId,
+    //     await Orders.create(row).then((order) => {
+    //       const { id } = order.get();
+    //       parseProductsData.forEach(async (product, i) => {
+    //         await Sizes.findOne({ where: { id: product.sizeId } }).then(
+    //           async (data) => {
+    //             await OrderProduct.create({
+    //               orderId: id,
+    //               productId: product.productId,
+    //               count: basket[i].count,
+    //               price: product.price,
+    //               size_product: data.dataValues.number_size,
+    //             }).then(async (data) => {
+    //               const notification = await Notification.create({
+    //                 notification_message: `Ваш заказ №${id} успешно оформлен! Мы уведомим вас, когда товар приедет к вам.`,
+    //                 userId: row.userId,
+    //               });
+    //             });
+    //           }
+    //         );
+    //       });
+    //     });
+    //   } else {
+    //     const notFoundIdProducts = [];
+    //     const arrProducts = []; //found id
+    //     isProductInDB.rows.forEach((item) => arrProducts.push(item.id));
+    //     parseProducts.forEach((productId) => {
+    //       if (!arrProducts.includes(productId)) {
+    //         notFoundIdProducts.push(productId);
+    //       }
+    //     });
+    //     return ApiError.badRequest(
+    //       res.json(
+    //         `Some productes of id(${notFoundIdProducts.join(
+    //           ", "
+    //         )}) not exist in DB`
+    //       )
+    //     );
+    //   }
+
+    //   return res.json("Thank you for you order! We will contact you shortly");
+    // } catch (e) {
+    //   return res.json(e);
+    // }
+
+    const {
+      userId,
+      sale,
+      payment_delivery,
+      total_price,
+      name,
+      family,
+      number_phone,
+      country,
+      city,
+      street,
+      number_home,
+      number_apartments,
+      zip,
+    } = req.body;
+
+    await Basket.findOne({ where: { userId: userId } }).then(
+      async (data_main_basket) => {
+        if (data_main_basket) {
+          await BasketProduct.findAll({
+            where: { basketId: data_main_basket.id },
+          }).then(async (data_basket) => {
+            if (data_basket) {
+              await Orders.create({ complete: false, userId: userId })
+                .then(async (order) => {
+                  let id_order = order.dataValues.id;
+
+                  await OrdersDetails.create({
+                    name: name,
+                    family: family,
+                    number_phone: number_phone,
+                    country: country,
+                    city: city,
+                    street: street,
+                    number_home: number_home,
+                    number_apartments: number_apartments,
+                    zip_code: zip,
+                    orderId: id_order,
+                    sale: 100 - 100 * sale,
+                    payment_delivery: payment_delivery,
+                    total_price: total_price,
+                  });
+
+                  for (let item of data_basket) {
+                    await Product.findOne({
+                      where: { id: item.productId },
+                    }).then(async (data_product) => {
+                      if (data_product) {
+                        await Sizes.findOne({
+                          where: { id: item.sizeId },
+                        }).then(async (data_size) => {
+                          await OrderProduct.create({
+                            count: item.count,
+                            productId: item.productId,
+                            orderId: id_order,
+                            price: item.price,
+                            size_product: data_size.number_size,
+                          });
+                        });
+                      }
+                    });
+                  }
+                })
+                .then(async () => {
+                  await BasketProduct.destroy({
+                    where: { basketId: data_main_basket.id },
+                  }).then(() => {
+                    res.send("Заказ оформлен!");
                   });
                 });
-              }
-            );
+            }
           });
-        });
-      } else {
-        const notFoundIdProducts = [];
-        const arrProducts = []; //found id
-        isProductInDB.rows.forEach((item) => arrProducts.push(item.id));
-        parseProducts.forEach((productId) => {
-          if (!arrProducts.includes(productId)) {
-            notFoundIdProducts.push(productId);
-          }
-        });
-        return ApiError.badRequest(
-          res.json(
-            `Some productes of id(${notFoundIdProducts.join(
-              ", "
-            )}) not exist in DB`
-          )
-        );
+        }
       }
-
-      return res.json("Thank you for you order! We will contact you shortly");
-    } catch (e) {
-      return res.json(e);
-    }
+    );
   }
 
   async updateOrder(req, res) {
@@ -197,7 +276,7 @@ class OrdersController {
         [sequelize.fn("COUNT", "id"), "totalCount"],
       ],
       group: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))],
-      order: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))]
+      order: [sequelize.fn("date_trunc", "month", sequelize.col("createdAt"))],
     });
 
     return res.json(orders);

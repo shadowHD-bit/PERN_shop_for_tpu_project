@@ -107,13 +107,19 @@ export const addProductToBasket = async (product) => {
     return data;
 }
 
+//Работа с корзиной
+export const changeCountProductBasket = async (data_action) => {
+    const {data} = await $authHost.post('api/basket/change_count', data_action);
+    return data;
+}
+
 export const getProductFromBasket = async () => {
     const {data} = await $authHost.get('api/basket');
     return data;
 }
 
-export const deleteProductFromBasket = async (id) => {
-    const {data} = await $authHost.delete(`api/basket/${id}`);
+export const deleteProductFromBasket = async (id, size_product) => {
+    const {data} = await $authHost({method: "DELETE", url: `api/basket/${id}`, data: size_product});
     return data;
 }
 

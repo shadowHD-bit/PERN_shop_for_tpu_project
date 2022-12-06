@@ -1,21 +1,9 @@
 import { $authHost, $host } from "./index";
 
-export const sendOrder = async ({ auth, basket }) => {
-  if (auth) {
-    const { data } = await $authHost({
-      method: "POST",
-      url: "api/order",
-      data: { basket },
-    });
-    return data;
-  } else {
-    const { data } = await $host({
-      method: "POST",
-      url: "api/order",
-      data: { basket },
-    });
-    return data;
-  }
+export const sendOrder = async (basket) => {
+  const { data } = await $authHost.post("api/order", basket);
+
+  return data;
 };
 
 export const fetchOrders = async ({ limit, page, complete }) => {
@@ -33,7 +21,9 @@ export const fetchOrdersUser = async ({ userId, limit, page, complete }) => {
 };
 
 export const fetchOrderFromStatistic = async () => {
-  const { data } = await $authHost.get(`api/statistic/statistic_order/count_in_months`);
+  const { data } = await $authHost.get(
+    `api/statistic/statistic_order/count_in_months`
+  );
   return data;
 };
 

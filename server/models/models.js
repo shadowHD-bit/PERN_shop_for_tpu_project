@@ -31,11 +31,18 @@ const Basket = sequelize.define("basket", {
 const BasketProduct = sequelize.define("basket_product", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   productId: { type: DataTypes.INTEGER },
+  count: { type: DataTypes.INTEGER, defaultValue: 1 },
 });
 
 //Models Reviews
 const Reviews = sequelize.define("reviews", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+});
+
+const Coupons = sequelize.define("coupons", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  code: { type: DataTypes.STRING, allowNull: false },
+  discount_percentage: { type: DataTypes.INTEGER, allowNull: false },
 });
 
 //Models ReviewsProduct
@@ -125,6 +132,22 @@ const Orders = sequelize.define("orders", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   complete: { type: DataTypes.BOOLEAN, defaultValue: false },
   userId: { type: DataTypes.INTEGER, allowNull: true },
+});
+
+const OrdersDetails = sequelize.define("orders_details", {
+  id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+  name: { type: DataTypes.STRING, allowNull: false },
+  family: { type: DataTypes.STRING, allowNull: false },
+  number_phone: { type: DataTypes.STRING, allowNull: false },
+  country: { type: DataTypes.STRING, allowNull: false },
+  city: { type: DataTypes.STRING, allowNull: false },
+  street: { type: DataTypes.STRING, allowNull: false },
+  number_home: { type: DataTypes.STRING, allowNull: false },
+  number_apartments: { type: DataTypes.STRING, allowNull: true },
+  zip_code: { type: DataTypes.STRING, allowNull: false },
+  sale: { type: DataTypes.INTEGER, allowNull: true },
+  payment_delivery: { type: DataTypes.BOOLEAN, allowNull: false },
+  total_price: { type: DataTypes.FLOAT, allowNull: false },
 });
 
 //Question
@@ -306,6 +329,12 @@ OrderProduct.belongsTo(Orders, {
   onUpdate: "CASCADE",
 });
 
+Orders.hasMany(OrdersDetails);
+OrdersDetails.belongsTo(Orders, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
 Product.hasMany(OrderProduct);
 OrderProduct.belongsTo(Product, {
   onDelete: "CASCADE",
@@ -340,4 +369,5 @@ module.exports = {
   ResetPasswordTokens,
   LocationPlace,
   HistoryViewProduct,
+  Coupons, OrdersDetails
 };

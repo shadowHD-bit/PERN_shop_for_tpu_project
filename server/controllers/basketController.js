@@ -8,9 +8,39 @@ const {
   Sizes,
 } = require("../models/models");
 const jwt = require("jsonwebtoken");
-const { Op } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 
 class BasketController {
+  async changeCount(req, res) {
+    const { id, action, sizeId } = req.body;
+
+    const token = req.headers.authorization.split(" ")[1];
+    const user = jwt.verify(token, process.env.SECRET_KEY);
+    const basket = await Basket.findOne({ where: { userId: user.id } });
+
+    if (action == "-") {
+      await BasketProduct.update(
+        {
+          count: Sequelize.literal("count - 1"),
+        },
+        { where: { basketId: basket.id, productId: id, sizeId: sizeId } }
+      ).then((data) => {
+        res.send("Количество уменьшено");
+      });
+    } else if (action == "+") {
+      await BasketProduct.update(
+        {
+          count: Sequelize.literal("count + 1"),
+        },
+        { where: { basketId: basket.id, productId: id, sizeId: sizeId } }
+      ).then((data) => {
+        res.send("Количество увеличено");
+      });
+    } else {
+      res.send("Error");
+    }
+  }
+
   async addProducts(req, res) {
     try {
       const { id, size_product } = req.body;
@@ -41,25 +71,27 @@ class BasketController {
           where: {
             id: basket[i].productId,
           },
-          include:
-            {
-              model: ProductInfo,
-              as: "info",
-              where: {
-                productId: basket[i].productId,
-                [Op.or]: [
-                  {
-                    productId: {
-                      [Op.not]: null,
-                    },
+          include: {
+            model: ProductInfo,
+            as: "info",
+            where: {
+              productId: basket[i].productId,
+              [Op.or]: [
+                {
+                  productId: {
+                    [Op.not]: null,
                   },
-                ],
-              },
-              required: false,
+                },
+              ],
             },
+            required: false,
+          },
         });
-        const size = {sizeId: basket[i].sizeId}
-        const result = Object.assign(BasketProduct.dataValues, size)
+        const size = { sizeId: basket[i].sizeId };
+        const count = { count: basket[i].count };
+        const resultOne = Object.assign(BasketProduct.dataValues, size);
+        const result = Object.assign(resultOne, count);
+
         basketArr.push(result);
       }
 
@@ -72,13 +104,18 @@ class BasketController {
   async deleteProduct(req, res) {
     try {
       const { id } = req.params;
+      const { size_product } = req.body;
       const user = req.user;
 
       await Basket.findOne({ where: { userId: user.id } }).then(
         async (userBasket) => {
           if (userBasket.userId === user.id) {
             await BasketProduct.destroy({
-              where: { basketId: userBasket.id, productId: id },
+              where: {
+                basketId: userBasket.id,
+                productId: id,
+                sizeId: size_product,
+              },
             });
           }
           return res.json(

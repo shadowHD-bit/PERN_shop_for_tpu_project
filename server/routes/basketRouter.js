@@ -6,6 +6,7 @@ const checkDeleteProductFromBasket = require('../middleware/checkDeleteProductFr
 
 
 router.post('/', authMiddleware, BasketController.addProducts)
+router.post('/change_count', authMiddleware, BasketController.changeCount)
 router.get('/', authMiddleware, BasketController.getProducts)
 router.delete('/:id', authMiddleware, checkDeleteProductFromBasket, BasketController.deleteProduct);
 

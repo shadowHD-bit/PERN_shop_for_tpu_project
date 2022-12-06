@@ -20,6 +20,7 @@ import {
   addProductToBasket,
   getProductDescription,
   fetchSizesOneProduct,
+  getProductFromBasket,
 } from "../../http/productAPI";
 import { BASKET_ROUTE } from "../../utils/consts";
 import { BsCheckLg, BsHeart } from "react-icons/bs";
@@ -57,6 +58,7 @@ const SimpleProduct = observer(() => {
   const [showSizeProductModal, setShowSizeProductModal] = useState(false);
   const [changedSize, setChangedSize] = useState("");
 
+
   const handlerShowSizeProduct = () => {
     setShowSizeProductModal(true);
   };
@@ -66,28 +68,35 @@ const SimpleProduct = observer(() => {
   };
 
   useEffect(() => {
-    if(user.isAuth && user.user.id != undefined){
-      const formDataHistory = new FormData()
-      formDataHistory.append('productId', id)
-      formDataHistory.append('userId', user.user.id)
-      addHistoryView(formDataHistory)
+    if (user.isAuth && user.user.id != undefined) {
+      const formDataHistory = new FormData();
+      formDataHistory.append("productId", id);
+      formDataHistory.append("userId", user.user.id);
+      addHistoryView(formDataHistory);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     fetchOneProduct(id).then((data) => setProduct(data));
+    getProductFromBasket().then((data) => {
+      setDataBasket(data);
+    });
   }, []);
 
+  const [dataBasket, setDataBasket] = useState([]);
+
   const isProductInBasket = () => {
-    const findProduct = basket.Basket.findIndex(
-      (item) => Number(item.id) === Number(product.id)
+    const findProduct = dataBasket.findIndex(
+      (item) =>
+        Number(item.id) == Number(id) &&
+        Number(item.sizeId) == Number(changedSize)
     );
     return findProduct < 0;
   };
 
   const isProductInLikes = () => {
     const findProduct = likes.Likes.findIndex(
-      (item) => Number(item.id) === Number(product.id)
+      (item) => Number(item.id) === Number(id)
     );
     return findProduct < 0;
   };
@@ -97,7 +106,13 @@ const SimpleProduct = observer(() => {
       const formData = new FormData();
       formData.append("id", product.id);
       formData.append("size_product", changedSize);
-      addProductToBasket(formData).then(() => basket.setBasket(product, true));
+      addProductToBasket(formData).then(() => {
+        basket.setCount(basket._count + 1);
+        basket.setBasket(product, true);
+        getProductFromBasket().then((data) => {
+          setDataBasket(data);
+        });
+      });
     } else {
       basket.setBasket(product);
     }
@@ -110,8 +125,6 @@ const SimpleProduct = observer(() => {
       likes.setLikes(product);
     }
   };
-
-  const [photoProduct, setProductPhoto] = useState(product.imgMain);
 
   //////////
 
@@ -191,8 +204,6 @@ const SimpleProduct = observer(() => {
 
     return numbers.concat(strings);
   };
-
-  console.log(sizes);
 
   return (
     <>

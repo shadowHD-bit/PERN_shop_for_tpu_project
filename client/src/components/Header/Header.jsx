@@ -58,15 +58,6 @@ const Header = observer(() => {
     });
   }, [load]);
 
-  const [notificationCount, setNotificationCount] = useState([])
-
-  // useEffect(() => {
-  //   fetchNotificationOneUser(user.user.id).then(data => {
-  //     setNotificationCount(data.count)
-  //   })
-  // }, [])
-
-
   if (user.isAuth) {
     return (
       <>
@@ -180,8 +171,8 @@ const Header = observer(() => {
                     >
                     <Link to={BASKET_ROUTE}>
                       <BsBasket className="user_icon" size={25} />
-                      {basket._basket.length != 0 ? (
-                        <Badge pill={true}>{basket._basket.length}</Badge>
+                      {basket._count != 0 ? (
+                        <Badge pill={true}>{basket._count}</Badge>
                       ) : (
                         ""
                       )}
