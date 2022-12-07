@@ -7,6 +7,27 @@
   box-shadow: -2px 1px 46px 0px rgba(34, 60, 80, 0.2);
   border-radius: 30px !important;
 
+  .relative{
+    position: relative;
+  }
+  .badge_isSocial{
+    position: absolute;
+    top: 0px;
+    right: 0;
+
+  }
+
+  .bg_badge{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1px 1px;
+  }
+
+
   .card_history {
     padding: 0 !important;
     box-shadow: none;
@@ -97,6 +118,15 @@
 .test_avatar {
   width: 200px;
   height: 200px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+}
+
+.avatar_profile{
+  width: 150px;
+  height: 150px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

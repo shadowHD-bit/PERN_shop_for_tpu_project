@@ -1,13 +1,16 @@
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import {
+  Badge,
   Button,
   Card,
   Col,
   Container,
   Form,
   Modal,
+  OverlayTrigger,
   Row,
+  Tooltip,
 } from "react-bootstrap";
 import { Context } from "../..";
 import {
@@ -22,6 +25,14 @@ import { FreeMode, Pagination } from "swiper";
 import { getHistoryView } from "../../http/historyAPI";
 import { Link } from "react-router-dom";
 import { PRODUCT_ROUTE } from "../../utils/consts";
+import {
+  BsBootstrap,
+  BsCircle,
+  BsFillBootstrapFill,
+  BsGoogle,
+  BsWindowSidebar,
+} from "react-icons/bs";
+import { MdWebAsset } from "react-icons/md";
 
 const UserProfile = observer(() => {
   const [changeData, setChangeData] = useState(false);
@@ -51,7 +62,9 @@ const UserProfile = observer(() => {
       setName(user.userProf.name);
       setFamily(user.userProf.family);
       setDate_birthday(user.userProf.date_birthday);
-      setNumberPhone(user.userProf.numberPhone);
+      user.userProf.isVK
+        ? setNumberPhone("")
+        : setNumberPhone(user.userProf.numberPhone);
     });
   }, []);
 
@@ -62,9 +75,7 @@ const UserProfile = observer(() => {
       });
     }
   }, []);
-
-  console.log(history);
-  console.log(user.user.id);
+  console.log(user.userProf);
 
   const [rerender, setRerender] = useState(false);
 
@@ -103,23 +114,76 @@ const UserProfile = observer(() => {
       <div className="container rounded bg-white mt-5 mb-5 profile">
         <div className="row">
           <div className="col-md-4 border-right">
-            <div className="d-flex flex-column align-items-center text-center p-3 py-5">
-              <img
-                className="rounded-circle mt-5"
-                width="150px"
-                src={process.env.REACT_APP_API_URL + user.userProf.img_user}
-              />
-              <span className="font-weight-bold">
+            <div className="d-flex flex-column align-items-center text-center p-3 py-5 relative">
+              <div className="relative">
+                <div
+                  className="avatar_profile"
+                  style={{
+                    backgroundImage: `url(${
+                      user.userProf.isVK || user.userProf.isGoogle
+                        ? user.userProf.img_user
+                        : process.env.REACT_APP_API_URL + user.userProf.img_user
+                    })`,
+                  }}
+                ></div>
+                <Row className="badge_isSocial">
+                  <Col className="d-flex flex-row justify-content-center">
+                    {user.userProf.isVK ? (
+                      <OverlayTrigger
+                        key="right"
+                        placement="right"
+                        overlay={
+                          <Tooltip id={`tooltip-right`}>
+                            Регистрация через ВКонтакте.
+                          </Tooltip>
+                        }
+                      >
+                        <Badge bg="primary" className="bg_badge">
+                          <BsBootstrap size={25} />
+                        </Badge>
+                      </OverlayTrigger>
+                    ) : user.userProf.isGoogle ? (
+                      <OverlayTrigger
+                        key="right"
+                        placement="right"
+                        overlay={
+                          <Tooltip id={`tooltip-right`}>
+                            Регистрация через Google.
+                          </Tooltip>
+                        }
+                      >
+                        <Badge bg="danger" className="bg_badge">
+                          <BsGoogle size={25} />
+                        </Badge>
+                      </OverlayTrigger>
+                    ) : (
+                      <OverlayTrigger
+                        key="right"
+                        placement="right"
+                        overlay={
+                          <Tooltip id={`tooltip-right`}>
+                            Регистрация через SHOP.RU.
+                          </Tooltip>
+                        }
+                      >
+                        <Badge bg="secondary" className="bg_badge">
+                          <BsWindowSidebar size={25} />
+                        </Badge>
+                      </OverlayTrigger>
+                    )}
+                  </Col>
+                </Row>
+              </div>
+              <span className="font-weight-bold mt-2">
                 {user.userProf.name} {user.userProf.family}
               </span>
               <span className="text-black-50"></span>
               <Button
-                className="change_photo_btn"
+                className="change_photo_btn mt-1"
                 onClick={() => handlerModalPhotoShow()}
               >
                 Изменить аватар
               </Button>
-              <span> </span>
             </div>
           </div>
           <div className="col-md-8">
@@ -158,7 +222,7 @@ const UserProfile = observer(() => {
                     disabled={!changeData ? true : false}
                     type="text"
                     className="form-control"
-                    placeholder="enter phone number"
+                    placeholder="Номер телефона не указан!"
                     value={numberPhone}
                     onChange={(e) => setNumberPhone(e.target.value)}
                   />
@@ -181,7 +245,11 @@ const UserProfile = observer(() => {
                     type="text"
                     className="form-control"
                     placeholder="enter address line 2"
-                    value={user.userProf.email}
+                    value={
+                      user.userProf.isVK
+                        ? "Регистрация через сервис ВКонтакте"
+                        : user.userProf.email
+                    }
                   />
                 </div>
                 <div className="col-md-12">
@@ -269,15 +337,17 @@ const UserProfile = observer(() => {
             {history?.map((item) => (
               <SwiperSlide key={item.id}>
                 <Card className="card_history">
-                  <Card.Img className="card_img"
+                  <Card.Img
+                    className="card_img"
                     variant="top"
                     src={process.env.REACT_APP_API_URL + item.product.imgMain}
                   />
                   <Card.Body className="card_body">
                     <Card.Title className="card_title">
-                      <Link to={PRODUCT_ROUTE + '/' + item.product.id}>
-                      {item.product.name}
-                      </Link></Card.Title>
+                      <Link to={PRODUCT_ROUTE + "/" + item.product.id}>
+                        {item.product.name}
+                      </Link>
+                    </Card.Title>
                   </Card.Body>
                 </Card>
               </SwiperSlide>

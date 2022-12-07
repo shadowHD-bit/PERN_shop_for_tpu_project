@@ -58,7 +58,6 @@ const SimpleProduct = observer(() => {
   const [showSizeProductModal, setShowSizeProductModal] = useState(false);
   const [changedSize, setChangedSize] = useState("");
 
-
   const handlerShowSizeProduct = () => {
     setShowSizeProductModal(true);
   };
@@ -394,33 +393,27 @@ const SimpleProduct = observer(() => {
                                   <Row className="w-100">
                                     <Col xs={12} md={12}>
                                       <Card className="card_question">
-                                        <Card.Header>
+                                        <Card.Header className="d-flex flex-row align-items-center">
                                           {question.question.user.isVk ||
                                           question.question.user.isGoogle ? (
-                                            <Image
-                                              src={
-                                                question.question.user.img_user
-                                              }
-                                              width={35}
+                                            <div
+                                              className="avatar_profile"
                                               style={{
-                                                borderRadius: "50%",
-                                                padding: 0,
-                                                margin: 0,
+                                                backgroundImage: `url(${question.question.user.img_user})`,
                                               }}
-                                            ></Image>
+                                            ></div>
                                           ) : (
-                                            <Image
-                                              src={
-                                                process.env.REACT_APP_API_URL +
-                                                question.question.user.img_user
-                                              }
-                                              width={35}
+                                            <div
+                                              className="avatar_profile"
                                               style={{
-                                                borderRadius: "50%",
-                                                padding: 0,
-                                                margin: 0,
+                                                backgroundImage: `url(${
+                                                  process.env
+                                                    .REACT_APP_API_URL +
+                                                  question.question.user
+                                                    .img_user
+                                                })`,
                                               }}
-                                            ></Image>
+                                            ></div>
                                           )}{" "}
                                           {question.question.user.name}{" "}
                                           {question.question.user.family}
@@ -434,33 +427,26 @@ const SimpleProduct = observer(() => {
                                     </Col>
                                     <Col xs={12} md={12}>
                                       <Card className="card_answer">
-                                        <Card.Header>
+                                        <Card.Header className="d-flex flex-row align-items-center">
                                           {question.answer.user.isVk ||
                                           question.answer.user.isGoogle ? (
-                                            <Image
-                                              src={
-                                                question.answer.user.img_user
-                                              }
-                                              width={35}
+                                            <div
+                                              className="avatar_profile"
                                               style={{
-                                                borderRadius: "50%",
-                                                padding: 0,
-                                                margin: 0,
+                                                backgroundImage: `url(${question.answer.user.img_user})`,
                                               }}
-                                            ></Image>
+                                            ></div>
                                           ) : (
-                                            <Image
-                                              src={
-                                                process.env.REACT_APP_API_URL +
-                                                question.answer.user.img_user
-                                              }
-                                              width={35}
+                                            <div
+                                              className="avatar_profile"
                                               style={{
-                                                borderRadius: "50%",
-                                                padding: 0,
-                                                margin: 0,
+                                                backgroundImage: `url(${
+                                                  process.env
+                                                    .REACT_APP_API_URL +
+                                                  question.answer.user.img_user
+                                                })`,
                                               }}
-                                            ></Image>
+                                            ></div>
                                           )}{" "}
                                           {question.answer.user.name}{" "}
                                           {question.answer.user.family}

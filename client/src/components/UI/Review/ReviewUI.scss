@@ -1,9 +1,20 @@
-.review_card{
-    border-radius: 30px;
-    padding: 0 !important;
+.review_card {
+  border-radius: 30px;
+  padding: 0 !important;
 
-    .null_img{
-        width: 0;
-        height: 0;
-    }
+  .avatar_profile {
+    width: 35px;
+    height: 35px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+  }
+
+  .null_img {
+    width: 0;
+    height: 0;
+  }
 }

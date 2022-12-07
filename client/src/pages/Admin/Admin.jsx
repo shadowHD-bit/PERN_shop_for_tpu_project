@@ -96,9 +96,9 @@ const Admin = () => {
     getMoneyUserApi().then((data) => {
       setMoneyUser(data);
     });
-    getAllUser().then(data => {
-      setCountUser(data.count)
-    })
+    getAllUser().then((data) => {
+      setCountUser(data.count);
+    });
   }, []);
 
   console.log(moneyUser);
@@ -107,7 +107,6 @@ const Admin = () => {
   useEffect(() => {
     let resultArray = [];
     moneyUser.map((item) => {
-
       if (resultArray.find((obj) => obj.user_id == item.user.id) != undefined) {
         resultArray.map((res) => {
           item.order_products.map((res_o) => {
@@ -118,22 +117,20 @@ const Admin = () => {
             }
           });
         });
-      } 
-      
-      else {
+      } else {
         let total;
         if (item.order_products.length == 1) {
           total = item.order_products[0].totalPrice;
         } else {
-          total = item.order_products.reduce((a, c) => a += c.totalPrice, 0);
+          total = item.order_products.reduce((a, c) => (a += c.totalPrice), 0);
         }
         resultArray.push({
           user_id: item.user.id,
           user_name: item.user.name,
           user_family: item.user.family,
           user_img: item.user.img_user,
-          isVK:  item.user.isVK,
-          isGoogle:  item.user.isGoogle,
+          isVK: item.user.isVK,
+          isGoogle: item.user.isGoogle,
           totalPrice: total,
         });
       }
@@ -252,27 +249,23 @@ const Admin = () => {
               {adminUser?.map((item) => (
                 <ListGroup.Item key={item.id}>
                   <Row className="d-flex flex-row justify-content-center align-items-center">
-                    <Col>
+                    <Col className="d-flex flex-row align-items-center">
                       {item.isVK || item.isGoogle ? (
-                        <Image
-                          src={item.img_user}
-                          width={35}
+                        <div
+                          className="avatar_profile"
                           style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
+                            backgroundImage: `url(${item.img_user})`,
                           }}
-                        ></Image>
+                        ></div>
                       ) : (
-                        <Image
-                          src={process.env.REACT_APP_API_URL + item.img_user}
-                          width={35}
+                        <div
+                          className="avatar_profile"
                           style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
+                            backgroundImage: `url(${
+                              process.env.REACT_APP_API_URL + item.img_user
+                            })`,
                           }}
-                        ></Image>
+                        ></div>
                       )}{" "}
                       {item.name} {item.family}
                     </Col>
@@ -290,27 +283,23 @@ const Admin = () => {
               {newUser?.map((item) => (
                 <ListGroup.Item key={item.id}>
                   <Row className="d-flex flex-row justify-content-center align-items-center">
-                    <Col>
+                    <Col className="d-flex flex-row align-items-center">
                       {item.isVK || item.isGoogle ? (
-                        <Image
-                          src={item.img_user}
-                          width={35}
+                        <div
+                          className="avatar_profile"
                           style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
+                            backgroundImage: `url(${item.img_user})`,
                           }}
-                        ></Image>
+                        ></div>
                       ) : (
-                        <Image
-                          src={process.env.REACT_APP_API_URL + item.img_user}
-                          width={35}
+                        <div
+                          className="avatar_profile"
                           style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
+                            backgroundImage: `url(${
+                              process.env.REACT_APP_API_URL + item.img_user
+                            })`,
                           }}
-                        ></Image>
+                        ></div>
                       )}{" "}
                       {item.name} {item.family}
                     </Col>
@@ -325,46 +314,46 @@ const Admin = () => {
               <ListGroup.Item variant="danger">
                 Список пользователей по покупкам
               </ListGroup.Item>
-              {resultMoneyUser?.sort((a,b) => {return b.totalPrice-a.totalPrice}).slice(0,5).map((item) => (
-                <ListGroup.Item key={item.user_id}>
-                  <Row className="d-flex flex-row justify-content-center align-items-center">
-                    <Col>
-                      {item.isVK ||
-                      item.isGoogle ? (
-                        <Image
-                          src={item.user_img}
-                          width={35}
-                          style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
-                          }}
-                        ></Image>
-                      ) : (
-                        <Image
-                          src={
-                            process.env.REACT_APP_API_URL +
-                            item.user_img
-                          }
-                          width={35}
-                          style={{
-                            borderRadius: "50%",
-                            padding: 0,
-                            margin: 0,
-                          }}
-                        ></Image>
-                      )}{" "}
-                      {item.user_name} {item.user_family}
-                    </Col>
-                    <Col xs={4} className="d-flex flex-row justify-content-end">
-                      {item.totalPrice} РУБ
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-              ))}
+              {resultMoneyUser
+                ?.sort((a, b) => {
+                  return b.totalPrice - a.totalPrice;
+                })
+                .slice(0, 5)
+                .map((item) => (
+                  <ListGroup.Item key={item.user_id}>
+                    <Row className="d-flex flex-row justify-content-center align-items-center">
+                      <Col className="d-flex flex-row align-items-center">
+                        {item.isVK || item.isGoogle ? (
+                          <div
+                            className="avatar_profile"
+                            style={{
+                              backgroundImage: `url(${item.user_img})`,
+                            }}
+                          ></div>
+                        ) : (
+                          <div
+                            className="avatar_profile"
+                            style={{
+                              backgroundImage: `url(${
+                                process.env.REACT_APP_API_URL + item.user_img
+                              })`,
+                            }}
+                          ></div>
+                        )}{" "}
+                        {item.user_name} {item.user_name}
+                      </Col>
+
+                      <Col
+                        xs={4}
+                        className="d-flex flex-row justify-content-end"
+                      >
+                        {item.totalPrice} РУБ
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                ))}
             </ListGroup>
           </Col>
-          
         </Row>
       </Container>
 

@@ -23,27 +23,24 @@ const ReviewUI = ({
       <Card className="review_card">
         <Card.Header>
           <Row>
-            <Col>
+            <Col className="d-flex flex-row align-items-center">
               {isVk || isGoogle ? (
-                <Image
-                  src={img_user}
-                  width={35}
-                  style={{
-                    borderRadius: "50%",
-                    padding: 0,
-                    margin: 0,
-                  }}
-                ></Image>
-              ) : (
-                <Image
-                  src={process.env.REACT_APP_API_URL + img_user}
-                  width={35}
-                  style={{
-                    borderRadius: "50%",
-                    padding: 0,
-                    margin: 0,
-                  }}
-                ></Image>
+                <div
+                className="avatar_profile"
+                style={{
+                  backgroundImage: `url(${img_user})`,
+                }}
+              ></div>
+            ) : (
+              <div
+                className="avatar_profile"
+                style={{
+                  backgroundImage: `url(${
+                    process.env
+                      .REACT_APP_API_URL + img_user
+                  })`,
+                }}
+              ></div>
               )}{" "}
               {name_user} {family_user}
             </Col>
