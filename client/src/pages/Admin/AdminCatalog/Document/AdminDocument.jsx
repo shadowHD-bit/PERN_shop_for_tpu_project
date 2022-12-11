@@ -387,7 +387,7 @@ const AdminDocument = () => {
       <Modal show={showModal} onHide={handleCloseModal} centered>
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Выбирите статус заказа
+            Выберите статус заказа
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

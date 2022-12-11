@@ -35,15 +35,17 @@ import {
   LOGIN_ROUTE,
   NOTIFICATION_ROUTE,
   ORDERS_ROUTE,
+  PRODUCT_ROUTE,
   SHOP_ROUTE,
   USERPROFILE_ROUTE,
 } from "../../utils/consts";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getData } from "../../http/userAPI";
 import SocialHeader from "../UI/Social/Header/SocialHeader";
 import { AiOutlineMenu } from "react-icons/ai";
 import Sidebar from "../UI/SideBar/Sidebar";
-import { fetchNotificationOneUser } from "../../http/notificationAPI";
+import { fetchProduct, getAllProductSearch } from "../../http/productAPI";
+import useDebounce from "../../hooks/useDebounce";
 
 const Header = observer(() => {
   const { user, basket, likes, notifications } = useContext(Context);
@@ -57,6 +59,36 @@ const Header = observer(() => {
       user.setUserProf(data);
     });
   }, [load]);
+
+  const [product, setProduct] = useState([]);
+  const [search, setSearch] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const [focused, setFocused] = useState(false);
+  const onFocus = () => {
+    setTimeout(() => {
+      setFocused(true);
+    }, 200);
+  } 
+  const onBlur = () => {
+    setTimeout(() => {
+      setFocused(false);
+    }, 200);
+  }
+
+  const debouncedSearch = useDebounce(search, 500);
+
+  useEffect(() => {
+    async function fetchData() {
+      setLoading(true);
+      setProduct([]);
+
+      const data = await getAllProductSearch(search);
+      setProduct(data.rows);
+      setLoading(false);
+    }
+    if (debouncedSearch) fetchData();
+  }, [debouncedSearch]);
 
   if (user.isAuth) {
     return (
@@ -134,8 +166,31 @@ const Header = observer(() => {
                         placeholder="Что вас интересует?"
                         aria-label="search"
                         aria-describedby="basic-addon1"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        onFocus={onFocus}
+                        onBlur={onBlur}
                       />
                     </InputGroup>
+                    {search != null && focused && product != [] && !loading ? (
+                      <div className="seach_item">
+                        <ul>
+                          {product.length == 0 ? (
+                            <li>Ничего не найдено!</li>
+                          ) : (
+                            product?.map((item) => (
+                              <Link
+                                to={PRODUCT_ROUTE + "/" + item.id}
+                              >
+                                <li>{item.name}</li>
+                              </Link>
+                            ))
+                          )}
+                        </ul>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </Col>
                   <Col
                     className="header_user_navigation"
@@ -156,65 +211,57 @@ const Header = observer(() => {
                       <Link to={NOTIFICATION_ROUTE}>
                         <BsBell className="user_icon" size={25} />
                         {notifications.count != 0 ? (
-                        <Badge pill={true}>{notifications.count}</Badge>
-                      ) : (
-                        ""
-                      )}
+                          <Badge pill={true}>{notifications.count}</Badge>
+                        ) : (
+                          ""
+                        )}
                       </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={
-                        <Tooltip id="button-tooltip">Корзина</Tooltip>
-                      }
+                      overlay={<Tooltip id="button-tooltip">Корзина</Tooltip>}
                     >
-                    <Link to={BASKET_ROUTE}>
-                      <BsBasket className="user_icon" size={25} />
-                      {basket._count != 0 ? (
-                        <Badge pill={true}>{basket._count}</Badge>
-                      ) : (
-                        ""
-                      )}
-                    </Link>
+                      <Link to={BASKET_ROUTE}>
+                        <BsBasket className="user_icon" size={25} />
+                        {basket._count != 0 ? (
+                          <Badge pill={true}>{basket._count}</Badge>
+                        ) : (
+                          ""
+                        )}
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={
-                        <Tooltip id="button-tooltip">Заказы</Tooltip>
-                      }
+                      overlay={<Tooltip id="button-tooltip">Заказы</Tooltip>}
                     >
-                    <Link to={ORDERS_ROUTE}>
-                      <BsBag className="user_icon" size={25} />
-                    </Link>
+                      <Link to={ORDERS_ROUTE}>
+                        <BsBag className="user_icon" size={25} />
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={
-                        <Tooltip id="button-tooltip">Лайки</Tooltip>
-                      }
+                      overlay={<Tooltip id="button-tooltip">Лайки</Tooltip>}
                     >
-                    <Link to={LIKES_ROUTER}>
-                      <BsHeart className="user_icon" size={25} />
-                      {likes._likes.length != 0 ? (
-                        <Badge pill={true}>{likes._likes.length}</Badge>
-                      ) : (
-                        ""
-                      )}
-                    </Link>
+                      <Link to={LIKES_ROUTER}>
+                        <BsHeart className="user_icon" size={25} />
+                        {likes._likes.length != 0 ? (
+                          <Badge pill={true}>{likes._likes.length}</Badge>
+                        ) : (
+                          ""
+                        )}
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={
-                        <Tooltip id="button-tooltip">Кабинет</Tooltip>
-                      }
+                      overlay={<Tooltip id="button-tooltip">Кабинет</Tooltip>}
                     >
-                    <Link to={USERPROFILE_ROUTE}>
-                      <BsPerson className="user_icon" size={25} />
-                    </Link>
+                      <Link to={USERPROFILE_ROUTE}>
+                        <BsPerson className="user_icon" size={25} />
+                      </Link>
                     </OverlayTrigger>
                     <Button
                       variant="outline-dark"
@@ -331,13 +378,11 @@ const Header = observer(() => {
                     <OverlayTrigger
                       placement="bottom"
                       delay={{ show: 250, hide: 400 }}
-                      overlay={
-                        <Tooltip id="button-tooltip">Войти</Tooltip>
-                      }
+                      overlay={<Tooltip id="button-tooltip">Войти</Tooltip>}
                     >
-                    <Link to={LOGIN_ROUTE}>
-                      <MdOutlineLogin className="user_icon" size={25} />
-                    </Link>
+                      <Link to={LOGIN_ROUTE}>
+                        <MdOutlineLogin className="user_icon" size={25} />
+                      </Link>
                     </OverlayTrigger>
                     <OverlayTrigger
                       placement="bottom"
@@ -346,9 +391,9 @@ const Header = observer(() => {
                         <Tooltip id="button-tooltip">Куда идти?</Tooltip>
                       }
                     >
-                    <Link to={LOCATIONPLACES_ROUTE}>
-                      <BsPinMap className="user_icon" size={25} />
-                    </Link>
+                      <Link to={LOCATIONPLACES_ROUTE}>
+                        <BsPinMap className="user_icon" size={25} />
+                      </Link>
                     </OverlayTrigger>
                     <Button
                       variant="outline-dark"

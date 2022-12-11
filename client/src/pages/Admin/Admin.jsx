@@ -340,7 +340,7 @@ const Admin = () => {
                             }}
                           ></div>
                         )}{" "}
-                        {item.user_name} {item.user_name}
+                        {item.user_name} {item.user_family}
                       </Col>
 
                       <Col

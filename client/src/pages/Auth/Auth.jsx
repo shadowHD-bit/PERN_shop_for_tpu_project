@@ -361,7 +361,7 @@ const Auth = observer(() => {
                   <Row className="img_row h-100 w-100">
                     <Col className="img_col h-100 w-100">
                       <p className="register_text">
-                        Если ты все еще не зарегистровался у нас на сайте, то
+                        Если ты все еще не зарегистрировался у нас на сайте, то
                         сделай это прямо сейчас!
                       </p>
                       <Link to={REGISTRATION_ROUTE}>

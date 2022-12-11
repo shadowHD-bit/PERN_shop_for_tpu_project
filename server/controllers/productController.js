@@ -287,12 +287,8 @@ class ProductController {
 
   async getSearchAllProductByName(req, res, next) {
     try {
-      let { limit, page, name, filter } = req.query;
+      let { name } = req.params;
 
-      page = page || 1;
-      limit = limit || 7;
-      let offset = page * limit - limit;
-      if (filter === "All") {
         const productes = await Product.findAndCountAll({
           attributes: ["name", "price", "imgMain", "id"],
           where: {
@@ -300,59 +296,10 @@ class ProductController {
               [Op.like]: `%${name}%`,
             },
           },
-          include: [
-            {
-              attributes: ["name"],
-              model: ProductBrand,
-            },
-            {
-              attributes: ["name"],
-              model: ProductType,
-            },
-          ],
-          limit,
-          offset,
+          limit: 5
         });
 
         return res.json(productes);
-      } else {
-        const productes = await Product.findAndCountAll({
-          attributes: [
-            "name",
-            "price",
-            "imgMain",
-            "id",
-            "productBrandId",
-            "productTypeId",
-          ],
-          where: {
-            name: {
-              [Op.like]: `%${name}%`,
-            },
-            [Op.or]: [
-              {
-                productBrandId: null,
-              },
-              {
-                productTypeId: null,
-              },
-            ],
-          },
-          include: [
-            {
-              attributes: ["name"],
-              model: ProductBrand,
-            },
-            {
-              attributes: ["name"],
-              model: ProductType,
-            },
-          ],
-          limit,
-          offset,
-        });
-        return res.json(productes);
-      }
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }

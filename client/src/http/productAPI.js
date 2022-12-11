@@ -124,8 +124,8 @@ export const deleteProductFromBasket = async (id, size_product) => {
 }
 
 //Поиск товара
-export const getAllProductSearch = async (name, page = 1, filter = "All") => {
-    const {data} = await $host({method:'GET', url:`api/product/search?page=${page}&name=${name}&filter=${filter}`});
+export const getAllProductSearch = async (name) => {
+    const {data} = await $host({method:'GET', url:`api/product/search/${name}`});
     return data;
 }
 

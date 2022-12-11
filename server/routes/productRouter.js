@@ -15,6 +15,6 @@ router.delete('/:id', checkRole("ADMIN"), productController.deleteProduct)
 router.put('/:id', checkRole("ADMIN"), productController.update)
 
 //Method Search
-router.get('/search', productController.getSearchAllProductByName) //api/product/search?page=${page}&name=${name}&filter=${filter}
+router.get('/search/:name', productController.getSearchAllProductByName) //api/product/search?page=${page}&name=${name}&filter=${filter}
 
 module.exports = router

@@ -41,6 +41,10 @@
   min-height: 600px;
   font-family: "Montserrat", sans-serif;
 
+  i{
+    z-index: 900;
+  }
+
   .errorToast {
     position: fixed;
     bottom: 0;
