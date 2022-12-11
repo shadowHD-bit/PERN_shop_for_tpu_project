@@ -1,0 +1,59 @@
+@import "../../index.scss";
+
+.one_order {
+  font-family: "Montserrat", sans-serif;
+
+  .order_item_header {
+    font-size: 12px;
+
+    .detail_link {
+      cursor: pointer;
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+
+  .order_item_footer {
+    font-size: 12px;
+  }
+
+  .row_item_product {
+    display: flex;
+    flex-direction: row;
+
+    .img_item {
+      width: 200px;
+      border-radius: 10px;
+    }
+
+    a {
+      text-decoration: none;
+      color: $red;
+    }
+
+    .params_item {
+      font-size: 14px;
+    }
+
+    .params_item_btn {
+      font-size: 14px;
+      color: $red;
+      cursor: pointer;
+
+      &:hover {
+        color: $white-red;
+      }
+    }
+
+    .item_product_name {
+      font-size: 16px;
+      color: $red;
+      cursor: pointer;
+
+      &:hover {
+        color: $white-red;
+      }
+    }
+  }
+}

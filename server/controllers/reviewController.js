@@ -21,6 +21,7 @@ class ReviewController {
         product_id,
         user_id,
         rate,
+        size,
       } = req.body;
 
       let fileName;
@@ -48,6 +49,7 @@ class ReviewController {
           reviewId: id,
           productId: product_id,
           rate: rate,
+          size: size,
         }).then(async () => {
           const productRatingUpdate = await ReviewsProduct.findAndCountAll({
             where: { productId: product_id },
@@ -58,9 +60,6 @@ class ReviewController {
               return (allRating += item.rate);
             });
             middleRating = Number(allRating) / Number(data.count);
-            console.log(middleRating);
-            console.log(allRating);
-            console.log(data);
 
             await Product.update(
               { rating: Number(middleRating) },

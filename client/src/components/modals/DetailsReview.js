@@ -2,7 +2,6 @@ import React from "react";
 import { Button, Image, Modal, Table } from "react-bootstrap";
 
 const DetailsReview = ({ show, handleClose, review_data }) => {
-  console.log(review_data);
   return (
     <>
       <Modal

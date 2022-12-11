@@ -9,6 +9,8 @@ const {
   Basket,
   BasketProduct,
   OrdersDetails,
+  ReviewsProduct,
+  Reviews,
 } = require("./../models/models");
 const ApiError = require("../errors/ApiErrors");
 const jwt = require("jsonwebtoken");
@@ -293,17 +295,24 @@ class OrdersController {
     try {
       let prod;
       let infoProductes = [];
-      await Orders.findOne({ where: { id } })
+      await Orders.findOne({
+        where: { id },
+        include: [
+          {
+            model: OrdersDetails,
+          },
+        ],
+      })
         .then(async (data) => {
           order.descr = data;
           prod = await OrderProduct.findAll({
-            attributes: ["productId", "count", 'size_product'],
+            attributes: ["productId", "count", "size_product"],
             where: { orderId: data.id },
           });
 
-          OrdersDetails.findOne({where: {orderId: id }}).then(data => {
-            order.detail = data
-          })
+          OrdersDetails.findOne({ where: { orderId: id } }).then((data) => {
+            order.detail = data;
+          });
 
           for (let product of prod) {
             await Product.findOne({
@@ -318,12 +327,22 @@ class OrdersController {
                   attributes: ["name"],
                   model: ProductBrand,
                 },
+                {
+                  model: ReviewsProduct,
+                  where: {size: product.size_product},
+                  required: false,
+                  include: [
+                    {
+                      model: Reviews,
+                      where: {userId: order.descr.userId}
+                    },]
+                },
               ],
             }).then(async (item) => {
               let newObj = {
                 descr: item,
                 count: product.count,
-                size: product.size_product
+                size: product.size_product,
               };
               infoProductes.push(newObj);
             });

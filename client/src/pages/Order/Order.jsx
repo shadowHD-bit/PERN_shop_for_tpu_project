@@ -161,7 +161,7 @@ const Order = () => {
             </Dropdown>
           </Col>
         </Row>
-        <ListGroup>
+        <Row className="mt-3">
           {orders.rows?.map(({ id, complete, createdAt, updatedAt }) => (
             <OneOrder
               key={id}
@@ -172,7 +172,7 @@ const Order = () => {
               reRender={reRender}
             />
           ))}
-        </ListGroup>
+        </Row>
         <Pagination
           size="sm"
           className="mt-4 mb-4"

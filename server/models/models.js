@@ -49,6 +49,7 @@ const Coupons = sequelize.define("coupons", {
 const ReviewsProduct = sequelize.define("reviews_products", {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   text_reviews: { type: DataTypes.STRING, allowNull: false },
+  size: { type: DataTypes.STRING, allowNull: false },
   img_reviews: { type: DataTypes.STRING, allowNull: true },
   description_true: { type: DataTypes.BOOLEAN, defaultValue: false },
   size_true: { type: DataTypes.BOOLEAN, defaultValue: false },
