@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { Context } from "../..";
 import { CreateReview } from "../../components/modals/CreateReview";
 import DetailsOrder from "../../components/modals/DetailOrder";
+import DetailsPostedReview from "../../components/modals/DetailPostedReview";
 import DetailsReview from "../../components/modals/DetailsReview";
 import { getOneOrderProducts } from "../../http/orderAPI";
 import { fetchOneProduct, fetchProduct } from "../../http/productAPI";
@@ -27,6 +28,7 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
   const [productInfo, setProductInfo] = useState([]);
 
   const [pickedSize, setPickedSize] = useState("");
+  const [pickedReview, setPickedReview] = useState([]);
 
   //modal delete
   const handleCloseReviews = () => setShowReview(false);
@@ -42,6 +44,12 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
     setShowDetail(true);
   };
 
+  const [modalPostedReview, setShowPostedReview] = useState(false);
+  const handleClosePostedReviews = () => setShowPostedReview(false);
+  const handleShowPostedReviews = (review) => {
+    setShowPostedReview(true);
+    setPickedReview(review)
+  };
   console.log(productInfo);
 
   useEffect(() => {
@@ -114,6 +122,17 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
                             Оставить отзыв
                           </a>
                         ) : (
+                          item.descr.reviews_products.length != 0 ? 
+                          <a
+                          className="params_item_btn"
+                          onClick={() =>
+                            handleShowPostedReviews(item.descr.reviews_products)
+                          }
+                        >
+                          Просмотреть отзыв
+                        </a>
+                          :
+
                           <div></div>
                         )}
                       </li>
@@ -153,6 +172,7 @@ const OneOrder = ({ id, complete, createdAt, updatedAt, reRender }) => {
       />
 
       <DetailsOrder show={modalDetail} handleClose={handleCloseDetail} detail={productInfo.detail} />
+      <DetailsPostedReview show={modalPostedReview} handleClose={handleClosePostedReviews} review={pickedReview} />
     </>
   );
 };

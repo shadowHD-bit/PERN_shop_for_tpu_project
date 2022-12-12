@@ -359,6 +359,7 @@ const SimpleProduct = observer(() => {
                       delivery_true={rew.delivery_true}
                       isVk={rew.review.user.isVK}
                       rate={rew.rate}
+                      size={rew.size}
                       isGoogle={rew.review.user.isGoogle}
                     />
                   );
@@ -598,7 +599,7 @@ const SimpleProduct = observer(() => {
                   <Row>
                     {reviews?.length != 0 ? (
                       <p className="quest_about_text text-center">
-                        Рейтинг составляет {product.rating} балл(-а) и основан
+                        Рейтинг составляет {Number(product.rating).toFixed(1)} балл(-а) и основан
                         на {reviews?.length} отывах(-е)...
                       </p>
                     ) : (

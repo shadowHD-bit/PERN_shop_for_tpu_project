@@ -129,17 +129,6 @@ export const getAllProductSearch = async (name) => {
     return data;
 }
 
-// //Rating
-// export const addRating = async (body) => {
-//     const {data} = await $authHost.post('api/rating', body);
-//     return data;
-// }
-
-// export const checkRating = async (body) => {
-//     const {data} = await $authHost.post('api/rating/check-rating', body);
-//     return data;
-// }
-
 // Удалить бренд 
 export const deleteInfo = async (id) => {
     const {data} = await $authHost({method:'DELETE', url:'api/info_product/'+id});

@@ -74,6 +74,7 @@ export default function Slider() {
                         })`,
                       }}
                     >
+                      <div className="black_mask"></div>
                       <div
                         className="text_content"
                         style={{ padding: "0px 100px" }}

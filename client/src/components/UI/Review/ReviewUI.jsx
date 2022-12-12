@@ -3,6 +3,7 @@ import React from "react";
 import { Card, Col, Image, Row } from "react-bootstrap";
 import BadReviewTag from "../Tags/BadReviewTag/BadReviewTag";
 import GoodReviewTag from "../Tags/GoodReviewTag/GoodReviewTag";
+import SizeReviewTag from "../Tags/SizeReviewTag/SizeReviewTag";
 import "./ReviewUI.scss";
 
 const ReviewUI = ({
@@ -14,6 +15,7 @@ const ReviewUI = ({
   description_true,
   size_true,
   delivery_true,
+  size,
   rate,
   isVk,
   isGoogle,
@@ -26,21 +28,20 @@ const ReviewUI = ({
             <Col className="d-flex flex-row align-items-center">
               {isVk || isGoogle ? (
                 <div
-                className="avatar_profile"
-                style={{
-                  backgroundImage: `url(${img_user})`,
-                }}
-              ></div>
-            ) : (
-              <div
-                className="avatar_profile"
-                style={{
-                  backgroundImage: `url(${
-                    process.env
-                      .REACT_APP_API_URL + img_user
-                  })`,
-                }}
-              ></div>
+                  className="avatar_profile"
+                  style={{
+                    backgroundImage: `url(${img_user})`,
+                  }}
+                ></div>
+              ) : (
+                <div
+                  className="avatar_profile"
+                  style={{
+                    backgroundImage: `url(${
+                      process.env.REACT_APP_API_URL + img_user
+                    })`,
+                  }}
+                ></div>
               )}{" "}
               {name_user} {family_user}
             </Col>
@@ -72,6 +73,7 @@ const ReviewUI = ({
               ) : (
                 <BadReviewTag children={"Доставка не соответствует"} />
               )}
+              <SizeReviewTag children={size} />
             </Col>
           </Row>
           <Row>
