@@ -63,6 +63,7 @@
     width: 100%;
     height: 100%;
     position: relative;
+    border-radius: 30px;
 
     .black_mask {
       background-color: rgba(0, 0, 0, 0.219);
@@ -70,6 +71,7 @@
       width: 100%;
       height: 100%;
       z-index: 90;
+      border-radius: 30px;
     }
 
     h1,
@@ -95,9 +97,8 @@
       }
     }
 
-    h4{
+    h4 {
       padding-bottom: 40px;
-
     }
   }
 

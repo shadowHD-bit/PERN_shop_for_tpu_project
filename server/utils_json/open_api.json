@@ -22,7 +22,7 @@
     "/api/user/registration": {
       "post": {
         "summary": "Возвращает JWT токен при успешной регистрации пользователя.",
-        "tags": [],
+        "tags": ["User"],
         "parameters": [
           {
             "name": "email",
@@ -123,6 +123,24 @@
               "examples": {
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImV4YW1wbGVAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiJ9.QEm7CXwf_0Fmm0HwdgRz9uVkUjx5FZH17A6J6rdfYTI"
               }
+            }
+          }
+        }
+      }
+    }
+  },
+
+  "/api/user/": {
+    "get": {
+      "summary": "Возвращает список пользователей.",
+      "tags": ["User"],
+      "responses": {
+        "200": {
+          "description": "Пользователь зарегистрирован",
+          "schema": {
+            "type": "string",
+            "examples": {
+              "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImV4YW1wbGVAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiJ9.QEm7CXwf_0Fmm0HwdgRz9uVkUjx5FZH17A6J6rdfYTI"
             }
           }
         }
